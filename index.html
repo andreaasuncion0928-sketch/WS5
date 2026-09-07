@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elena & Adrian — Wedding Invitation</title>
+    <!-- Elegant Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           COLOR PALETTE & CSS VARIABLES
+           ========================================================================== */
+        :root {
+            --bg-ivory: #F8F5EF;
+            --gold-primary: #C8A96B;
+            --gold-light: #e6cb96;
+            --deep-plum: #4B2948;
+            --soft-mauve: #B99AAD;
+            --text-black: #171515;
+            --white: #FFFFFF;
+            
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            --font-script: 'Alex Brush', cursive;
+        }
+
+        /* ==========================================================================
+           BASE STYLES & RESET
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            background-color: #121111;
+            color: var(--text-black);
+            font-family: var(--font-serif);
+            overflow-x: hidden;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        body {
+            /* Paper texture simulation using soft gradient overlay */
+            background-image: radial-gradient(#1f1e1d 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Container simulating high-end card proportions */
+        .invitation-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--bg-ivory);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Gold Foil Effect Utility */
+        .gold-text {
+            background: linear-gradient(135deg, #A88645 0%, #E2C98B 50%, #A88645 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-border {
+            border: 1px solid var(--gold-primary);
+        }
+
+        /* Floral Corner Ornament SVGs */
+        .corner-ornament {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .corner-top-left { top: 15px; left: 15px; }
+        .corner-top-right { top: 15px; right: 15px; transform: scaleX(-1); }
+        .corner-bottom-left { bottom: 15px; left: 15px; transform: scaleY(-1); }
+        .corner-bottom-right { bottom: 15px; right: 15px; transform: scale(-1); }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        p, span {
+            font-family: var(--font-serif);
+        }
+
+        .subtitle {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--deep-plum);
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+            margin: 25px auto;
+        }
+
+        /* Buttons */
+        .btn-gold {
+            display: inline-block;
+            padding: 12px 30px;
+            border: 1px solid var(--gold-primary);
+            background: transparent;
+            color: var(--text-black);
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+
+        .btn-gold:hover {
+            background-color: var(--gold-primary);
+            color: var(--white);
+        }
+
+        /* Sections */
+        section {
+            padding: 60px 30px;
+            position: relative;
+            background-color: var(--bg-ivory);
+        }
+
+        /* ==========================================================================
+           SCREEN 1: THE ENVELOPE
+           ========================================================================== */
+        #screen-envelope {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 600px;
+            height: 100vh;
+            z-index: 1000;
+            background-color: #2c2523;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease 1.2s, visibility 1s ease 1.2s;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            background-color: #f3efe6;
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            cursor: pointer;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 120px solid #e2ded4;
+            transform-origin: top;
+            transition: transform 0.8s ease;
+            z-index: 3;
+        }
+
+        .envelope-pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid #ede8de;
+            border-right: 160px solid #ede8de;
+            border-bottom: 110px solid #e5e0d5;
+            border-top: 110px solid transparent;
+            z-index: 2;
+        }
+
+        .envelope-title {
+            position: absolute;
+            top: -50px;
+            width: 100%;
+            text-align: center;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            color: var(--gold-light);
+        }
+
+        .wax-seal {
+            position: absolute;
+            top: 110px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #6b1d2f 0%, #4a0d1a 100%);
+            border-radius: 50%;
+            z-index: 4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 0 0 5px rgba(255,255,255,0.2);
+            border: 2px solid #541220;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .wax-seal span {
+            color: var(--gold-primary);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .tap-instruction {
+            position: absolute;
+            bottom: -40px;
+            width: 100%;
+            text-align: center;
+            font-family: var(--font-sans);
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: #a0988e;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+        }
+
+        /* Open Envelope Animation */
+        .envelope-wrapper.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-wrapper.open .wax-seal {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1.5);
+            pointer-events: none;
+        }
+
+        #screen-envelope.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* ==========================================================================
+           SCREEN 2: THE INVITATION CARD (HERO)
+           ========================================================================== */
+        #screen-invitation {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .hero-card {
+            border: 1px solid var(--gold-primary);
+            padding: 40px 20px;
+            width: 100%;
+            position: relative;
+            box-shadow: inset 0 0 0 3px var(--bg-ivory), inset 0 0 0 4px var(--gold-primary);
+        }
+
+        .names {
+            font-size: 2.8rem;
+            line-height: 1.1;
+            margin: 20px 0;
+            color: var(--text-black);
+            letter-spacing: 4px;
+        }
+
+        .names span.ampersand {
+            display: block;
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 1.8rem;
+            color: var(--gold-primary);
+            margin: 5px 0;
+        }
+
+        .date-display {
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            margin-top: 25px;
+            color: var(--deep-plum);
+            font-weight: 600;
+        }
+
+        /* ==========================================================================
+           SCREEN 3: A LITTLE NOTE
+           ========================================================================== */
+        #screen-note {
+            text-align: center;
+            background-color: #F3EFE6;
+        }
+
+        .note-content {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            font-style: italic;
+            color: #333;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .signature-container {
+            margin-top: 30px;
+            height: 80px;
+        }
+
+        /* Handwritten SVG Signature Animation */
+        .sig-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: stroke 4s ease forwards;
+        }
+
+        @keyframes stroke {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* ==========================================================================
+           SCREEN 4: OUR STORY
+           ========================================================================== */
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background: var(--gold-primary);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin-bottom: 50px;
+            position: relative;
+            text-align: center;
+        }
+
+        .timeline-img {
+            width: 100%;
+            max-width: 320px;
+            height: 220px;
+            object-fit: cover;
+            border: 4px solid var(--white);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 15px;
+        }
+
+        .timeline-item h3 {
+            font-size: 1rem;
+            color: var(--deep-plum);
+            margin-bottom: 8px;
+        }
+
+        .timeline-item p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #555;
+            padding: 0 10px;
+        }
+
+        /* ==========================================================================
+           SCREEN 5: THE WEDDING (DETAILS)
+           ========================================================================== */
+        #screen-wedding {
+            text-align: center;
+        }
+
+        .event-block {
+            margin: 30px 0;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            color: var(--gold-primary);
+            margin-bottom: 8px;
+        }
+
+        .event-location {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .event-time {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            color: #666;
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================================================
+           SCREEN 6: THE ENTOURAGE
+           ========================================================================== */
+        .entourage-group {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .entourage-role {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--gold-primary);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .entourage-name {
+            font-size: 1.1rem;
+            color: var(--text-black);
+        }
+
+        /* ==========================================================================
+           SCREEN 7: DRESS CODE
+           ========================================================================== */
+        #screen-dresscode {
+            background-color: #F3EFE6;
+            text-align: center;
+        }
+
+        .palette-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        /* ==========================================================================
+           SCREEN 8: GALLERY (PAGE-TURN)
+           ========================================================================== */
+        .album-wrapper {
+            position: relative;
+            width: 100%;
+            height: 380px;
+            margin-top: 20px;
+            perspective: 1000px;
+        }
+
+        .album-page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: var(--white);
+            border: 8px solid var(--white);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000), opacity 0.8s;
+            transform-origin: left center;
+        }
+
+        .album-page img {
+            width: 100%;
+            height: 310px;
+            object-fit: cover;
+        }
+
+        .album-page-num {
+            text-align: right;
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            color: #999;
+            padding: 5px 10px;
+        }
+
+        .album-page.turned {
+            transform: rotateY(-180deg);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .gallery-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        /* ==========================================================================
+           SCREEN 9: COUNTDOWN
+           ========================================================================== */
+        #screen-countdown {
+            text-align: center;
+            background-color: var(--deep-plum);
+            color: var(--bg-ivory);
+        }
+
+        .countdown-title {
+            color: var(--gold-light);
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+        }
+
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .timer-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .timer-value {
+            font-size: 2rem;
+            font-family: var(--font-serif);
+            color: var(--white);
+        }
+
+        .timer-label {
+            font-family: var(--font-sans);
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: var(--soft-mauve);
+            margin-top: 5px;
+        }
+
+        /* ==========================================================================
+           SCREEN 10: RSVP
+           ========================================================================== */
+        #screen-rsvp {
+            text-align: center;
+        }
+
+        /* ==========================================================================
+           SCREEN 11: GIFT
+           ========================================================================== */
+        #screen-gift {
+            background-color: #F3EFE6;
+            text-align: center;
+        }
+
+        .registry-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 250px;
+            margin: 25px auto 0;
+        }
+
+        /* ==========================================================================
+           SCREEN 12: FINAL SCREEN
+           ========================================================================== */
+        #screen-final {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .final-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .final-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(248, 245, 239, 0.85);
+            z-index: 2;
+        }
+
+        .final-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        /* Corner SVGs Helper */
+        .corner-svg {
+            fill: none;
+            stroke: var(--gold-primary);
+            stroke-width: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="invitation-container">
+
+        <!-- ==========================================================================
+             SCREEN 1 — THE ENVELOPE
+             ========================================================================== -->
+        <div id="screen-envelope">
+            <div class="envelope-wrapper" id="envelope">
+                <div class="envelope-title">ELENA & ADRIAN</div>
+                <div class="envelope-flap"></div>
+                <div class="wax-seal">
+                    <span>E ♡ A</span>
+                </div>
+                <div class="envelope-pocket"></div>
+                <div class="tap-instruction">Tap to open</div>
+            </div>
+        </div>
+
+        <!-- Corner Ornaments (Reused Component) -->
+        <svg class="corner-ornament corner-top-left" viewBox="0 0 50 50">
+            <path class="corner-svg" d="M 0 0 L 50 0 M 0 0 L 0 50 M 0 10 L 40 10 M 10 0 L 10 40" />
+        </svg>
+        <svg class="corner-ornament corner-top-right" viewBox="0 0 50 50">
+            <path class="corner-svg" d="M 0 0 L 50 0 M 0 0 L 0 50 M 0 10 L 40 10 M 10 0 L 10 40" />
+        </svg>
+
+        <!-- ==========================================================================
+             SCREEN 2 — THE INVITATION CARD
+             ========================================================================== -->
+        <section id="screen-invitation">
+            <div class="hero-card">
+                <p class="subtitle">Together with their families</p>
+                <h1 class="names">
+                    ELENA
+                    <span class="ampersand">&</span>
+                    ADRIAN
+                </h1>
+                <p class="subtitle" style="margin-top: 20px;">Request the honor of your presence<br>as they celebrate their marriage</p>
+                
+                <div class="divider"></div>
+                
+                <div class="date-display">JANUARY 31, 2028</div>
+                
+                <div style="margin-top: 40px;">
+                    <a href="#screen-note" class="btn-gold">Open Invitation ↓</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             SCREEN 3 — A LITTLE NOTE
+             ========================================================================== -->
+        <section id="screen-note">
+            <p class="subtitle">A Note From Us</p>
+            <div class="divider"></div>
+            
+            <div class="note-content">
+                <p>After all this time,</p>
+                <p>we're finally getting married.</p>
+                <br>
+                <p>It would mean so much to have</p>
+                <p>you with us as we begin this</p>
+                <p>next chapter together.</p>
+                <br>
+                <p>With love,</p>
+            </div>
+
+            <div class="signature-container">
+                <!-- SVG Animated Signature -->
+                <svg width="220" height="60" viewBox="0 0 300 100">
+                    <text x="20" y="60" font-family="'Alex Brush', cursive" font-size="55" fill="none" stroke="#C8A96B" stroke-width="2" class="sig-path">
+                        Elena & Adrian
+                    </text>
+                </svg>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             SCREEN 4 — OUR STORY
+             ========================================================================== -->
+        <section id="screen-story">
+            <h2>Our Story</h2>
+            <div class="divider"></div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80" alt="Where it began" class="timeline-img">
+                    <h3>WHERE IT BEGAN</h3>
+                    <p>A chance meeting at a quiet coffee shop that turned into hours of endless conversation.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="The years that followed" class="timeline-img">
+                    <h3>THE YEARS THAT FOLLOWED</h3>
+                    <p>Building a life filled with shared dreams, unforgettable trips, and quiet Sunday mornings.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=80" alt="The Question" class="timeline-img">
+                    <h3>THE QUESTION</h3>
+                    <p>Under a starry night sky, a simple promise was made for a lifetime of togetherness.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80" alt="We are getting married" style="width:100%; height:300px; object-fit:cover; border-radius: 2px;">
+                <p class="subtitle" style="margin-top: 20px;">And now…</p>
+                <h3 style="font-size: 1.2rem; letter-spacing: 3px;">WE'RE GETTING MARRIED.</h3>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             SCREEN 5 — THE WEDDING
+             ========================================================================== -->
+        <section id="screen-wedding">
+            <h2>The Wedding</h2>
+            <div class="divider"></div>
+
+            <div class="event-block">
+                <div class="event-title">CEREMONY</div>
+                <div class="event-location">San Sebastian Church</div>
+                <div class="event-time">JANUARY 31, 2028 | 3:00 PM</div>
+            </div>
+
+            <div class="divider" style="width: 30px;"></div>
+
+            <div class="event-block">
+                <div class="event-title">RECEPTION</div>
+                <div class="event-location">The Manila Hotel</div>
+                <div class="event-time">JANUARY 31, 2028 | 6:00 PM</div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <a href="https://maps.google.com" target="_blank" class="btn-gold">View Location</a>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             SCREEN 6 — THE ENTOURAGE
+             ========================================================================== -->
+        <section id="screen-entourage">
+            <h2>The Wedding Entourage</h2>
+            <div class="divider"></div>
+
+            <div class="entourage-group">
+                <div class="entourage-role">Parents of the Bride</div>
+                <div class="entourage-name">Mr. & Mrs. Robert Santos</div>
+            </div>
+
+            <div class="entourage-group">
+                <div class="entourage-role">Parents of the Groom</div>
+                <div class="entourage-name">Mr. & Mrs. David Cruz</div>
+            </div>
+
+            <div class="divider" style="width: 20px;"></div>
+
+            <div class="entourage-group">
+                <div class="entourage-role">Maid of Honor</div>
+                <div class="entourage-name">Sophia Santos</div>
+            </div>
+
+            <div class="entourage-group">
+                <div class="entourage-role">Best Man</div>
+                <div class="entourage-name">Lucas Cruz</div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             SCREEN 7 — DRESS CODE
+             ========================================================================== -->
+        <section id="screen-dresscode">
+            <h2>Dress Code</h2>
+            <div class="divider"></div>
+            
+            <h3 class="gold-text" style="font-size: 1.5rem; margin-bottom: 10px;">PURPLE</h3>
+            <p style="font-size: 0.95rem; color: #555; max-width: 300px; margin: 0 auto;">
+                We kindly invite our guests to celebrate with us in shades of purple.
+            </p>
+
+            <div class="palette-container">
+                <div class="swatch" style="background-color: #4B2948;" title="Deep Plum"></div>
+                <div class="swatch" style="background-color: #6B3A65;" title="Royal Purple"></div>
+                <div class="swatch" style="background-color: #8E5A86;" title="Medium Purple"></div>
+                <div class="swatch" style="background-color: #B99AAD;" title="Soft Mauve"></div>
+                <div class="swatch" style="background-color: #E2D4DD;" title="Lilac Tint"></div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             SCREEN 8 — GALLERY
+             ========================================================================== -->
+        <section id="screen-gallery">
+            <h2>Memories</h2>
+            <div class="divider"></div>
+
+            <div class="album-wrapper">
+                <!-- Page 3 -->
+                <div class="album-page" id="page-3">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="Memory 03">
+                    <div class="album-page-num">03</div>
+                </div>
+                <!-- Page 2 -->
+                <div class="album-page" id="page-2">
+                    <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="Memory 02">
+                    <div class="album-page-num">02</div>
+                </div>
+                <!-- Page 1 (Top) -->
+                <div class="album-page" id="page-1">
+                    <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=80" alt="Memory 01">
+                    <div class="album-page-num">01</div>
+                </div>
+            </div>
+
+            <div class="gallery-controls">
+                <button class="btn-gold" id="prev-page-btn">← Prev</button>
+                <button class="btn-gold" id="next-page-btn">Next →</button>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             SCREEN 9 — COUNTDOWN
+             ========================================================================== -->
+        <section id="screen-countdown">
+            <div class="countdown-title">UNTIL WE SAY “I DO”</div>
+            
+            <div class="timer">
+                <div class="timer-unit">
+                    <span class="timer-value" id="timer-days">00</span>
+                    <span class="timer-label">DAYS</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-value" id="timer-hours">00</span>
+                    <span class="timer-label">HOURS</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-value" id="timer-mins">00</span>
+                    <span class="timer-label">MINUTES</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-value" id="timer-secs">00</span>
+                    <span class="timer-label">SECONDS</span>
+                </div>
+            </div>
+
+            <div class="divider" style="margin-top: 30px;"></div>
+            <div style="font-size: 0.9rem; letter-spacing: 3px; color: var(--gold-light);">JANUARY 31, 2028</div>
+        </section>
+
+        <!-- ==========================================================================
+             SCREEN 10 — RSVP
+             ========================================================================== -->
+        <section id="screen-rsvp">
+            <h2>Kindly Respond</h2>
+            <div class="divider"></div>
+
+            <p style="font-size: 1rem; color: #555; margin-bottom: 15px;">
+                Please let us know if you'll be joining us on this special day.
+            </p>
+            <p class="subtitle" style="margin-bottom: 30px;">RSVP BY DECEMBER 1, 2027</p>
+
+            <a href="https://forms.google.com" target="_blank" class="btn-gold">Respond Now</a>
+        </section>
+
+        <!-- ==========================================================================
+             SCREEN 11 — GIFT
+             ========================================================================== -->
+        <section id="screen-gift">
+            <h2>With Love</h2>
+            <div class="divider"></div>
+
+            <p style="font-size: 0.95rem; color: #555; max-width: 320px; margin: 0 auto;">
+                Your presence at our wedding is the greatest gift of all. For those who wish to bless us further:
+            </p>
+
+            <div class="registry-links">
+                <a href="#" class="btn-gold">Wedding Fund</a>
+                <a href="#" class="btn-gold">Gift Registry</a>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             SCREEN 12 — FINAL SCREEN
+             ========================================================================== -->
+        <section id="screen-final">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="Couple Final" class="final-bg-img">
+            <div class="final-overlay"></div>
+            
+            <div class="final-content">
+                <h2>We Can't Wait</h2>
+                <p class="subtitle" style="margin-top: 10px;">To Celebrate With You</p>
+                <div class="divider"></div>
+                <p style="font-family: var(--font-serif); font-size: 1.1rem; letter-spacing: 2px;">WITH LOVE,</p>
+                <h3 style="font-size: 1.5rem; margin-top: 5px;">ELENA & ADRIAN</h3>
+                <p class="gold-text" style="margin-top: 15px; font-weight: bold;">E ♡ A</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ==========================================================================
+         JAVASCRIPT LOGIC
+         ========================================================================== -->
+    <script>
+        // Envelope Click Animation
+        const envelope = document.getElementById('envelope');
+        const screenEnvelope = document.getElementById('screen-envelope');
+
+        envelope.addEventListener('click', () => {
+            envelope.classList.add('open');
+            setTimeout(() => {
+                screenEnvelope.classList.add('hide');
+            }, 1200);
+        });
+
+        // Gallery Page Turn Logic
+        let currentPage = 1;
+        const totalPages = 3;
+        const prevBtn = document.getElementById('prev-page-btn');
+        const nextBtn = document.getElementById('next-page-btn');
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                document.getElementById(`page-${currentPage}`).classList.add('turned');
+                currentPage++;
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                document.getElementById(`page-${currentPage}`).classList.remove('turned');
+            }
+        });
+
+        // Countdown Timer Logic
+        const targetDate = new Date('January 31, 2028 15:00:00').getTime();
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('timer-days').innerText = String(days).padStart(2, '0');
+                document.getElementById('timer-hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('timer-mins').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('timer-secs').innerText = String(seconds).padStart(2, '0');
+            }
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
+</body>
+</html>
