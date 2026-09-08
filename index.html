@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Next Adventure | OurStory Invites</title>
+    <title>The Next Adventure | Elena & Adrian</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +19,8 @@
             --color-sage: #8A9A86;
             --color-dusty-blue: #7A8B99;
             --color-terracotta: #C87D55;
+            --color-purple: #6B4E71;
+            --color-purple-light: #F3EFF5;
             --color-gold: #C5A059;
             --color-border: #E8E2D8;
             
@@ -54,7 +56,7 @@
             display: block;
         }
 
-        /* Typography Helper Classes */
+        /* Helper Classes */
         .serif { font-family: var(--font-serif); }
         .sans { font-family: var(--font-sans); }
         .script { font-family: var(--font-script); }
@@ -64,9 +66,10 @@
             font-size: 1.8rem;
             color: var(--color-terracotta);
             display: block;
-            margin-top: 0.5rem;
-            transform: rotate(-3deg);
+            margin-top: 0.8rem;
+            transform: rotate(-2deg);
             pointer-events: none;
+            line-height: 1.2;
         }
 
         .tagline {
@@ -92,7 +95,6 @@
 
         .delay-1 { transition-delay: 0.2s; }
         .delay-2 { transition-delay: 0.4s; }
-        .delay-3 { transition-delay: 0.6s; }
 
         /* --- Hero Section --- */
         .hero {
@@ -108,7 +110,7 @@
         }
 
         .hero h2 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             letter-spacing: 0.3em;
             text-transform: uppercase;
             color: var(--color-text-muted);
@@ -128,9 +130,9 @@
         .hero .names {
             font-family: var(--font-serif);
             font-style: italic;
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
             color: var(--color-terracotta);
-            margin-top: 1rem;
+            margin-top: 0.5rem;
         }
 
         .scroll-indicator {
@@ -162,18 +164,49 @@
             100% { transform: scaleY(0); transform-origin: bottom; }
         }
 
-        /* --- Prelude Transition --- */
+        /* --- Prelude Transition & Introduction --- */
         .prelude {
-            padding: 10rem 2rem 6rem;
+            padding: 8rem 2rem 4rem;
             text-align: center;
             max-width: 800px;
             margin: 0 auto;
         }
 
-        .prelude p {
+        .prelude p.sub {
             font-family: var(--font-serif);
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-size: clamp(1.4rem, 2.8vw, 2.2rem);
             line-height: 1.4;
+            color: var(--color-text-main);
+            margin-bottom: 3rem;
+        }
+
+        .our-story-intro {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            padding: 3.5rem 2.5rem;
+            border-radius: 2px;
+            text-align: center;
+            position: relative;
+        }
+
+        .our-story-intro h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: var(--color-terracotta);
+        }
+
+        .our-story-intro p {
+            color: var(--color-text-muted);
+            font-size: 1rem;
+            line-height: 1.9;
+            margin-bottom: 1.2rem;
+        }
+
+        .our-story-intro p:last-child {
+            margin-bottom: 0;
+            font-weight: 500;
             color: var(--color-text-main);
         }
 
@@ -182,7 +215,7 @@
             position: relative;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 6rem 2rem;
         }
 
         .journey-line {
@@ -211,7 +244,7 @@
 
         .chapter-content {
             width: 48%;
-            padding: 2.5rem;
+            padding: 2.8rem;
             background: var(--color-card-bg);
             border: 1px solid var(--color-border);
             box-shadow: 0 10px 30px rgba(0,0,0,0.02);
@@ -258,7 +291,7 @@
         .chapter h4 {
             font-family: var(--font-serif);
             font-style: italic;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: var(--color-dusty-blue);
             margin-bottom: 1.2rem;
             font-weight: 400;
@@ -267,6 +300,7 @@
         .chapter p {
             font-size: 0.95rem;
             color: var(--color-text-muted);
+            line-height: 1.8;
             margin-bottom: 1rem;
         }
 
@@ -275,7 +309,7 @@
             position: relative;
         }
 
-        /* Editorial Image Stacking & Overlap Effect */
+        /* Editorial Image Stacking & Parallax Effect */
         .image-wrapper {
             position: relative;
             overflow: hidden;
@@ -306,7 +340,7 @@
         .secondary-photo {
             position: absolute;
             width: 55%;
-            height: 240px;
+            height: 220px;
             bottom: -20px;
             border: 6px solid var(--color-bg);
             box-shadow: 0 12px 25px rgba(0,0,0,0.08);
@@ -332,7 +366,7 @@
         .stats-section {
             background-color: var(--color-card-bg);
             padding: 8rem 2rem;
-            margin: 6rem 0;
+            margin: 4rem 0;
             border-top: 1px solid var(--color-border);
             border-bottom: 1px solid var(--color-border);
             text-align: center;
@@ -347,23 +381,24 @@
         }
 
         .stats-grid {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 2.5rem;
         }
 
         .stat-card {
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
         .stat-number {
             font-family: var(--font-serif);
-            font-size: 3rem;
+            font-size: 3.2rem;
             color: var(--color-terracotta);
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
+            line-height: 1;
         }
 
         .stat-label {
@@ -375,7 +410,7 @@
 
         /* --- Section: Emotional Centerpiece --- */
         .centerpiece {
-            padding: 10rem 2rem;
+            padding: 8rem 2rem 10rem;
             text-align: center;
             max-width: 900px;
             margin: 0 auto;
@@ -386,35 +421,27 @@
             font-size: clamp(2.2rem, 5vw, 3.8rem);
             line-height: 1.2;
             font-weight: 400;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
             color: var(--color-text-main);
         }
 
         .centerpiece-lines {
             font-family: var(--font-serif);
             font-style: italic;
-            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-size: clamp(1.3rem, 2.5vw, 2rem);
             color: var(--color-text-muted);
             line-height: 2;
         }
 
-        .centerpiece-climax {
-            font-family: var(--font-serif);
-            font-size: clamp(2rem, 4vw, 3rem);
-            color: var(--color-terracotta);
-            margin-top: 3rem;
-            font-style: normal;
-        }
-
         /* --- Section: Transition to Wedding --- */
         .wedding-transition {
-            padding: 8rem 2rem 4rem;
+            padding: 6rem 2rem 4rem;
             text-align: center;
         }
 
         .wedding-transition p {
             font-size: 1.1rem;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--color-sage);
             margin-bottom: 1rem;
@@ -428,8 +455,8 @@
 
         /* --- Section: The Next Stop (Wedding Details) --- */
         .wedding-details {
-            max-width: 1000px;
-            margin: 4rem auto 8rem;
+            max-width: 1050px;
+            margin: 3rem auto 6rem;
             padding: 0 2rem;
         }
 
@@ -453,10 +480,15 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.04);
         }
 
+        .detail-card.dress-code-card {
+            background-color: var(--color-purple-light);
+            border-color: rgba(107, 78, 113, 0.2);
+        }
+
         .detail-card h3 {
             font-family: var(--font-serif);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            margin-bottom: 0.8rem;
             font-weight: 400;
         }
 
@@ -473,10 +505,19 @@
             margin-top: 0.5rem;
         }
 
+        .detail-card .purple-highlight {
+            color: var(--color-purple);
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: block;
+            margin-top: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
         /* --- Section: Our Crew (Entourage) --- */
         .entourage-section {
-            padding: 6rem 2rem;
-            max-width: 900px;
+            padding: 6rem 2rem 8rem;
+            max-width: 1000px;
             margin: 0 auto;
             text-align: center;
         }
@@ -485,22 +526,33 @@
             font-family: var(--font-serif);
             font-size: 2.5rem;
             font-weight: 400;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .entourage-subtitle {
+            color: var(--color-text-muted);
+            font-size: 1rem;
+            margin-bottom: 4rem;
+            font-style: italic;
         }
 
         .entourage-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3rem;
+            text-align: center;
         }
 
         .entourage-group h4 {
             font-family: var(--font-serif);
             font-style: italic;
             color: var(--color-dusty-blue);
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             margin-bottom: 1rem;
             font-weight: 400;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 0.5rem;
+            display: inline-block;
         }
 
         .entourage-group ul {
@@ -510,7 +562,7 @@
         .entourage-group li {
             font-size: 0.95rem;
             color: var(--color-text-muted);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
         }
 
         /* --- Section: RSVP --- */
@@ -532,7 +584,17 @@
         .rsvp-section p {
             font-size: 1.1rem;
             color: var(--color-text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .rsvp-date-badge {
+            display: inline-block;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-terracotta);
             margin-bottom: 2.5rem;
+            font-weight: 600;
         }
 
         .btn-rsvp {
@@ -554,22 +616,29 @@
             color: var(--color-text-main);
         }
 
+        .rsvp-deadline {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            margin-top: 1.8rem;
+            font-style: italic;
+        }
+
         /* --- Section: Finale --- */
         .finale-section {
-            padding: 10rem 2rem 6rem;
+            padding: 8rem 2rem 6rem;
             text-align: center;
             position: relative;
         }
 
         .finale-image-container {
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto 4rem;
             position: relative;
         }
 
         .finale-image-container img {
             width: 100%;
-            height: 500px;
+            height: 520px;
             object-fit: cover;
             border-radius: 2px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.08);
@@ -577,7 +646,7 @@
 
         .finale-section h2 {
             font-family: var(--font-serif);
-            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-size: clamp(2.2rem, 4.5vw, 3.8rem);
             font-weight: 400;
             line-height: 1.2;
             margin-bottom: 1.5rem;
@@ -634,7 +703,7 @@
             <p class="tagline">Our Story</p>
             <h2>Has Taken Us Places</h2>
             <h1>THE NEXT ADVENTURE</h1>
-            <div class="names">Julian &amp; Elena</div>
+            <div class="names">Elena &amp; Adrian</div>
         </div>
 
         <div class="scroll-indicator">
@@ -643,106 +712,162 @@
         </div>
     </section>
 
-    <!-- PRELUDE TRANSITION -->
+    <!-- PRELUDE & OUR STORY INTRO -->
     <section class="prelude reveal">
-        <p>Before we tell you where we're getting married, let us show you where we've been.</p>
+        <p class="sub">Before we tell you where we're getting married, let us show you where we've been.</p>
+
+        <div class="our-story-intro reveal delay-1">
+            <p class="tagline">How It All Began</p>
+            <h3>It started with a coffee.</h3>
+            <p>Elena and Adrian met over iced coffee on an ordinary afternoon in Manila. What started as one coffee turned into late-night conversations, spontaneous weekend trips, missed trains, long drives, and eventually a collection of places that became part of their story.</p>
+            <p>Seven years later, they've collected more memories than souvenirs—and they're ready for their next adventure.</p>
+        </div>
     </section>
 
-    <!-- DESTINATION CHAPTERS (EDITORIAL TIMELINE) -->
+    <!-- DESTINATION CHAPTERS (OUR ADVENTURES) -->
     <main class="timeline-container">
         <div class="journey-line"></div>
 
-        <!-- CHAPTER 01: MANILA -->
+        <!-- 01 — MANILA -->
         <article class="chapter reveal">
             <div class="chapter-content">
                 <div class="chapter-meta">
                     <span class="chapter-number">01</span>
-                    <span>2019 • 3 DAYS • TOO MUCH COFFEE</span>
+                    <span>2019 • MANILA, PHILIPPINES</span>
                 </div>
-                <p class="tagline">First Trip</p>
+                <p class="tagline">First Chapter</p>
                 <h3>MANILA</h3>
-                <h4>"Where it all started."</h4>
-                <p>An unplanned weekend escape turned into late-night coffee talks and walking down old streetlights until sunrise. We learned that two days could feel like a lifetime if you're with the right person.</p>
-                <span class="annotation">We missed our Sunday flight back... worth it.</span>
+                <h4>"Where it all started"</h4>
+                <p>Their first weekend together wasn't exactly planned. They got lost looking for a little café, argued over directions, laughed about it five minutes later, and somehow ended the day already planning their next trip.</p>
+                <span class="annotation">Still can't agree on who got us lost.</span>
             </div>
             <div class="chapter-media">
                 <div class="image-wrapper">
                     <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=1000&q=80" alt="Manila Street Scene">
                 </div>
                 <div class="secondary-photo">
-                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=600&q=80" alt="Coffee together">
+                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=600&q=80" alt="Coffee Shop">
                 </div>
             </div>
         </article>
 
-        <!-- CHAPTER 02: KYOTO -->
+        <!-- 02 — KYOTO -->
         <article class="chapter reveal">
             <div class="chapter-content">
                 <div class="chapter-meta">
                     <span class="chapter-number">02</span>
-                    <span>2021 • 10 DAYS • NO ITINERARY</span>
+                    <span>2021 • KYOTO, JAPAN</span>
                 </div>
                 <p class="tagline">Finding Rhythm</p>
                 <h3>KYOTO</h3>
-                <h4>"We learned to slow down."</h4>
-                <p>Wandering down bamboo groves with zero plans, sharing quiet morning teas, and embracing the beauty of being completely lost together without ever worrying about the map.</p>
-                <span class="annotation">Found our favorite ramen shop in a hidden alley!</span>
+                <h4>"We learned to slow down"</h4>
+                <p>No packed itinerary. No rushing from one place to another. Just bicycles, quiet streets, too much matcha, and an entire afternoon spent getting nowhere in particular.</p>
+                <span class="annotation">Our favorite day had absolutely no plans.</span>
             </div>
             <div class="chapter-media">
                 <div class="image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80" alt="Kyoto Alley">
+                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80" alt="Kyoto Street">
                 </div>
                 <div class="secondary-photo">
-                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=600&q=80" alt="Kyoto Temple">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=600&q=80" alt="Kyoto Garden">
                 </div>
             </div>
         </article>
 
-        <!-- CHAPTER 03: SANTORINI -->
+        <!-- 03 — BALI -->
         <article class="chapter reveal">
             <div class="chapter-content">
                 <div class="chapter-meta">
                     <span class="chapter-number">03</span>
-                    <span>2023 • 7 DAYS • GOLDEN HOURS</span>
+                    <span>2022 • BALI, INDONESIA</span>
                 </div>
-                <p class="tagline">The Promise</p>
-                <h3>SANTORINI</h3>
-                <h4>"Somewhere between here and there..."</h4>
-                <p>Watching the horizon turn pink and gold, listening to the waves beneath the cliffs. It was on a quiet rooftop overlook that we realized our greatest adventure wasn't a place—it was each other.</p>
-                <span class="annotation">This is where Julian asked the question.</span>
+                <p class="tagline">The Unplanned</p>
+                <h3>BALI</h3>
+                <h4>"The trip we almost didn't take"</h4>
+                <p>A last-minute decision, a very questionable hotel booking, and one of the best weeks they've ever had together. They learned that the best memories aren't always the ones you plan.</p>
+                <span class="annotation">10/10 would book the questionable hotel again.</span>
             </div>
             <div class="chapter-media">
                 <div class="image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1000&q=80" alt="Santorini Sunset">
+                    <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1000&q=80" alt="Bali Coastline">
                 </div>
                 <div class="secondary-photo">
-                    <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80" alt="Santorini Architecture">
+                    <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=600&q=80" alt="Bali Palms">
+                </div>
+            </div>
+        </article>
+
+        <!-- 04 — PARIS -->
+        <article class="chapter reveal">
+            <div class="chapter-content">
+                <div class="chapter-meta">
+                    <span class="chapter-number">04</span>
+                    <span>2024 • PARIS, FRANCE</span>
+                </div>
+                <p class="tagline">The Realization</p>
+                <h3>PARIS</h3>
+                <h4>"Somewhere between here and there"</h4>
+                <p>They came for the city. They stayed out too late, ate dessert before dinner, walked until their feet hurt, and watched the sunset together. Somewhere along the way, Adrian realized he didn't really care where they were—as long as Elena was beside him.</p>
+            </div>
+            <div class="chapter-media">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1000&q=80" alt="Paris Streets">
+                </div>
+                <div class="secondary-photo">
+                    <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=600&q=80" alt="Paris Sunset">
+                </div>
+            </div>
+        </article>
+
+        <!-- 05 — NEW YORK -->
+        <article class="chapter reveal">
+            <div class="chapter-content">
+                <div class="chapter-meta">
+                    <span class="chapter-number">05</span>
+                    <span>2025 • NEW YORK, USA</span>
+                </div>
+                <p class="tagline">Laughter in Chaos</p>
+                <h3>NEW YORK</h3>
+                <h4>"Our kind of chaos"</h4>
+                <p>Their first trip where everything seemed to go wrong. Delayed flights. Wrong subway. Rain without an umbrella. And somehow, they laughed through all of it.</p>
+                <span class="annotation">Definitely not our smoothest trip. Definitely one of our favorites.</span>
+            </div>
+            <div class="chapter-media">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1000&q=80" alt="New York Street">
+                </div>
+                <div class="secondary-photo">
+                    <img src="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=600&q=80" alt="Rainy NYC">
                 </div>
             </div>
         </article>
     </main>
 
-    <!-- SECTION: RELATIONSHIP STATS -->
+    <!-- SECTION: RELATIONSHIP STATS (ANIMATED NUMBERS) -->
     <section class="stats-section">
         <div class="reveal">
             <p class="tagline">By the numbers</p>
             <h2>SOMEWHERE ALONG THE WAY...</h2>
             <div class="stats-grid">
                 <div class="stat-card">
-                    <span class="stat-number">47</span>
+                    <span class="stat-number" data-target="47">0</span>
                     <span class="stat-label">Coffees Shared</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-number">12</span>
+                    <span class="stat-number" data-target="12">0</span>
                     <span class="stat-label">Missed Trains</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-number">9</span>
+                    <span class="stat-number" data-target="9">0</span>
                     <span class="stat-label">Countries Explored</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-number">&infin;</span>
+                    <span class="stat-number" data-target="365" data-suffix="+">0</span>
                     <span class="stat-label">Inside Jokes</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">&infin;</span>
+                    <span class="stat-label">Memories Made</span>
                 </div>
             </div>
         </div>
@@ -751,14 +876,10 @@
     <!-- SECTION: EMOTIONAL CENTERPIECE -->
     <section class="centerpiece">
         <div class="reveal">
-            <h2>OUR FAVORITE PLACES<br>WERE NEVER PLACES.</h2>
+            <h2>Our favorite places<br>were never places.</h2>
             <div class="centerpiece-lines">
-                <p>They were the mornings we didn't want to end.</p>
-                <p>The wrong turns that became stories.</p>
-                <p>The meals we still talk about.</p>
-                <p>The quiet moments between everything else.</p>
+                <p>They were the moments we shared along the way.</p>
             </div>
-            <div class="centerpiece-climax serif">They were us.</div>
         </div>
     </section>
 
@@ -773,56 +894,75 @@
         <div class="reveal" style="text-align: center;">
             <p class="tagline">The Destination</p>
             <h2 class="serif" style="font-size: 3rem; font-weight: 400;">OUR WEDDING DAY</h2>
-            <p style="color: var(--color-terracotta); font-size: 1.1rem; margin-top: 0.5rem;" class="serif">October 24, 2026</p>
+            <p style="color: var(--color-terracotta); font-size: 1.2rem; margin-top: 0.5rem;" class="serif">January 31, 2028 • Manila, Philippines</p>
+            <p style="color: var(--color-text-muted); font-size: 0.95rem; margin-top: 0.5rem;">The next chapter of their story begins in Manila.</p>
         </div>
 
         <div class="wedding-grid reveal delay-1">
+            <!-- Ceremony -->
             <div class="detail-card">
                 <p class="tagline">The Next Stop</p>
                 <h3>Ceremony</h3>
-                <p>4:00 PM in the Afternoon</p>
-                <p>Villa Escalante Gardens</p>
-                <span class="highlight">Tuscany, Italy</span>
+                <p>San Sebastian Church</p>
+                <span class="highlight">3:00 PM</span>
             </div>
 
+            <!-- Reception -->
             <div class="detail-card">
                 <p class="tagline">The Celebration</p>
                 <h3>Reception</h3>
-                <p>6:30 PM under the stars</p>
-                <p>Dinner, drinks &amp; dancing to follow</p>
-                <span class="highlight">The Courtyard</span>
+                <p>The Manila Hotel</p>
+                <span class="highlight">6:00 PM onwards</span>
             </div>
 
-            <div class="detail-card">
-                <p class="tagline">Attire</p>
+            <!-- Dress Code -->
+            <div class="detail-card dress-code-card">
+                <p class="tagline" style="color: var(--color-purple);">Attire</p>
                 <h3>Dress Code</h3>
-                <p>Warm Editorial / Elegant Formal</p>
-                <p>Earth tones &amp; muted palettes suggested</p>
-                <span class="highlight">Sophisticated &amp; Comfortable</span>
+                <span class="purple-highlight">Purple</span>
+                <p style="margin-top: 0.8rem; font-style: italic;">Come celebrate, stay awhile, and make a few memories with us.</p>
             </div>
         </div>
     </section>
 
     <!-- SECTION: OUR CREW (ENTOURAGE) -->
     <section class="entourage-section reveal">
-        <p class="tagline">With Us Along The Way</p>
+        <p class="tagline">Good Company</p>
         <h2>OUR CREW</h2>
+        <p class="entourage-subtitle">Every adventure needs good company.</p>
         
         <div class="entourage-grid">
             <div class="entourage-group">
-                <h4>Standing Beside Elena</h4>
+                <h4>Honorary Support</h4>
                 <ul>
-                    <li>Sophia Laurent — Maid of Honor</li>
-                    <li>Camilla Reyes</li>
-                    <li>Chloe Bennett</li>
+                    <li><strong>Sofia Reyes</strong><br><span style="font-size:0.8rem; color:var(--color-sage);">Maid of Honor</span></li>
+                    <li style="margin-top: 1rem;"><strong>Marco Santos</strong><br><span style="font-size:0.8rem; color:var(--color-sage);">Best Man</span></li>
                 </ul>
             </div>
+
             <div class="entourage-group">
-                <h4>Standing Beside Julian</h4>
+                <h4>Bridesmaids</h4>
                 <ul>
-                    <li>Marcus Vance — Best Man</li>
-                    <li>Liam Sterling</li>
-                    <li>David Vance</li>
+                    <li>Clara Mendoza</li>
+                    <li>Isabel Cruz</li>
+                    <li>Nina Garcia</li>
+                </ul>
+            </div>
+
+            <div class="entourage-group">
+                <h4>Groomsmen</h4>
+                <ul>
+                    <li>Lucas Reyes</li>
+                    <li>Daniel Flores</li>
+                    <li>Miguel Santos</li>
+                </ul>
+            </div>
+
+            <div class="entourage-group">
+                <h4>Little Explorers</h4>
+                <ul>
+                    <li><strong>Lia</strong><br><span style="font-size:0.8rem; color:var(--color-sage);">Flower Girl</span></li>
+                    <li style="margin-top: 0.8rem;"><strong>Theo</strong><br><span style="font-size:0.8rem; color:var(--color-sage);">Ring Bearer</span></li>
                 </ul>
             </div>
         </div>
@@ -834,7 +974,10 @@
             <p class="tagline">Are You Coming?</p>
             <h2>ONE MORE ADVENTURE?</h2>
             <p>This time, we'd love to have you with us.</p>
-            <a href="#rsvp" class="btn-rsvp">Confirm Your Journey</a>
+            <div class="rsvp-date-badge">January 31, 2028 • Manila, Philippines</div>
+            <br>
+            <a href="#rsvp" class="btn-rsvp">Count Me In &rarr;</a>
+            <div class="rsvp-deadline">RSVP deadline: December 15, 2027</div>
         </div>
     </section>
 
@@ -842,12 +985,12 @@
     <section class="finale-section">
         <div class="reveal">
             <div class="finale-image-container">
-                <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=80" alt="Candid Couple">
+                <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=80" alt="Elena and Adrian Candid">
             </div>
             <h2>WHEREVER WE GO,<br>WE GO TOGETHER.</h2>
-            <div class="serif" style="font-size: 1.8rem; color: var(--color-terracotta); font-style: italic;">Julian &amp; Elena</div>
-            <br>
-            <div class="branding">Designed with OurStory Invites</div>
+            <div class="serif" style="font-size: 2rem; color: var(--color-terracotta); font-style: italic;">Elena &amp; Adrian</div>
+            <p style="color: var(--color-text-muted); margin-top: 0.8rem; font-size: 0.95rem;">Our next adventure begins with you.</p>
+            <div class="branding">OurStory Invites</div>
         </div>
     </section>
 
@@ -865,6 +1008,10 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
+                        
+                        // Check if this container has stat numbers to animate
+                        const stats = entry.target.querySelectorAll('.stat-number[data-target]');
+                        stats.forEach(stat => animateCounter(stat));
                     }
                 });
             }, observerOptions);
@@ -872,16 +1019,40 @@
             const revealElements = document.querySelectorAll('.reveal');
             revealElements.forEach(el => revealObserver.observe(el));
 
+            // Animated Number Counter Function
+            function animateCounter(element) {
+                if (element.classList.contains('counted')) return;
+                element.classList.add('counted');
+
+                const target = parseInt(element.getAttribute('data-target'));
+                const suffix = element.getAttribute('data-suffix') || '';
+                const duration = 2000; // 2 seconds
+                const stepTime = 30;
+                const steps = duration / stepTime;
+                const increment = target / steps;
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        element.innerText = target + suffix;
+                        clearInterval(timer);
+                    } else {
+                        element.innerText = Math.floor(current) + suffix;
+                    }
+                }, stepTime);
+            }
+
             // Parallax effect on imagery during scroll
             window.addEventListener('scroll', () => {
                 const scrolled = window.pageYOffset;
                 const parallaxImages = document.querySelectorAll('.image-wrapper img');
                 
                 parallaxImages.forEach(img => {
-                    const speed = 0.05;
+                    const speed = 0.04;
                     const rect = img.getBoundingClientRect();
                     if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        img.style.transform = `scale(1.05) translateY(${scrolled * speed * 0.2}px)`;
+                        img.style.transform = `scale(1.05) translateY(${scrolled * speed * 0.15}px)`;
                     }
                 });
             });
