@@ -12,61 +12,82 @@
 
     <style>
         :root {
-            --color-bg: #FDFBF7;
-            --color-card-bg: #F8F5F0;
-            --color-text-main: #1A1A1A; /* Senior friendly high contrast */
-            --color-text-muted: #555555;
-            --color-sage: #6E816A;
-            --color-dusty-blue: #5C7080;
-            --color-terracotta: #BA5D32;
-            --color-purple: #5A3A60;
-            --color-purple-light: #F2ECF4;
-            --color-gold: #B38B38;
-            --color-border: #DCD3C5;
+            --color-bg: #111111;
+            --color-text-light: #FFFFFF;
+            --color-text-muted: #D1D1D1;
+            --color-sage: #A3B899;
+            --color-dusty-blue: #9BB1C9;
+            --color-terracotta: #E07A5F;
+            --color-purple: #D8B4E2;
+            --color-gold: #E5C158;
+            --color-card-overlay: rgba(0, 0, 0, 0.4);
             
             --font-serif: 'Bodoni Moda', Georgia, serif;
             --font-sans: 'Montserrat', sans-serif;
             --font-script: 'Alex Brush', cursive;
         }
 
-        /* --- Base & Senior-Friendly Typography --- */
+        /* --- Disable Page Scrolling Completely --- */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* FREEZE SCROLLING */
             background-color: var(--color-bg);
-            color: var(--color-text-main);
+            color: var(--color-text-light);
             font-family: var(--font-sans);
-            font-size: 18px; /* Larger base font for senior readability */
-            overflow-x: hidden;
-        }
-
-        body {
-            line-height: 1.8;
+            font-size: 18px;
             -webkit-font-smoothing: antialiased;
-            padding-top: 70px; /* Space for fixed navigation bar */
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
+        /* --- Universal Section Styling with NY.jpeg + 70% Overlay --- */
+        .section-page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            padding-top: 80px; /* Offset for top fixed menu */
+            padding-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+            transform: scale(0.98);
+            box-sizing: border-box;
+
+            /* NY.jpeg Background + 70% Dark Overlay (rgba 0.7) */
+            background: linear-gradient(rgba(0, 0, 0, 0.70), rgba(0, 0, 0, 0.70)), 
+                        url('NY.jpeg') center/cover no-repeat;
         }
 
-        /* Senior Friendly Nav Bar */
+        /* Active Page Class triggered by Header Menu clicks */
+        .section-page.active-page {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+            z-index: 10;
+        }
+
+        /* --- Senior-Friendly Top Navigation Header --- */
         .sticky-header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 70px;
-            background-color: rgba(253, 251, 247, 0.96);
-            backdrop-filter: blur(8px);
-            border-bottom: 2px solid var(--color-border);
+            height: 75px;
+            background-color: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.15);
             z-index: 1000;
             display: flex;
             align-items: center;
@@ -77,64 +98,41 @@
         .header-logo {
             font-family: var(--font-serif);
             font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--color-text-main);
+            font-size: 1.3rem;
+            color: #FFFFFF;
             text-decoration: none;
             letter-spacing: 0.05em;
+            cursor: pointer;
         }
 
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             list-style: none;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: var(--color-text-main);
-            font-size: 0.9rem;
+            color: #E0E0E0;
+            font-size: 0.95rem;
             font-weight: 600;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            padding: 0.4rem 0.6rem;
+            padding: 0.5rem 0.9rem;
             border-radius: 4px;
-            transition: background 0.3s, color 0.3s;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .nav-links a:hover, .nav-links a:focus {
+        .nav-links a:hover, 
+        .nav-links a.active-link {
             background-color: var(--color-terracotta);
             color: #FFFFFF;
+            border-color: var(--color-terracotta);
         }
 
-        /* Senior Helper Floating Top Button */
-        .back-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--color-text-main);
-            color: #FFFFFF;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 1.4rem;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        /* Helper Classes */
+        /* --- Helper Classes --- */
         .serif { font-family: var(--font-serif); }
         .sans { font-family: var(--font-sans); }
         .script { font-family: var(--font-script); }
@@ -146,51 +144,24 @@
             display: block;
             margin-top: 0.8rem;
             transform: rotate(-2deg);
-            pointer-events: none;
             line-height: 1.2;
         }
 
         .tagline {
             text-transform: uppercase;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.25em;
             font-size: 0.85rem;
             color: var(--color-sage);
             font-weight: 700;
             margin-bottom: 0.8rem;
         }
 
-        /* --- Scroll Reveals --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- Hero Section with background.jpg --- */
-        .hero {
-            min-height: calc(100vh - 70px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 3rem 2rem;
-            position: relative;
-            /* Background image with high contrast warm dark tint for text clarity */
-            background: linear-gradient(rgba(20, 18, 15, 0.55), rgba(20, 18, 15, 0.55)), url('background.jpg') center/cover no-repeat;
-            color: #FFFFFF;
-        }
-
+        /* --- SECTION 1: HERO --- */
         .hero h2 {
             font-size: 1.2rem;
             letter-spacing: 0.3em;
             text-transform: uppercase;
-            color: #E2D9CD;
+            color: var(--color-text-muted);
             font-weight: 500;
             margin-bottom: 1rem;
         }
@@ -200,98 +171,69 @@
             font-family: var(--font-serif);
             font-weight: 400;
             line-height: 1.1;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             letter-spacing: -0.01em;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
         }
 
         .hero .names {
             font-family: var(--font-serif);
             font-style: italic;
             font-size: clamp(2.2rem, 4vw, 3.5rem);
-            color: #F1C3A6;
-            margin-top: 0.5rem;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            color: var(--color-terracotta);
+            text-shadow: 0 4px 12px rgba(0,0,0,0.8);
         }
 
-        /* --- Prelude & Story Intro --- */
-        .prelude {
-            padding: 6rem 2rem 4rem;
-            text-align: center;
+        /* --- SECTION 2: STORY --- */
+        .story-container {
             max-width: 900px;
-            margin: 0 auto;
+            padding: 3rem 2.5rem;
+            background: var(--color-card-overlay);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            backdrop-filter: blur(5px);
         }
 
-        .prelude p.sub {
+        .story-container h3 {
             font-family: var(--font-serif);
-            font-size: clamp(1.6rem, 3vw, 2.4rem);
-            line-height: 1.4;
-            color: var(--color-text-main);
-            margin-bottom: 3rem;
-        }
-
-        .our-story-intro {
-            background-color: var(--color-card-bg);
-            border: 2px solid var(--color-border);
-            padding: 3.5rem 2.5rem;
-            border-radius: 4px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-        }
-
-        .our-story-intro h3 {
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            font-weight: 600;
+            font-size: 2.2rem;
+            font-weight: 500;
             margin-bottom: 1.2rem;
             color: var(--color-terracotta);
         }
 
-        .our-story-intro p {
-            color: var(--color-text-main);
+        .story-container p {
+            color: #F0F0F0;
             font-size: 1.1rem;
             line-height: 1.9;
             margin-bottom: 1.2rem;
         }
 
-        /* --- Global Destinations Overview Summary --- */
-        .travel-summary-section {
-            max-width: 1100px;
-            margin: 4rem auto;
-            padding: 4rem 2rem;
-            background-color: #F3EEE6;
-            border-top: 2px solid var(--color-border);
-            border-bottom: 2px solid var(--color-border);
-            text-align: center;
-        }
-
-        .travel-summary-section h2 {
-            font-family: var(--font-serif);
-            font-size: clamp(2rem, 3.5vw, 3rem);
-            font-weight: 500;
-            margin-bottom: 2.5rem;
+        /* --- SECTION 3: ADVENTURES & POSTCARD --- */
+        .adventures-container {
+            max-width: 1000px;
+            width: 90%;
         }
 
         .travel-badge-grid {
             display: flex;
             justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0 2.5rem;
             flex-wrap: wrap;
-            gap: 2rem;
-            margin-bottom: 2rem;
         }
 
         .travel-badge {
-            background: #FFFFFF;
-            border: 1px solid var(--color-border);
-            padding: 1.5rem 2.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1.2rem 2rem;
             border-radius: 4px;
-            min-width: 220px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            min-width: 180px;
         }
 
         .travel-badge .count {
             font-family: var(--font-serif);
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             color: var(--color-terracotta);
             font-weight: 600;
             display: block;
@@ -299,227 +241,110 @@
         }
 
         .travel-badge .label {
-            font-size: 0.95rem;
-            font-weight: 600;
+            font-size: 0.85rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--color-text-muted);
-            margin-top: 0.5rem;
+            margin-top: 0.4rem;
             display: block;
         }
 
-        /* --- Featured Postcard Section: NEW YORK --- */
-        .featured-postcard-section {
-            max-width: 950px;
-            margin: 6rem auto;
-            padding: 0 2rem;
-        }
-
-        .postcard-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .postcard-header h2 {
-            font-family: var(--font-serif);
-            font-size: clamp(2.2rem, 4vw, 3.2rem);
-            font-weight: 500;
-        }
-
         .postcard-card {
-            background: #FFFDF9;
-            border: 2px solid var(--color-border);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.07);
-            padding: 3rem;
-            position: relative;
-            border-radius: 4px;
+            background: rgba(20, 20, 20, 0.85);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            padding: 2.5rem;
+            border-radius: 6px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 2.5rem;
             align-items: center;
+            text-align: left;
+            position: relative;
         }
 
         .postcard-stamp {
             position: absolute;
-            top: 20px;
-            right: 25px;
+            top: 15px;
+            right: 20px;
             border: 2px dashed var(--color-terracotta);
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             color: var(--color-terracotta);
             font-family: var(--font-serif);
             font-weight: 700;
             font-size: 0.8rem;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            transform: rotate(5deg);
-        }
-
-        .postcard-image {
-            position: relative;
+            transform: rotate(4deg);
         }
 
         .postcard-image img {
             width: 100%;
-            height: 380px;
+            height: 300px;
             object-fit: cover;
-            border-radius: 2px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .postcard-body h3 {
             font-family: var(--font-serif);
-            font-size: 2.2rem;
-            color: var(--color-text-main);
-            margin-bottom: 0.3rem;
+            font-size: 2rem;
+            color: #FFFFFF;
+            margin-bottom: 0.2rem;
         }
 
         .postcard-body h4 {
             font-family: var(--font-serif);
             font-style: italic;
             color: var(--color-dusty-blue);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
         }
 
         .postcard-body p {
-            font-size: 1.05rem;
-            color: var(--color-text-main);
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        /* --- Section: Somewhere Along The Way (Stats) --- */
-        .stats-section {
-            background-color: var(--color-card-bg);
-            padding: 6rem 2rem;
-            margin: 4rem 0;
-            border-top: 2px solid var(--color-border);
-            border-bottom: 2px solid var(--color-border);
-            text-align: center;
-        }
-
-        .stats-section h2 {
-            font-family: var(--font-serif);
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 500;
-            margin-bottom: 3.5rem;
-        }
-
-        .stats-grid {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 2rem;
-        }
-
-        .stat-card {
-            background: #FFFFFF;
-            padding: 1.8rem 1rem;
-            border: 1px solid var(--color-border);
-            border-radius: 4px;
-        }
-
-        .stat-number {
-            font-family: var(--font-serif);
-            font-size: 3.2rem;
-            color: var(--color-terracotta);
-            display: block;
-            margin-bottom: 0.3rem;
-            line-height: 1;
-            font-weight: 600;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+            font-size: 1rem;
             color: var(--color-text-muted);
-            font-weight: 600;
+            line-height: 1.7;
+            margin-bottom: 0.8rem;
         }
 
-        /* --- Emotional Centerpiece --- */
-        .centerpiece {
-            padding: 6rem 2rem 8rem;
-            text-align: center;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .centerpiece h2 {
-            font-family: var(--font-serif);
-            font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-            line-height: 1.3;
-            font-weight: 500;
-            margin-bottom: 2rem;
-        }
-
-        .centerpiece p {
-            font-family: var(--font-serif);
-            font-style: italic;
-            font-size: clamp(1.4rem, 2.5vw, 2rem);
-            color: var(--color-text-muted);
-        }
-
-        /* --- Transition to Wedding --- */
-        .wedding-transition {
-            padding: 4rem 2rem 2rem;
-            text-align: center;
-        }
-
-        .wedding-transition p {
-            font-size: 1.1rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--color-sage);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .wedding-transition h2 {
-            font-family: var(--font-serif);
-            font-size: clamp(2.4rem, 5vw, 3.8rem);
-            font-weight: 500;
-        }
-
-        /* --- Wedding Details Section --- */
-        .wedding-details {
+        /* --- SECTION 4: WEDDING DETAILS --- */
+        .wedding-container {
             max-width: 1050px;
-            margin: 3rem auto 6rem;
-            padding: 0 2rem;
+            width: 90%;
         }
 
         .wedding-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.8rem;
+            margin-top: 2rem;
         }
 
         .detail-card {
-            background-color: var(--color-card-bg);
-            border: 2px solid var(--color-border);
-            padding: 3rem 2rem;
+            background-color: rgba(0, 0, 0, 0.65);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 2.5rem 1.8rem;
             text-align: center;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         .detail-card.dress-code-card {
-            background-color: var(--color-purple-light);
-            border-color: rgba(90, 58, 96, 0.3);
+            background-color: rgba(60, 30, 70, 0.5);
+            border-color: var(--color-purple);
         }
 
         .detail-card h3 {
             font-family: var(--font-serif);
             font-size: 1.8rem;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
             font-weight: 600;
         }
 
         .detail-card p {
-            color: var(--color-text-main);
+            color: var(--color-text-muted);
             font-size: 1.05rem;
-            line-height: 1.8;
+            line-height: 1.7;
         }
 
         .detail-card .highlight {
@@ -527,7 +352,7 @@
             font-weight: 700;
             font-size: 1.2rem;
             display: block;
-            margin-top: 0.8rem;
+            margin-top: 0.6rem;
         }
 
         .detail-card .purple-highlight {
@@ -535,47 +360,38 @@
             font-weight: 700;
             font-size: 1.4rem;
             display: block;
-            margin-top: 0.5rem;
+            margin-top: 0.4rem;
         }
 
-        /* --- Our Crew Section --- */
-        .entourage-section {
-            padding: 6rem 2rem;
+        /* --- SECTION 5: OUR CREW --- */
+        .crew-container {
             max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .entourage-section h2 {
-            font-family: var(--font-serif);
-            font-size: 2.8rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .entourage-subtitle {
-            color: var(--color-text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 4rem;
-            font-style: italic;
+            width: 90%;
         }
 
         .entourage-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .entourage-group {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
         }
 
         .entourage-group h4 {
             font-family: var(--font-serif);
             font-style: italic;
             color: var(--color-dusty-blue);
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             margin-bottom: 1rem;
             font-weight: 600;
-            border-bottom: 2px solid var(--color-border);
-            padding-bottom: 0.5rem;
-            display: inline-block;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 0.4rem;
         }
 
         .entourage-group ul {
@@ -583,165 +399,108 @@
         }
 
         .entourage-group li {
-            font-size: 1.05rem;
-            color: var(--color-text-main);
-            margin-bottom: 0.6rem;
-        }
-
-        /* --- RSVP Section --- */
-        .rsvp-section {
-            background-color: var(--color-card-bg);
-            border-top: 2px solid var(--color-border);
-            border-bottom: 2px solid var(--color-border);
-            padding: 8rem 2rem;
-            text-align: center;
-        }
-
-        .rsvp-section h2 {
-            font-family: var(--font-serif);
-            font-size: clamp(2.4rem, 4.5vw, 3.6rem);
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .rsvp-section p {
-            font-size: 1.2rem;
-            color: var(--color-text-main);
+            font-size: 1rem;
+            color: #E0E0E0;
             margin-bottom: 0.5rem;
         }
 
-        .rsvp-date-badge {
-            display: inline-block;
-            font-size: 1rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--color-terracotta);
-            margin-bottom: 2.5rem;
-            font-weight: 700;
+        /* --- SECTION 6: RSVP & FINALE --- */
+        .rsvp-container {
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.65);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 3.5rem 2.5rem;
+            border-radius: 6px;
+        }
+
+        .rsvp-container h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            font-weight: 500;
+            margin-bottom: 0.8rem;
         }
 
         .btn-rsvp {
             display: inline-block;
-            padding: 1.4rem 4rem;
-            background-color: var(--color-text-main);
+            margin-top: 1.5rem;
+            padding: 1.2rem 3.5rem;
+            background-color: var(--color-terracotta);
             color: #FFFFFF;
             text-decoration: none;
             font-size: 1rem;
             font-weight: 700;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            border: 2px solid var(--color-text-main);
+            border: 2px solid var(--color-terracotta);
             border-radius: 4px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .btn-rsvp:hover, .btn-rsvp:focus {
-            background-color: var(--color-terracotta);
-            border-color: var(--color-terracotta);
-            color: #FFFFFF;
+        .btn-rsvp:hover {
+            background-color: transparent;
+            color: var(--color-terracotta);
         }
 
         .rsvp-deadline {
             font-size: 0.95rem;
             color: var(--color-text-muted);
-            margin-top: 1.8rem;
+            margin-top: 1.5rem;
             font-style: italic;
         }
 
-        /* --- Finale Section --- */
-        .finale-section {
-            padding: 8rem 2rem 6rem;
-            text-align: center;
-        }
-
-        .finale-image-container {
-            max-width: 800px;
-            margin: 0 auto 4rem;
-        }
-
-        .finale-image-container img {
-            width: 100%;
-            height: 520px;
-            object-fit: cover;
-            border-radius: 4px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        }
-
-        .finale-section h2 {
-            font-family: var(--font-serif);
-            font-size: clamp(2.2rem, 4.5vw, 3.8rem);
-            font-weight: 500;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-        }
-
-        .branding {
-            margin-top: 6rem;
-            font-size: 0.85rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--color-text-muted);
-            border-top: 2px solid var(--color-border);
-            padding-top: 2rem;
-            display: inline-block;
-            font-weight: 600;
-        }
-
-        /* Responsive adjustment for Mobile & Tablet */
+        /* Responsive Fixes */
         @media (max-width: 850px) {
             .postcard-card {
                 grid-template-columns: 1fr;
             }
-
+            .postcard-image img {
+                height: 200px;
+            }
             .sticky-header {
                 padding: 0 1rem;
             }
-
             .nav-links {
-                gap: 0.5rem;
+                gap: 0.3rem;
             }
-
             .nav-links a {
                 font-size: 0.75rem;
-                padding: 0.3rem 0.4rem;
+                padding: 0.4rem 0.5rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- SENIOR-FRIENDLY STICKY NAVIGATION BAR -->
+    <!-- TOP NAVIGATION MENU -->
     <header class="sticky-header">
-        <a href="#hero" class="header-logo">E &amp; A</a>
+        <span class="header-logo" onclick="navigateTo('page-hero')">E &amp; A</span>
         <nav>
             <ul class="nav-links">
-                <li><a href="#story">Story</a></li>
-                <li><a href="#adventures">Adventures</a></li>
-                <li><a href="#wedding">Details</a></li>
-                <li><a href="#crew">Crew</a></li>
-                <li><a href="#rsvp">RSVP</a></li>
+                <li><a onclick="navigateTo('page-hero')" id="link-page-hero" class="active-link">Home</a></li>
+                <li><a onclick="navigateTo('page-story')" id="link-page-story">Story</a></li>
+                <li><a onclick="navigateTo('page-adventures')" id="link-page-adventures">Adventures</a></li>
+                <li><a onclick="navigateTo('page-wedding')" id="link-page-wedding">Details</a></li>
+                <li><a onclick="navigateTo('page-crew')" id="link-page-crew">Crew</a></li>
+                <li><a onclick="navigateTo('page-rsvp')" id="link-page-rsvp">RSVP</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- QUICK BACK TO TOP BUTTON FOR EASY SCROLLING -->
-    <a href="#hero" class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</a>
-
-    <!-- HERO SECTION (USING background.jpg) -->
-    <section class="hero" id="hero">
-        <div class="reveal">
-            <p class="tagline" style="color: #E2D9CD;">Our Story</p>
+    <!-- SECTION 1: HERO PAGE -->
+    <section class="section-page hero active-page" id="page-hero">
+        <div>
+            <p class="tagline">Our Story</p>
             <h2>Has Taken Us Places</h2>
             <h1>THE NEXT ADVENTURE</h1>
             <div class="names">Elena &amp; Adrian</div>
+            <p style="margin-top: 2rem; font-size: 0.9rem; letter-spacing: 0.15em; color: var(--color-text-muted); text-transform: uppercase;">Use the menu above to navigate</p>
         </div>
     </section>
 
-    <!-- PRELUDE & STORY INTRO -->
-    <section class="prelude reveal" id="story">
-        <p class="sub">Before we tell you where we're getting married, let us show you where we've been.</p>
-
-        <div class="our-story-intro reveal">
+    <!-- SECTION 2: STORY PAGE -->
+    <section class="section-page" id="page-story">
+        <div class="story-container">
             <p class="tagline">How It All Began</p>
             <h3>It started with a coffee.</h3>
             <p>Elena and Adrian met over iced coffee on an ordinary afternoon in Manila. What started as one coffee turned into late-night conversations, spontaneous weekend trips, missed trains, long drives, and eventually a collection of places that became part of their story.</p>
@@ -749,255 +508,184 @@
         </div>
     </section>
 
-    <!-- ADVENTURES SECTION: OVERVIEW BADGES -->
-    <section class="travel-summary-section reveal" id="adventures">
-        <p class="tagline">7 Years of Exploring</p>
-        <h2>OUR ADVENTURES TOGETHER</h2>
+    <!-- SECTION 3: ADVENTURES & NEW YORK POSTCARD PAGE -->
+    <section class="section-page" id="page-adventures">
+        <div class="adventures-container">
+            <p class="tagline">7 Years of Exploring</p>
+            <h2 class="serif" style="font-size: 2.2rem; font-weight: 400;">OUR ADVENTURES TOGETHER</h2>
 
-        <div class="travel-badge-grid">
-            <div class="travel-badge">
-                <span class="count">9</span>
-                <span class="label">Countries Explored</span>
+            <div class="travel-badge-grid">
+                <div class="travel-badge">
+                    <span class="count">9</span>
+                    <span class="label">Countries Explored</span>
+                </div>
+                <div class="travel-badge">
+                    <span class="count">24</span>
+                    <span class="label">Cities Visited</span>
+                </div>
+                <div class="travel-badge">
+                    <span class="count">14</span>
+                    <span class="label">Beaches Discovered</span>
+                </div>
             </div>
-            <div class="travel-badge">
-                <span class="count">24</span>
-                <span class="label">Cities Visited</span>
-            </div>
-            <div class="travel-badge">
-                <span class="count">14</span>
-                <span class="label">Beaches Discovered</span>
-            </div>
-        </div>
-    </section>
 
-    <!-- FEATURED CITY POSTCARD: NEW YORK CITY -->
-    <section class="featured-postcard-section reveal">
-        <div class="postcard-header">
-            <p class="tagline">Our Absolute Favorite City</p>
-            <h2>NEW YORK CITY</h2>
-        </div>
-
-        <div class="postcard-card">
-            <div class="postcard-stamp">Favorite City</div>
-            <div class="postcard-image">
-                <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1000&q=80" alt="New York City Candid">
-            </div>
-            <div class="postcard-body">
-                <h3>NEW YORK, USA</h3>
-                <h4>"Our kind of chaos"</h4>
-                <p>Out of all the places we've visited over the past seven years, New York remains our ultimate favorite.</p>
-                <p>It was our first trip where everything seemed to go wrong—delayed flights, wrong subways, and rain without an umbrella. And somehow, we laughed through all of it.</p>
-                <span class="annotation">Definitely not our smoothest trip. Definitely our favorite.</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION: RELATIONSHIP STATS -->
-    <section class="stats-section">
-        <div class="reveal">
-            <p class="tagline">By the numbers</p>
-            <h2>SOMEWHERE ALONG THE WAY...</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <span class="stat-number" data-target="47">0</span>
-                    <span class="stat-label">Coffees Shared</span>
+            <!-- EXCLUSIVE NEW YORK POSTCARD -->
+            <div class="postcard-card">
+                <div class="postcard-stamp">Favorite City</div>
+                <div class="postcard-image">
+                    <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1000&q=80" alt="New York City">
                 </div>
-                <div class="stat-card">
-                    <span class="stat-number" data-target="12">0</span>
-                    <span class="stat-label">Missed Trains</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number" data-target="9">0</span>
-                    <span class="stat-label">Countries Explored</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number" data-target="365" data-suffix="+">0</span>
-                    <span class="stat-label">Inside Jokes</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">&infin;</span>
-                    <span class="stat-label">Memories Made</span>
+                <div class="postcard-body">
+                    <h3>NEW YORK, USA</h3>
+                    <h4>"Our kind of chaos"</h4>
+                    <p>Out of all the places we've visited, New York remains our ultimate favorite city.</p>
+                    <p>It was our first trip where everything seemed to go wrong—delayed flights, wrong subways, and rain without an umbrella. And somehow, we laughed through all of it.</p>
+                    <span class="annotation">Definitely not our smoothest trip. Definitely our favorite.</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- EMOTIONAL CENTERPIECE -->
-    <section class="centerpiece reveal">
-        <h2>Our favorite places were never places.</h2>
-        <p>They were the moments we shared along the way.</p>
-    </section>
-
-    <!-- TRANSITION TO WEDDING -->
-    <section class="wedding-transition reveal">
-        <p>And now...</p>
-        <h2>We're heading somewhere<br>we've never been before.</h2>
-    </section>
-
-    <!-- WEDDING DETAILS SECTION -->
-    <section class="wedding-details" id="wedding">
-        <div class="reveal" style="text-align: center;">
+    <!-- SECTION 4: WEDDING DETAILS PAGE -->
+    <section class="section-page" id="page-wedding">
+        <div class="wedding-container">
             <p class="tagline">The Destination</p>
-            <h2 class="serif" style="font-size: 3.2rem; font-weight: 500;">OUR WEDDING DAY</h2>
-            <p style="color: var(--color-terracotta); font-size: 1.3rem; margin-top: 0.5rem;" class="serif">January 31, 2028 • Manila, Philippines</p>
-            <p style="color: var(--color-text-muted); font-size: 1.05rem; margin-top: 0.5rem;">The next chapter of our story begins in Manila.</p>
-        </div>
+            <h2 class="serif" style="font-size: 2.8rem; font-weight: 500;">OUR WEDDING DAY</h2>
+            <p style="color: var(--color-terracotta); font-size: 1.2rem; margin-top: 0.3rem;" class="serif">January 31, 2028 • Manila, Philippines</p>
 
-        <div class="wedding-grid reveal">
-            <!-- Ceremony -->
-            <div class="detail-card">
-                <p class="tagline">The Next Stop</p>
-                <h3>Ceremony</h3>
-                <p>San Sebastian Church</p>
-                <span class="highlight">3:00 PM</span>
-            </div>
+            <div class="wedding-grid">
+                <!-- Ceremony -->
+                <div class="detail-card">
+                    <p class="tagline">The Next Stop</p>
+                    <h3>Ceremony</h3>
+                    <p>San Sebastian Church</p>
+                    <span class="highlight">3:00 PM</span>
+                </div>
 
-            <!-- Reception -->
-            <div class="detail-card">
-                <p class="tagline">The Celebration</p>
-                <h3>Reception</h3>
-                <p>The Manila Hotel</p>
-                <span class="highlight">6:00 PM onwards</span>
-            </div>
+                <!-- Reception -->
+                <div class="detail-card">
+                    <p class="tagline">The Celebration</p>
+                    <h3>Reception</h3>
+                    <p>The Manila Hotel</p>
+                    <span class="highlight">6:00 PM onwards</span>
+                </div>
 
-            <!-- Dress Code -->
-            <div class="detail-card dress-code-card">
-                <p class="tagline" style="color: var(--color-purple);">Attire</p>
-                <h3>Dress Code</h3>
-                <span class="purple-highlight">Purple</span>
-                <p style="margin-top: 0.8rem; font-style: italic;">Come celebrate, stay awhile, and make a few memories with us.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- OUR CREW SECTION -->
-    <section class="entourage-section reveal" id="crew">
-        <p class="tagline">Good Company</p>
-        <h2>OUR CREW</h2>
-        <p class="entourage-subtitle">Every adventure needs good company.</p>
-        
-        <div class="entourage-grid">
-            <div class="entourage-group">
-                <h4>Honorary Support</h4>
-                <ul>
-                    <li><strong>Sofia Reyes</strong><br><span style="font-size:0.85rem; color:var(--color-sage);">Maid of Honor</span></li>
-                    <li style="margin-top: 1rem;"><strong>Marco Santos</strong><br><span style="font-size:0.85rem; color:var(--color-sage);">Best Man</span></li>
-                </ul>
-            </div>
-
-            <div class="entourage-group">
-                <h4>Bridesmaids</h4>
-                <ul>
-                    <li>Clara Mendoza</li>
-                    <li>Isabel Cruz</li>
-                    <li>Nina Garcia</li>
-                </ul>
-            </div>
-
-            <div class="entourage-group">
-                <h4>Groomsmen</h4>
-                <ul>
-                    <li>Lucas Reyes</li>
-                    <li>Daniel Flores</li>
-                    <li>Miguel Santos</li>
-                </ul>
-            </div>
-
-            <div class="entourage-group">
-                <h4>Little Explorers</h4>
-                <ul>
-                    <li><strong>Lia</strong><br><span style="font-size:0.85rem; color:var(--color-sage);">Flower Girl</span></li>
-                    <li style="margin-top: 0.8rem;"><strong>Theo</strong><br><span style="font-size:0.85rem; color:var(--color-sage);">Ring Bearer</span></li>
-                </ul>
+                <!-- Dress Code -->
+                <div class="detail-card dress-code-card">
+                    <p class="tagline" style="color: var(--color-purple);">Attire</p>
+                    <h3>Dress Code</h3>
+                    <span class="purple-highlight">Purple</span>
+                    <p style="margin-top: 0.6rem; font-style: italic;">Come celebrate, stay awhile, and make a few memories with us.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- RSVP SECTION -->
-    <section class="rsvp-section" id="rsvp">
-        <div class="reveal">
+    <!-- SECTION 5: OUR CREW PAGE -->
+    <section class="section-page" id="page-crew">
+        <div class="crew-container">
+            <p class="tagline">Good Company</p>
+            <h2 class="serif" style="font-size: 2.5rem; font-weight: 400;">OUR CREW</h2>
+            <p style="color: var(--color-text-muted); font-style: italic; margin-bottom: 1.5rem;">Every adventure needs good company.</p>
+            
+            <div class="entourage-grid">
+                <div class="entourage-group">
+                    <h4>Honorary Support</h4>
+                    <ul>
+                        <li><strong>Sofia Reyes</strong><br><span style="font-size:0.85rem; color:var(--color-sage);">Maid of Honor</span></li>
+                        <li style="margin-top: 0.8rem;"><strong>Marco Santos</strong><br><span style="font-size:0.85rem; color:var(--color-sage);">Best Man</span></li>
+                    </ul>
+                </div>
+
+                <div class="entourage-group">
+                    <h4>Bridesmaids</h4>
+                    <ul>
+                        <li>Clara Mendoza</li>
+                        <li>Isabel Cruz</li>
+                        <li>Nina Garcia</li>
+                    </ul>
+                </div>
+
+                <div class="entourage-group">
+                    <h4>Groomsmen</h4>
+                    <ul>
+                        <li>Lucas Reyes</li>
+                        <li>Daniel Flores</li>
+                        <li>Miguel Santos</li>
+                    </ul>
+                </div>
+
+                <div class="entourage-group">
+                    <h4>Little Explorers</h4>
+                    <ul>
+                        <li><strong>Lia</strong><br><span style="font-size:0.85rem; color:var(--color-sage);">Flower Girl</span></li>
+                        <li style="margin-top: 0.8rem;"><strong>Theo</strong><br><span style="font-size:0.85rem; color:var(--color-sage);">Ring Bearer</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: RSVP & FINALE PAGE -->
+    <section class="section-page" id="page-rsvp">
+        <div class="rsvp-container">
             <p class="tagline">Are You Coming?</p>
             <h2>ONE MORE ADVENTURE?</h2>
-            <p>This time, we'd love to have you with us.</p>
-            <div class="rsvp-date-badge">January 31, 2028 • Manila, Philippines</div>
+            <p style="font-size: 1.1rem; color: var(--color-text-muted);">This time, we'd love to have you with us.</p>
+            <p style="color: var(--color-terracotta); font-weight: 700; margin-top: 0.5rem;" class="serif">January 31, 2028 • Manila, Philippines</p>
+            
             <br>
-            <a href="#rsvp" class="btn-rsvp">Count Me In &rarr;</a>
+            <a href="javascript:void(0)" class="btn-rsvp">Count Me In &rarr;</a>
             <div class="rsvp-deadline">RSVP deadline: December 15, 2027</div>
-        </div>
-    </section>
 
-    <!-- FINALE SECTION -->
-    <section class="finale-section">
-        <div class="reveal">
-            <div class="finale-image-container">
-                <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=80" alt="Elena and Adrian Candid">
+            <div style="margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem;">
+                <h3 class="serif" style="font-size: 1.8rem; font-weight: 400; color: #FFFFFF;">WHEREVER WE GO, WE GO TOGETHER.</h3>
+                <div class="serif" style="font-size: 1.5rem; color: var(--color-terracotta); font-style: italic; margin-top: 0.3rem;">Elena &amp; Adrian</div>
+                <div style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-muted); margin-top: 1.5rem;">OurStory Invites</div>
             </div>
-            <h2>WHEREVER WE GO,<br>WE GO TOGETHER.</h2>
-            <div class="serif" style="font-size: 2.2rem; color: var(--color-terracotta); font-style: italic;">Elena &amp; Adrian</div>
-            <p style="color: var(--color-text-muted); margin-top: 0.8rem; font-size: 1.05rem;">Our next adventure begins with you.</p>
-            <div class="branding">OurStory Invites</div>
         </div>
     </section>
 
-    <!-- INTERACTION & ANIMATION SCRIPT -->
+    <!-- NAVIGATION SWITCHING SCRIPT -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Scroll Reveal Observer
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15
-            };
+        // Disable Wheel Scroll / Touch Scroll Completely
+        window.addEventListener('wheel', function(e) {
+            e.preventDefault();
+        }, { passive: false });
 
-            const revealObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        
-                        // Check if this container has stat numbers to animate
-                        const stats = entry.target.querySelectorAll('.stat-number[data-target]');
-                        stats.forEach(stat => animateCounter(stat));
-                    }
-                });
-            }, observerOptions);
+        window.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
 
-            const revealElements = document.querySelectorAll('.reveal');
-            revealElements.forEach(el => revealObserver.observe(el));
+        window.addEventListener('keydown', function(e) {
+            // Block Page Up, Page Down, Up Arrow, Down Arrow, Spacebar
+            if([32, 33, 34, 38, 40].indexOf(e.keyCode) > -1) {
+                e.preventDefault();
+            }
+        }, false);
 
-            // Animated Number Counter Function
-            function animateCounter(element) {
-                if (element.classList.contains('counted')) return;
-                element.classList.add('counted');
+        // Click Menu Navigation Handler
+        function navigateTo(targetPageId) {
+            // Remove active status from all pages
+            const pages = document.querySelectorAll('.section-page');
+            pages.forEach(page => page.classList.remove('active-page'));
 
-                const target = parseInt(element.getAttribute('data-target'));
-                const suffix = element.getAttribute('data-suffix') || '';
-                const duration = 1800;
-                const stepTime = 30;
-                const steps = duration / stepTime;
-                const increment = target / steps;
-                let current = 0;
+            // Remove active status from all menu links
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => link.classList.remove('active-link'));
 
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        element.innerText = target + suffix;
-                        clearInterval(timer);
-                    } else {
-                        element.innerText = Math.floor(current) + suffix;
-                    }
-                }, stepTime);
+            // Activate Target Page
+            const targetPage = document.getElementById(targetPageId);
+            if (targetPage) {
+                targetPage.classList.add('active-page');
             }
 
-            // Senior Back to Top Button visibility toggle
-            const backToTopBtn = document.getElementById('backToTop');
-            window.addEventListener('scroll', () => {
-                if (window.pageYOffset > 400) {
-                    backToTopBtn.classList.add('visible');
-                } else {
-                    backToTopBtn.classList.remove('visible');
-                }
-            });
-        });
+            // Activate Target Menu Button Highlight
+            const activeLink = document.getElementById('link-' + targetPageId);
+            if (activeLink) {
+                activeLink.classList.add('active-link');
+            }
+        }
     </script>
 </body>
 </html>
