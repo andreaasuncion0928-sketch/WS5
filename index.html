@@ -6,22 +6,31 @@
   <title>Elena & Adrian — Wedding Invitation</title>
   <style>
     /* ==========================================================================
-       1. CORE STYLES & PAPER TEXTURES
+       1. CORE THEMING & TYPOGRAPHY
        ========================================================================== */
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&family=Montserrat:wght@300;400;500&display=swap');
 
     :root {
-      --bg-color: #e5dfd3;
-      --paper-color: #faf8f5;
-      --paper-accent: #f3efe6;
-      --text-main: #2b2927;
-      --gold-accent: #b89759;
+      --bg-table: #dfd7cc;
+      --paper-main: #fcfbf8;
+      --paper-cream: #f7f3ed;
+      --paper-dark: #f0eadd;
+      --text-dark: #2c2825;
+      --text-muted: #6b635b;
+      --gold-foil: #b89759;
+      --gold-light: #d4af37;
+      --purple-accent: #4a3b52;
       --wax-red: #8b2626;
       --wax-shadow: #5c1818;
-      --purple-accent: #4a3b52;
+      
       --font-serif: 'Playfair Display', Georgia, serif;
       --font-heading: 'Cinzel', serif;
       --font-script: 'Pinyon Script', cursive;
+      --font-sans: 'Montserrat', sans-serif;
+
+      --shadow-paper: 0 12px 35px rgba(44, 40, 37, 0.12), 0 3px 10px rgba(0,0,0,0.06);
+      --shadow-hover: 0 22px 45px rgba(44, 40, 37, 0.2), 0 8px 18px rgba(0,0,0,0.08);
+      --deckled-border: 1px solid rgba(184, 151, 89, 0.25);
     }
 
     * {
@@ -31,54 +40,64 @@
     }
 
     body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
+      background-color: var(--bg-table);
+      color: var(--text-dark);
       font-family: var(--font-serif);
+      min-height: 100vh;
       overflow-x: hidden;
-      background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 0);
-      background-size: 24px 24px;
+      /* Textured paper backdrop for the entire table view */
+      background-image: 
+        radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 0),
+        linear-gradient(to bottom, #e3dcce, #d8cfc0);
+      background-size: 28px 28px, 100% 100%;
     }
 
-    /* Scroll Experience Track */
-    .scroll-container {
-      height: 1100vh;
-      position: relative;
+    /* Deckled / Paper texture outline */
+    .deckled-edge {
+      background-color: var(--paper-main);
+      background-image: radial-gradient(#e0d8cb 0.5px, transparent 0);
+      background-size: 12px 12px;
+      border: var(--deckled-border);
+      box-shadow: var(--shadow-paper);
     }
 
-    .viewport {
+    /* Gold foil border decoration */
+    .foil-border {
+      border: 1px solid var(--gold-foil);
+      outline: 1px solid var(--gold-foil);
+      outline-offset: -6px;
+    }
+
+    /* ==========================================================================
+       01. ENVELOPE INTRO SCREEN
+       ========================================================================== */
+    .intro-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
+      z-index: 1000;
       display: flex;
       justify-content: center;
       align-items: center;
-      perspective: 1500px;
-      overflow: hidden;
+      background-color: var(--bg-table);
+      perspective: 1200px;
+      transition: opacity 1s ease, visibility 1s ease;
     }
 
-    /* Standard Paper Base Style */
-    .paper {
-      background-color: var(--paper-color);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15), 0 1px 4px rgba(0,0,0,0.1);
-      border-radius: 2px;
-      position: absolute;
-      transition: transform 0.1s ease-out, opacity 0.3s ease;
-      background-image: radial-gradient(#d3cbbe 0.5px, transparent 0);
-      background-size: 16px 16px;
-      border: 1px solid rgba(0,0,0,0.03);
+    .intro-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
     }
 
-    /* ==========================================================================
-       2. ENVELOPE STRUCTURE & SEAL ANIMATIONS
-       ========================================================================== */
     .envelope-wrapper {
       position: relative;
-      width: 650px;
-      height: 440px;
+      width: 580px;
+      height: 390px;
       transform-style: preserve-3d;
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
       cursor: pointer;
     }
 
@@ -86,10 +105,19 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background: #ebdcc9;
+      background: var(--paper-dark);
       border-radius: 4px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-      z-index: 1;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.22);
+    }
+
+    .envelope-pocket-left-right {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      clip-path: polygon(0 0, 50% 50%, 0 100%, 100% 100%, 50% 50%, 100% 0);
+      background: #f3ece0;
+      z-index: 11;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
     }
 
     .envelope-pocket {
@@ -99,21 +127,9 @@
       width: 100%;
       height: 100%;
       clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 50%);
-      background: #f0e4d3;
-      z-index: 10;
+      background: var(--paper-cream);
+      z-index: 12;
       border-top: 1px solid rgba(0,0,0,0.05);
-      pointer-events: none;
-    }
-
-    .envelope-pocket-left-right {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      clip-path: polygon(0 0, 50% 50%, 0 100%, 100% 100%, 50% 50%, 100% 0);
-      background: #f5ebe0;
-      z-index: 11;
-      box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
-      pointer-events: none;
     }
 
     .envelope-flap {
@@ -123,10 +139,10 @@
       width: 100%;
       height: 100%;
       clip-path: polygon(0 0, 100% 0, 50% 55%);
-      background: #f3e6d3;
+      background: #f5eedf;
       transform-origin: top center;
       transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
-      z-index: 12;
+      z-index: 13;
       border-bottom: 1px solid rgba(0,0,0,0.08);
     }
 
@@ -135,63 +151,61 @@
       z-index: 2;
     }
 
-    .envelope-text {
+    .envelope-contents-preview {
       position: absolute;
-      top: 35%;
+      width: 90%;
+      height: 90%;
+      top: 5%;
+      left: 5%;
+      background: var(--paper-main);
+      z-index: 5;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.6s;
+    }
+
+    .envelope-wrapper.open .envelope-contents-preview {
+      transform: translateY(-80px);
+    }
+
+    .envelope-front-text {
+      position: absolute;
+      top: 38%;
       width: 100%;
       text-align: center;
       pointer-events: none;
-      z-index: 13;
+      z-index: 14;
       transition: opacity 0.4s ease;
     }
 
-    .envelope-text h1 {
+    .envelope-front-text h1 {
       font-family: var(--font-heading);
-      font-size: 1.8rem;
-      letter-spacing: 4px;
-      color: var(--gold-accent);
+      font-size: 1.6rem;
+      letter-spacing: 5px;
+      color: var(--gold-foil);
       margin-bottom: 8px;
     }
 
-    .envelope-text p {
+    .envelope-front-text p {
       font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 0.95rem;
-      letter-spacing: 1px;
-      color: #666;
-    }
-
-    .tap-hint {
-      position: absolute;
-      bottom: -40px;
-      width: 100%;
-      text-align: center;
-      font-family: var(--font-heading);
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       letter-spacing: 2px;
-      color: #777;
-      animation: pulse 2s infinite;
+      color: var(--text-muted);
+      text-transform: uppercase;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 0.4; transform: translateY(0); }
-      50% { opacity: 1; transform: translateY(-4px); }
-    }
-
-    /* Wax Seal Mechanics */
+    /* Wax Seal */
     .wax-seal {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 64px;
-      height: 64px;
-      z-index: 14;
-      cursor: pointer;
+      width: 68px;
+      height: 68px;
+      z-index: 15;
+      transition: transform 0.6s ease, opacity 0.5s ease;
     }
 
-    .seal-piece {
-      position: absolute;
+    .seal-body {
       width: 100%;
       height: 100%;
       background: radial-gradient(circle, var(--wax-red) 60%, var(--wax-shadow) 100%);
@@ -199,19 +213,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.2);
-      transition: transform 0.6s cubic-bezier(0.5, 0, 0.5, 1.2), opacity 0.5s ease;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.25);
     }
 
-    .seal-left {
-      clip-path: polygon(0 0, 55% 0, 45% 100%, 0 100%);
-    }
-
-    .seal-right {
-      clip-path: polygon(55% 0, 100% 0, 100% 100%, 45% 100%);
-    }
-
-    .seal-piece::before {
+    .seal-body::after {
       content: 'E & A';
       font-family: var(--font-heading);
       color: rgba(255,255,255,0.85);
@@ -219,692 +224,819 @@
       letter-spacing: 1px;
     }
 
-    .envelope-wrapper.open .seal-left {
-      transform: translate(-18px, 6px) rotate(-15deg);
+    .envelope-wrapper.open .wax-seal {
+      transform: translate(-50%, -120%) scale(1.1);
       opacity: 0;
     }
 
-    .envelope-wrapper.open .seal-right {
-      transform: translate(18px, -6px) rotate(15deg);
-      opacity: 0;
+    .btn-open {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: transparent;
+      border: none;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      color: var(--text-dark);
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 10px 20px;
+      transition: color 0.3s ease;
+    }
+
+    .btn-open::after {
+      content: '';
+      display: block;
+      width: 40%;
+      height: 1px;
+      background: var(--gold-foil);
+      margin: 6px auto 0;
+      transition: width 0.3s ease;
+    }
+
+    .btn-open:hover::after {
+      width: 100%;
     }
 
     /* ==========================================================================
-       3. STATIONERY STACK & CARD LAYOUTS
+       02. THE INVITATION TABLE (STATIONERY DESK LAYOUT)
        ========================================================================== */
-    .paper-stack {
-      position: absolute;
-      width: 580px;
-      height: 780px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -45%);
-      z-index: 5;
-      pointer-events: none;
+    .table-container {
+      width: 100vw;
+      min-height: 100vh;
+      padding: 60px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+      opacity: 0;
+      transition: opacity 1.2s ease 0.4s;
     }
 
-    .card {
+    .table-container.visible {
+      opacity: 1;
+    }
+
+    .stationery-table {
+      position: relative;
+      width: 1000px;
+      height: 750px;
+      margin: 0 auto;
+    }
+
+    /* Decorative Ribbon Connection */
+    .ribbon-svg {
       position: absolute;
-      width: 100%;
-      height: 100%;
       top: 0;
       left: 0;
-      padding: 50px 40px;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Interactive Stationary Pieces */
+    .table-item {
+      position: absolute;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+      z-index: 10;
+    }
+
+    .table-item:hover {
+      transform: translateY(-8px) scale(1.02) !important;
+      box-shadow: var(--shadow-hover);
+      z-index: 50 !important;
+    }
+
+    /* Item Placement Specs */
+    /* 1. Main Invitation (Center Top) */
+    .item-main-invitation {
+      width: 380px;
+      height: 520px;
+      top: 40px;
+      left: 310px;
+      z-index: 15;
+      transform: rotate(-0.5deg);
+      cursor: default; /* Main invitation doesn't pop out as a modal */
+    }
+
+    .item-main-invitation:hover {
+      transform: rotate(-0.5deg) !important; /* Lock hover lift on main */
+      box-shadow: var(--shadow-paper);
+    }
+
+    /* 2. The Day Card (Left) */
+    .item-day {
+      width: 240px;
+      height: 280px;
+      top: 80px;
+      left: 40px;
+      z-index: 20;
+      transform: rotate(-3deg);
+    }
+
+    /* 3. Entourage Card (Right) */
+    .item-entourage {
+      width: 250px;
+      height: 310px;
+      top: 60px;
+      right: 30px;
+      z-index: 12;
+      transform: rotate(2.5deg);
+    }
+
+    /* 4. Our Story Letter (Center Bottom) */
+    .item-story {
+      width: 320px;
+      height: 220px;
+      bottom: 40px;
+      left: 340px;
+      z-index: 25;
+      transform: rotate(1deg);
+      background-color: var(--paper-cream);
+    }
+
+    /* 5. Gallery Stack (Bottom Left) */
+    .item-gallery {
+      width: 230px;
+      height: 210px;
+      bottom: 60px;
+      left: 70px;
+      z-index: 18;
+      transform: rotate(-4deg);
+    }
+
+    /* 6. RSVP Card (Bottom Right) */
+    .item-rsvp {
+      width: 240px;
+      height: 190px;
+      bottom: 50px;
+      right: 60px;
+      z-index: 22;
+      transform: rotate(3deg);
+    }
+
+    /* Cards typography on Table */
+    .table-card-inner {
+      width: 100%;
+      height: 100%;
+      padding: 30px 25px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       text-align: center;
-      opacity: 0;
-      transform-origin: center center;
-      pointer-events: auto;
-      overflow: hidden;
+      position: relative;
     }
 
-    h2.card-title {
+    .card-label {
       font-family: var(--font-heading);
-      font-size: 1.4rem;
+      font-size: 0.95rem;
       letter-spacing: 3px;
-      color: var(--gold-accent);
-      margin-bottom: 25px;
+      color: var(--gold-foil);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .card-subtext {
+      font-family: var(--font-serif);
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    .tap-indicator {
+      position: absolute;
+      bottom: 12px;
+      font-family: var(--font-sans);
+      font-size: 0.6rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold-foil);
+      opacity: 0.8;
+    }
+
+    /* ==========================================================================
+       03. MAIN INVITATION CARD CONTENT
+       ========================================================================== */
+    .main-invitation-content {
+      padding: 45px 35px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    .main-invitation-content .sub-title {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      color: var(--text-muted);
       text-transform: uppercase;
     }
 
-    h3.names {
+    .main-invitation-content .names {
       font-family: var(--font-script);
-      font-size: 4rem;
+      font-size: 3.5rem;
+      color: var(--text-dark);
       font-weight: normal;
-      color: var(--text-main);
+      margin: 10px 0;
+      line-height: 1.1;
+    }
+
+    .main-invitation-content .invite-text {
+      font-family: var(--font-serif);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      text-transform: lowercase;
+      font-style: italic;
+    }
+
+    .main-invitation-content .date {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      letter-spacing: 3px;
+      color: var(--gold-foil);
+      padding: 12px 0;
+      border-top: 1px solid rgba(184, 151, 89, 0.3);
+      border-bottom: 1px solid rgba(184, 151, 89, 0.3);
+      width: 100%;
       margin: 15px 0;
-      line-height: 1;
     }
 
-    .divider {
-      width: 60px;
-      height: 1px;
-      background: var(--gold-accent);
-      margin: 20px 0;
+    .explore-hint {
+      font-family: var(--font-sans);
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold-foil);
     }
 
-    /* CARD 1: FORMAL INVITATION */
-    #card1 {
-      border: 12px solid #f3efe6;
-      outline: 1px solid var(--gold-accent);
-      outline-offset: -6px;
+    /* ==========================================================================
+       MODAL EXPANDED VIEW ENGINE (PICKING UP CARDS)
+       ========================================================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(44, 40, 37, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
     }
 
-    .sub-title {
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card {
+      position: relative;
+      width: 580px;
+      max-width: 90vw;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 50px 45px;
+      transform: translateY(30px) scale(0.95);
+      transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.3);
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .btn-return {
+      margin-top: 35px;
+      background: transparent;
+      border: none;
       font-family: var(--font-heading);
       font-size: 0.75rem;
       letter-spacing: 2px;
-      margin-bottom: 15px;
-      color: #666;
+      color: var(--gold-foil);
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.3s ease;
     }
 
-    .date-display {
-      font-family: var(--font-heading);
-      font-size: 1.2rem;
-      letter-spacing: 2px;
-      margin: 20px 0;
-      border-top: 1px solid #ddd;
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-      width: 100%;
+    .btn-return:hover {
+      color: var(--text-dark);
     }
 
-    /* CARD 2: DETAILS & COUNTDOWN */
+    /* Modal Specific Sections */
+    /* THE DAY DETAILS */
     .details-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      width: 100%;
-      margin-top: 20px;
+      gap: 25px;
+      margin: 25px 0;
       text-align: center;
     }
 
     .details-item h4 {
       font-family: var(--font-heading);
-      font-size: 0.85rem;
-      letter-spacing: 1.5px;
-      color: var(--gold-accent);
-      margin-bottom: 8px;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: var(--gold-foil);
+      margin-bottom: 6px;
     }
 
     .details-item p {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
       line-height: 1.4;
-      color: #444;
     }
 
     .dress-code-badge {
       display: inline-block;
-      margin-top: 5px;
-      padding: 4px 12px;
+      padding: 6px 16px;
       background-color: var(--purple-accent);
       color: #fff;
-      font-size: 0.75rem;
-      font-family: var(--font-heading);
-      letter-spacing: 1px;
-      border-radius: 2px;
-    }
-
-    .countdown-container {
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px dashed var(--gold-accent);
-      width: 100%;
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 15px;
     }
 
     .countdown-timer {
       display: flex;
       justify-content: center;
       gap: 20px;
-      margin-top: 15px;
-    }
-
-    .time-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--gold-foil);
     }
 
     .time-block .number {
       font-family: var(--font-heading);
-      font-size: 1.5rem;
-      font-weight: 600;
+      font-size: 1.4rem;
+      color: var(--text-dark);
     }
 
     .time-block .label {
-      font-size: 0.65rem;
+      font-family: var(--font-sans);
+      font-size: 0.6rem;
       letter-spacing: 1px;
+      color: var(--text-muted);
       text-transform: uppercase;
-      color: #777;
     }
 
-    /* CARD 3: ENTOURAGE (FOLDED PROGRAM) */
-    .program-fold {
-      width: 100%;
-      height: 100%;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      transform-style: preserve-3d;
-    }
-
-    .entourage-grid {
+    /* ENTOURAGE PROGRAM */
+    .entourage-list {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
-      width: 100%;
-      font-size: 0.85rem;
       text-align: center;
-    }
-
-    .entourage-group {
-      margin-bottom: 15px;
+      margin-top: 20px;
     }
 
     .entourage-group h5 {
       font-family: var(--font-heading);
       font-size: 0.75rem;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       color: var(--gold-accent);
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
 
     .entourage-group p {
-      line-height: 1.3;
-      color: #333;
+      font-size: 0.85rem;
+      color: var(--text-dark);
     }
 
-    /* CARD 4: OUR STORY LETTER */
-    .letter-paper {
-      background-color: #fffefb;
-      padding: 40px 35px;
+    /* OUR STORY LETTER */
+    .letter-body {
       text-align: left;
-    }
-
-    .letter-paper h2 {
-      text-align: center;
-    }
-
-    .letter-content {
       font-size: 0.95rem;
       line-height: 1.8;
-      color: #333;
+      color: var(--text-dark);
     }
 
-    .letter-content p {
+    .letter-body p {
       margin-bottom: 15px;
       text-indent: 20px;
     }
 
-    .inline-photo {
+    .letter-photo-tucked {
       width: 100%;
-      height: 140px;
+      height: 180px;
       object-fit: cover;
-      margin: 15px 0;
-      border: 6px solid #fff;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transform: rotate(-1deg);
+      margin: 20px 0;
+      border: 8px solid #fff;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      transform: rotate(-1.5deg);
     }
 
-    /* CARD 5: GALLERY (POLAROIDS TUCKED) */
-    .polaroid-container {
-      position: relative;
-      width: 100%;
-      height: 500px;
+    /* FULLSCREEN GALLERY EXPERIENCE */
+    .gallery-modal-content {
+      width: 90vw;
+      max-width: 1100px;
+      background: transparent;
+      box-shadow: none;
+      border: none;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
       margin-top: 20px;
     }
 
-    .polaroid {
-      position: absolute;
+    .polaroid-frame {
       background: #fff;
-      padding: 10px 10px 25px 10px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-      width: 200px;
+      padding: 12px 12px 30px 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+      transform: rotate(var(--rot));
       transition: transform 0.3s ease;
     }
 
-    .polaroid img {
+    .polaroid-frame:hover {
+      transform: scale(1.05) rotate(0deg);
+      z-index: 10;
+    }
+
+    .polaroid-frame img {
       width: 100%;
-      height: 160px;
+      height: 200px;
       object-fit: cover;
       background: #eee;
     }
 
-    .polaroid .caption {
+    .polaroid-frame .caption {
       font-family: var(--font-script);
-      font-size: 1.2rem;
-      margin-top: 10px;
-      color: #444;
+      font-size: 1.3rem;
+      color: var(--text-dark);
       text-align: center;
-    }
-
-    .pol-1 { top: 10px; left: 20px; transform: rotate(-5deg); }
-    .pol-2 { top: 40px; right: 20px; transform: rotate(4deg); }
-    .pol-3 { bottom: 30px; left: 50px; transform: rotate(-2deg); }
-    .pol-4 { bottom: 10px; right: 40px; transform: rotate(6deg); }
-
-    .tape {
-      position: absolute;
-      top: -10px;
-      left: 35%;
-      width: 50px;
-      height: 20px;
-      background: rgba(240, 230, 200, 0.5);
-      backdrop-filter: blur(1px);
-      border: 1px solid rgba(255,255,255,0.3);
-      transform: rotate(-2deg);
-    }
-
-    /* CARD 6: GIFTS & RSVP */
-    .gift-section {
-      margin-bottom: 30px;
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-
-    .rsvp-form-card {
-      width: 100%;
-      border-top: 1px solid #ddd;
-      padding-top: 25px;
       margin-top: 10px;
     }
 
-    .btn-rsvp {
+    /* RSVP MODAL */
+    .btn-rsvp-submit {
       display: inline-block;
-      margin-top: 15px;
-      padding: 14px 36px;
-      background-color: var(--text-main);
+      margin-top: 20px;
+      padding: 14px 40px;
+      background-color: var(--text-dark);
       color: #fff;
       font-family: var(--font-heading);
       font-size: 0.8rem;
       letter-spacing: 2px;
       text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
+      transition: background 0.3s ease;
     }
 
-    .btn-rsvp:hover {
-      background-color: var(--gold-accent);
-      transform: translateY(-2deg);
-    }
-
-    .deadline {
-      font-size: 0.75rem;
-      font-style: italic;
-      color: #777;
-      margin-top: 10px;
-    }
-
-    /* CARD 7: OUTRO CLOSING */
-    .outro-card {
-      justify-content: center;
+    .btn-rsvp-submit:hover {
+      background-color: var(--gold-foil);
     }
 
     /* ==========================================================================
-       4. MEDIA QUERIES & RESPONSIVE ADJUSTMENTS
+       MEDIA QUERIES FOR RESPONSIVE DESK LAYOUT
        ========================================================================== */
-    @media (max-width: 768px) {
-      .envelope-wrapper {
-        width: 90vw;
-        height: 60vw;
+    @media (max-width: 992px) {
+      .stationery-table {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
       }
 
-      .paper-stack {
-        width: 85vw;
-        height: 125vw;
+      .table-item {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: none !important;
+        width: 90% !important;
+        max-width: 400px;
       }
 
-      .card {
-        padding: 25px 20px;
+      .ribbon-svg {
+        display: none;
       }
-
-      h3.names {
-        font-size: 2.8rem;
-      }
-
-      h2.card-title {
-        font-size: 1.1rem;
-        margin-bottom: 15px;
-      }
-
-      .details-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-      }
-
-      .polaroid {
-        width: 140px;
-      }
-
-      .polaroid img {
-        height: 110px;
-      }
-
-      .pol-1 { top: 10px; left: 0px; }
-      .pol-2 { top: 30px; right: 0px; }
-      .pol-3 { bottom: 60px; left: 10px; }
-      .pol-4 { bottom: 10px; right: 10px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Scroll track controls dynamic timeline -->
-  <div class="scroll-container">
-    <div class="viewport">
+  <!-- ==========================================================================
+     01 — THE ENVELOPE INTRO
+     ========================================================================== -->
+  <div class="intro-screen" id="introScreen">
+    <div class="envelope-wrapper" id="envelopeWrapper">
+      <div class="envelope-back"></div>
+      
+      <!-- Inside preview card -->
+      <div class="envelope-contents-preview deckled-edge foil-border"></div>
+      
+      <div class="envelope-pocket-left-right"></div>
+      <div class="envelope-pocket"></div>
+      <div class="envelope-flap"></div>
+      
+      <!-- Wax Seal -->
+      <div class="wax-seal">
+        <div class="seal-body"></div>
+      </div>
 
-      <!-- ENVELOPE -->
-      <div class="envelope-wrapper" id="envelope">
-        <div class="envelope-back"></div>
+      <div class="envelope-front-text">
+        <h1>Elena &amp; Adrian</h1>
+        <p>January 31, 2028</p>
+      </div>
 
-        <!-- INNER PAPERS STACK -->
-        <div class="paper-stack" id="paperStack">
+      <button class="btn-open" id="btnOpen">Open Invitation</button>
+    </div>
+  </div>
 
-          <!-- 03 INVITATION CARD -->
-          <div class="paper card" id="card1">
-            <div class="sub-title">Together with their families</div>
+  <!-- ==========================================================================
+     02 — THE INVITATION TABLE (MAIN HOMEPAGE SETUP)
+     ========================================================================== -->
+  <div class="table-container" id="tableContainer">
+    <div class="stationery-table">
+
+      <!-- Subtle Silk Ribbon Graphic connecting layout -->
+      <svg class="ribbon-svg" viewBox="0 0 1000 750" fill="none">
+        <path d="M 120,200 Q 350,120 500,300 T 880,520" stroke="rgba(184, 151, 89, 0.25)" stroke-width="2" fill="none" stroke-dasharray="4 4" />
+      </svg>
+
+      <!-- 03 MAIN INVITATION (Centerpiece) -->
+      <div class="table-item item-main-invitation deckled-edge foil-border">
+        <div class="main-invitation-content">
+          <div class="sub-title">Together with their families</div>
+          <div>
             <h3 class="names">Elena &amp; Adrian</h3>
-            <p style="font-size: 0.85rem; letter-spacing: 1px; color: #555;">REQUEST THE PLEASURE OF YOUR COMPANY</p>
-            <p style="font-size: 0.85rem; letter-spacing: 1px; color: #555; margin-top: 4px;">AS THEY CELEBRATE THEIR WEDDING</p>
-
-            <div class="divider"></div>
-
-            <div class="date-display">
-              SATURDAY &bull; JANUARY 31, 2028
-            </div>
-
-            <p style="font-size: 0.9rem; font-style: italic;">Four o'clock in the afternoon</p>
+            <p class="invite-text">invite you to celebrate<br>their wedding</p>
           </div>
-
-          <!-- 04 WEDDING DETAILS CARD -->
-          <div class="paper card" id="card2">
-            <h2 class="card-title">The Details</h2>
-
-            <div class="details-grid">
-              <div class="details-item">
-                <h4>CEREMONY</h4>
-                <p>San Sebastian Church<br>Manila, Philippines<br>4:00 PM</p>
-              </div>
-              <div class="details-item">
-                <h4>RECEPTION</h4>
-                <p>The Manila Hotel<br>One Rizal Park, Manila<br>6:00 PM</p>
-              </div>
-            </div>
-
-            <div style="margin-top: 25px;">
-              <h4 style="font-family: var(--font-heading); font-size: 0.8rem; letter-spacing: 1px;">DRESS CODE</h4>
-              <p style="font-size: 0.85rem; color: #555; margin-top: 3px;">Formal Attire / Black Tie Optional</p>
-              <span class="dress-code-badge">Motif: Deep Purple &amp; Gold</span>
-            </div>
-
-            <div class="countdown-container">
-              <div class="sub-title" style="margin-bottom: 0;">COUNTDOWN TO THE DAY</div>
-              <div class="countdown-timer">
-                <div class="time-block"><span class="number" id="days">00</span><span class="label">Days</span></div>
-                <div class="time-block"><span class="number" id="hours">00</span><span class="label">Hours</span></div>
-                <div class="time-block"><span class="number" id="mins">00</span><span class="label">Mins</span></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 05 ENTOURAGE (FOLDED PROGRAM) -->
-          <div class="paper card" id="card3">
-            <div class="program-fold" id="programFold">
-              <h2 class="card-title">The Wedding Party</h2>
-
-              <div class="entourage-grid">
-                <div class="entourage-group">
-                  <h5>PARENTS OF THE BRIDE</h5>
-                  <p>Mr. Robert &amp; Elena Rostova</p>
-                </div>
-                <div class="entourage-group">
-                  <h5>PARENTS OF THE GROOM</h5>
-                  <p>Mr. Arthur &amp; Clara Vance</p>
-                </div>
-                <div class="entourage-group">
-                  <h5>MAID OF HONOR</h5>
-                  <p>Sophia Rostova</p>
-                </div>
-                <div class="entourage-group">
-                  <h5>BEST MAN</h5>
-                  <p>Julian Vance</p>
-                </div>
-                <div class="entourage-group" style="grid-column: span 2;">
-                  <h5>BRIDESMAIDS &amp; GROOMSMEN</h5>
-                  <p>Isabella M. &bull; Lucas H. &bull; Mia T. &bull; Ethan W.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 06 OUR STORY LETTER -->
-          <div class="paper card letter-paper" id="card4">
-            <h2 class="card-title">A Little Story About Us</h2>
-            <div class="letter-content">
-              <p>It started with a shared cup of coffee on a rainy Tuesday morning in 2020. What was supposed to be a quick 20-minute meeting turned into hours of endless conversation, laughter, and realized dreams.</p>
-
-              <svg class="inline-photo" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
-                <rect width="100%" height="100%" fill="#d8d0c5"/>
-                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Playfair Display" font-size="16" fill="#777">Photo: Our First Trip Together</text>
-              </svg>
-
-              <p>Through five years of adventures, building a life together, and growing side-by-side, we realized that forever wasn't long enough. We cannot wait to begin this next chapter with all of you.</p>
-            </div>
-          </div>
-
-          <!-- 07 GALLERY (POLAROIDS) -->
-          <div class="paper card" id="card5" style="background: transparent; box-shadow: none; border: none;">
-            <h2 class="card-title" style="background: var(--paper-color); padding: 5px 15px; border-radius: 2px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">Memories Along The Way</h2>
-
-            <div class="polaroid-container">
-              <div class="polaroid pol-1">
-                <div class="tape"></div>
-                <svg width="100%" height="160" viewBox="0 0 200 160"><rect width="100%" height="100%" fill="#ccc"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="#666">First Date</text></svg>
-                <div class="caption">Coffee first, always</div>
-              </div>
-
-              <div class="polaroid pol-2">
-                <div class="tape"></div>
-                <svg width="100%" height="160" viewBox="0 0 200 160"><rect width="100%" height="100%" fill="#d5cabe"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="#666">Proposal</text></svg>
-                <div class="caption">She said yes!</div>
-              </div>
-
-              <div class="polaroid pol-3">
-                <div class="tape"></div>
-                <svg width="100%" height="160" viewBox="0 0 200 160"><rect width="100%" height="100%" fill="#cbe0d5"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="#666">Summer '22</text></svg>
-                <div class="caption">By the sea</div>
-              </div>
-
-              <div class="polaroid pol-4">
-                <div class="tape"></div>
-                <svg width="100%" height="160" viewBox="0 0 200 160"><rect width="100%" height="100%" fill="#e0cbd8"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="#666">New Home</text></svg>
-                <div class="caption">Building home</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 08 GIFTS & 09 RSVP CARD -->
-          <div class="paper card" id="card6">
-            <h2 class="card-title">With Love &amp; Thanks</h2>
-            <div class="gift-section">
-              <p>For those who wish to bless us with a gift, we would be deeply grateful for your contributions toward our new home and future together.</p>
-              <p style="font-size: 0.8rem; margin-top: 8px; color: var(--gold-accent);">BANK: 1234-5678-9012 &bull; E-WALLET: 0917-123-4567</p>
-            </div>
-
-            <div class="rsvp-form-card">
-              <h2 class="card-title" style="margin-bottom: 10px;">Kindly Respond</h2>
-              <p style="font-size: 0.85rem; color: #555;">Will you be celebrating with us?</p>
-
-              <a href="https://forms.google.com" target="_blank" rel="noopener noreferrer" class="btn-rsvp">RSVP ONLINE</a>
-              <div class="deadline">Please respond on or before December 1, 2027</div>
-            </div>
-          </div>
-
-          <!-- 10 OUTRO / RE-CLOSING CARD -->
-          <div class="paper card outro-card" id="card7">
-            <h3 class="names">Elena &amp; Adrian</h3>
-            <p style="font-size: 1.1rem; font-style: italic; color: #444; margin-top: 15px;">We can't wait to celebrate with you.</p>
-            <div class="divider"></div>
-            <p style="font-family: var(--font-heading); font-size: 0.8rem; letter-spacing: 2px; color: var(--gold-accent);">SEE YOU IN JANUARY</p>
-          </div>
-
-        </div> <!-- /paper-stack -->
-
-        <!-- ENVELOPE FLAP & FRONT POCKET -->
-        <div class="envelope-pocket-left-right"></div>
-        <div class="envelope-pocket"></div>
-        <div class="envelope-flap"></div>
-
-        <!-- SPLIT WAX SEAL -->
-        <div class="wax-seal" id="waxSeal">
-          <div class="seal-piece seal-left"></div>
-          <div class="seal-piece seal-right"></div>
+          <div class="date">JANUARY 31, 2028</div>
+          <div class="explore-hint">Explore the invitation &rarr;</div>
         </div>
+      </div>
 
-        <div class="envelope-text" id="envelopeText">
-          <h1>E &amp; A</h1>
-          <p>Together with their families</p>
+      <!-- 04 THE DAY CARD (Top Left) -->
+      <div class="table-item item-day deckled-edge" onclick="openModal('modalDay')">
+        <div class="table-card-inner">
+          <div class="card-label">The Day</div>
+          <div class="card-subtext">Schedule &amp; Location</div>
+          <div class="tap-indicator">Tap to View</div>
         </div>
+      </div>
 
-        <div class="tap-hint" id="tapHint">Tap Wax Seal to Open</div>
+      <!-- 05 ENTOURAGE CARD (Top Right) -->
+      <div class="table-item item-entourage deckled-edge" onclick="openModal('modalEntourage')">
+        <div class="table-card-inner">
+          <div class="card-label">Entourage</div>
+          <div class="card-subtext">The Wedding Party</div>
+          <div class="tap-indicator">Tap to View</div>
+        </div>
+      </div>
+
+      <!-- 06 OUR STORY LETTER (Bottom Center) -->
+      <div class="table-item item-story deckled-edge" onclick="openModal('modalStory')">
+        <div class="table-card-inner">
+          <div class="card-label">Our Story</div>
+          <div class="card-subtext">A handwritten note from us</div>
+          <div class="tap-indicator">Tap to Read</div>
+        </div>
+      </div>
+
+      <!-- 07 GALLERY (Bottom Left) -->
+      <div class="table-item item-gallery deckled-edge" onclick="openModal('modalGallery')">
+        <div class="table-card-inner">
+          <div class="card-label">Our Memories</div>
+          <div class="card-subtext">Photographs tucked inside</div>
+          <div class="tap-indicator">Tap to Open</div>
+        </div>
+      </div>
+
+      <!-- 08 RSVP CARD (Bottom Right) -->
+      <div class="table-item item-rsvp deckled-edge" onclick="openModal('modalRSVP')">
+        <div class="table-card-inner">
+          <div class="card-label">RSVP</div>
+          <div class="card-subtext">Kindly Respond</div>
+          <div class="tap-indicator">Tap to Respond</div>
+        </div>
       </div>
 
     </div>
   </div>
 
   <!-- ==========================================================================
-     5. JAVASCRIPT: PHYSICAL TIMELINE & INTERACTION ENGINE
+     MODALS: PHYSICAL CARD EXPANSION EXPERIENCES
+     ========================================================================== -->
+
+  <!-- MODAL: THE DAY -->
+  <div class="modal-overlay" id="modalDay">
+    <div class="modal-card deckled-edge foil-border">
+      <div style="text-align: center;">
+        <div class="card-label" style="font-size: 1.2rem;">The Day</div>
+        <p class="card-subtext" style="margin-bottom: 25px;">January 31, 2028</p>
+
+        <div class="details-grid">
+          <div class="details-item">
+            <h4>CEREMONY</h4>
+            <p>San Sebastian Church<br>Manila, Philippines<br>4:00 PM</p>
+          </div>
+          <div class="details-item">
+            <h4>RECEPTION</h4>
+            <p>The Manila Hotel<br>One Rizal Park, Manila<br>6:00 PM</p>
+          </div>
+        </div>
+
+        <span class="dress-code-badge">Dress Code: Deep Purple Attire</span>
+
+        <div class="countdown-timer">
+          <div class="time-block"><div class="number" id="days">00</div><div class="label">Days</div></div>
+          <div class="time-block"><div class="number" id="hours">00</div><div class="label">Hours</div></div>
+          <div class="time-block"><div class="number" id="mins">00</div><div class="label">Minutes</div></div>
+        </div>
+
+        <button class="btn-return" onclick="closeModal('modalDay')">&larr; Return to Invitation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ENTOURAGE -->
+  <div class="modal-overlay" id="modalEntourage">
+    <div class="modal-card deckled-edge">
+      <div style="text-align: center;">
+        <div class="card-label" style="font-size: 1.2rem;">The Entourage</div>
+        <p class="card-subtext">Those walking beside us</p>
+
+        <div class="entourage-list">
+          <div class="entourage-group">
+            <h5>PARENTS OF BRIDE</h5>
+            <p>Mr. &amp; Mrs. Rostova</p>
+          </div>
+          <div class="entourage-group">
+            <h5>PARENTS OF GROOM</h5>
+            <p>Mr. &amp; Mrs. Vance</p>
+          </div>
+          <div class="entourage-group">
+            <h5>MAID OF HONOR</h5>
+            <p>Sophia Rostova</p>
+          </div>
+          <div class="entourage-group">
+            <h5>BEST MAN</h5>
+            <p>Julian Vance</p>
+          </div>
+          <div class="entourage-group" style="grid-column: span 2;">
+            <h5>BRIDESMAIDS &amp; GROOMSMEN</h5>
+            <p>Isabella M. &bull; Lucas H. &bull; Mia T. &bull; Ethan W.</p>
+          </div>
+        </div>
+
+        <button class="btn-return" onclick="closeModal('modalEntourage')">&larr; Return to Invitation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: OUR STORY -->
+  <div class="modal-overlay" id="modalStory">
+    <div class="modal-card deckled-edge" style="background-color: var(--paper-cream);">
+      <div style="text-align: center;">
+        <div class="card-label" style="font-size: 1.2rem;">A Little Story About Us</div>
+        <p class="card-subtext" style="margin-bottom: 20px;">Somewhere between then and now...</p>
+
+        <div class="letter-body">
+          <p>It started with a shared cup of coffee on a rainy Tuesday morning in 2020. What was supposed to be a quick 20-minute meeting turned into hours of endless conversation, laughter, and realized dreams.</p>
+
+          <svg class="letter-photo-tucked" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+            <rect width="100%" height="100%" fill="#d8d0c5"/>
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Playfair Display" font-size="15" fill="#666">Photo: Our First Trip Together</text>
+          </svg>
+
+          <p>Through five years of adventures, building a life together, and growing side-by-side, we realized that forever wasn't long enough. We cannot wait to begin this next chapter with all of you.</p>
+        </div>
+
+        <button class="btn-return" onclick="closeModal('modalStory')">&larr; Return to Invitation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: GALLERY -->
+  <div class="modal-overlay" id="modalGallery">
+    <div class="modal-card gallery-modal-content">
+      <div style="text-align: center;">
+        <div class="card-label" style="font-size: 1.4rem; color: #fff;">Memories Along The Way</div>
+        
+        <div class="gallery-grid">
+          <div class="polaroid-frame" style="--rot: -3deg;">
+            <svg width="100%" height="200" viewBox="0 0 200 200"><rect width="100%" height="100%" fill="#ccc"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="#555">First Date</text></svg>
+            <div class="caption">Coffee first</div>
+          </div>
+          <div class="polaroid-frame" style="--rot: 2deg;">
+            <svg width="100%" height="200" viewBox="0 0 200 200"><rect width="100%" height="100%" fill="#d5cabe"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="#555">Proposal</text></svg>
+            <div class="caption">She said yes!</div>
+          </div>
+          <div class="polaroid-frame" style="--rot: -2deg;">
+            <svg width="100%" height="200" viewBox="0 0 200 200"><rect width="100%" height="100%" fill="#cbe0d5"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="#555">Summer '22</text></svg>
+            <div class="caption">By the sea</div>
+          </div>
+          <div class="polaroid-frame" style="--rot: 4deg;">
+            <svg width="100%" height="200" viewBox="0 0 200 200"><rect width="100%" height="100%" fill="#e0cbd8"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="#555">Our Home</text></svg>
+            <div class="caption">New beginnings</div>
+          </div>
+        </div>
+
+        <button class="btn-return" style="color: #fff; margin-top: 40px;" onclick="closeModal('modalGallery')">&larr; Return to Invitation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: RSVP -->
+  <div class="modal-overlay" id="modalRSVP">
+    <div class="modal-card deckled-edge">
+      <div style="text-align: center;">
+        <div class="card-label" style="font-size: 1.2rem;">Kindly Respond</div>
+        <p class="card-subtext" style="margin-bottom: 20px;">We would love to celebrate this day with you.</p>
+
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">Please confirm your attendance by December 1, 2027.</p>
+
+        <a href="https://forms.google.com" target="_blank" rel="noopener noreferrer" class="btn-rsvp-submit">RSVP ONLINE</a>
+
+        <div>
+          <button class="btn-return" onclick="closeModal('modalRSVP')">&larr; Return to Invitation</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+     JAVASCRIPT: INTERACTION CONTROLLER
      ========================================================================== -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const envelope = document.getElementById('envelope');
-      const tapHint = document.getElementById('tapHint');
-      const cards = [
-        document.getElementById('card1'),
-        document.getElementById('card2'),
-        document.getElementById('card3'),
-        document.getElementById('card4'),
-        document.getElementById('card5'),
-        document.getElementById('card6'),
-        document.getElementById('card7')
-      ];
+      const envelopeWrapper = document.getElementById('envelopeWrapper');
+      const btnOpen = document.getElementById('btnOpen');
+      const introScreen = document.getElementById('introScreen');
+      const tableContainer = document.getElementById('tableContainer');
 
-      let isOpen = false;
+      // 1. Envelope opening animation trigger
+      btnOpen.addEventListener('click', () => {
+        envelopeWrapper.classList.add('open');
+        btnOpen.style.opacity = '0';
 
-      // Click / Tap to Open Envelope Mechanism
-      envelope.addEventListener('click', () => {
-        if (!isOpen) {
-          isOpen = true;
-          envelope.classList.add('open');
-          tapHint.style.opacity = '0';
-
-          setTimeout(() => {
-            window.scrollTo({
-              top: window.innerHeight * 0.5,
-              behavior: 'smooth'
-            });
-          }, 800);
-        }
+        // Camera zooms in slightly and transitions to desk view
+        setTimeout(() => {
+          introScreen.classList.add('hidden');
+          tableContainer.classList.add('visible');
+        }, 1200);
       });
 
-      // Scroll physics driven timeline
-      window.addEventListener('scroll', () => {
-        const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPos = window.scrollY;
-        const progress = Math.max(0, Math.min(1, scrollPos / scrollMax));
-
-        // Auto-open envelope on scroll start
-        if (progress > 0.02 && !isOpen) {
-          isOpen = true;
-          envelope.classList.add('open');
-          tapHint.style.opacity = '0';
-        }
-
-        // Phase 1: Envelope scale down and tuck to back as scroll begins
-        if (progress < 0.15) {
-          const envScale = 1 - (progress / 0.15) * 0.15;
-          const envY = (progress / 0.15) * 100;
-          envelope.style.transform = `scale(${envScale}) translateY(${envY}px)`;
-        } else {
-          envelope.style.transform = `scale(0.85) translateY(100px)`;
-        }
-
-        // Phase 2: Sequential Paper Slide, Unfold, Stack, and Return logic
-        const numCards = cards.length;
-        const startOffset = 0.08;
-        const endOffset = 0.90;
-        const totalRange = endOffset - startOffset;
-        const cardStep = totalRange / numCards;
-
-        cards.forEach((card, index) => {
-          const cardStart = startOffset + (index * cardStep);
-          const cardEnd = cardStart + cardStep;
-
-          if (progress < cardStart) {
-            // Below view: Sitting inside envelope pocket
-            const peekOffset = (numCards - index) * 12;
-            card.style.opacity = isOpen ? '1' : '0';
-            card.style.transform = `translateY(${180 + peekOffset}px) scale(0.75) rotate(${index % 2 === 0 ? -2 : 2}deg)`;
-            card.style.zIndex = 5 + index; // Under envelope pocket (z-index 10)
-          } else if (progress >= cardStart && progress < cardEnd) {
-            // Active phase: Pulled out of envelope and focused
-            const cardProgress = (progress - cardStart) / cardStep;
-
-            const translateY = 180 - (cardProgress * 230);
-            const scale = 0.75 + (Math.sin(cardProgress * Math.PI) * 0.3);
-            const rotate = (1 - cardProgress) * (index % 2 === 0 ? -3 : 3);
-            const opacity = Math.sin(cardProgress * Math.PI) * 1.2;
-
-            card.style.opacity = Math.min(1, opacity);
-            card.style.transform = `translateY(${translateY}px) scale(${scale}) rotate(${rotate}deg)`;
-            card.style.zIndex = 20 + index; // Above envelope pocket
-
-            // Fold out effect for Program card (#card3)
-            if (index === 2) {
-              const fold = document.getElementById('programFold');
-              const foldAngle = (1 - Math.sin(cardProgress * Math.PI)) * -60;
-              fold.style.transform = `rotateX(${foldAngle}deg)`;
-            }
-
-          } else {
-            // Past phase: Slide out toward top
-            card.style.opacity = '0';
-            card.style.transform = `translateY(-220px) scale(0.7) rotate(0deg)`;
-            card.style.zIndex = 5 + index;
-          }
-        });
-
-        // Phase 3: Outro / Envelope Return Closing logic
-        if (progress > 0.92) {
-          const returnProgress = (progress - 0.92) / 0.08;
-          envelope.classList.remove('open');
-          envelope.style.transform = `scale(${0.85 + returnProgress * 0.15}) translateY(${100 - returnProgress * 100}px)`;
-        }
-      });
-
-      // Countdown Timer Logic
+      // 2. Countdown Timer
       const targetDate = new Date('January 31, 2028 16:00:00').getTime();
 
       function updateCountdown() {
         const now = new Date().getTime();
-        const difference = targetDate - now;
+        const diff = targetDate - now;
 
-        if (difference > 0) {
-          const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        if (diff > 0) {
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
           document.getElementById('days').innerText = String(days).padStart(2, '0');
           document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-          document.getElementById('mins').innerText = String(minutes).padStart(2, '0');
+          document.getElementById('mins').innerText = String(mins).padStart(2, '0');
         }
       }
 
       setInterval(updateCountdown, 1000);
       updateCountdown();
     });
+
+    // 3. Modal Handlers (Pick up card / Return to table)
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.add('active');
+      }
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.remove('active');
+      }
+    }
   </script>
 </body>
 </html>
