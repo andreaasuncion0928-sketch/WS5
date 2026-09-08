@@ -35,14 +35,13 @@
       color: var(--text-main);
       font-family: var(--font-serif);
       overflow-x: hidden;
-      /* Subtle noise texture on the main background */
       background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 0);
       background-size: 24px 24px;
     }
 
-    /* Scroll Experience Setup */
+    /* Scroll Experience Track */
     .scroll-container {
-      height: 1100vh; /* Long scroll track to drive physics timeline */
+      height: 1100vh;
       position: relative;
     }
 
@@ -72,7 +71,7 @@
     }
 
     /* ==========================================================================
-       2. ENVELOPE STRUCTURE & ANIMATIONS
+       2. ENVELOPE STRUCTURE & SEAL ANIMATIONS
        ========================================================================== */
     .envelope-wrapper {
       position: relative;
@@ -123,7 +122,7 @@
       clip-path: polygon(0 0, 100% 0, 50% 55%);
       background: #f3e6d3;
       transform-origin: top center;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
       z-index: 12;
       border-bottom: 1px solid rgba(0,0,0,0.08);
     }
@@ -176,7 +175,7 @@
       50% { opacity: 1; transform: translateY(-4px); }
     }
 
-    /* Wax Seal */
+    /* Wax Seal Mechanics */
     .wax-seal {
       position: absolute;
       top: 50%;
@@ -184,35 +183,51 @@
       transform: translate(-50%, -50%);
       width: 64px;
       height: 64px;
+      z-index: 14;
+      cursor: pointer;
+    }
+
+    .seal-piece {
+      position: absolute;
+      width: 100%;
+      height: 100%;
       background: radial-gradient(circle, var(--wax-red) 60%, var(--wax-shadow) 100%);
       border-radius: 50%;
-      z-index: 14;
       display: flex;
       justify-content: center;
       align-items: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.2);
-      transition: transform 0.5s ease, opacity 0.5s ease;
+      transition: transform 0.6s cubic-bezier(0.5, 0, 0.5, 1.2), opacity 0.5s ease;
     }
 
-    .wax-seal::before {
+    .seal-left {
+      clip-path: polygon(0 0, 55% 0, 45% 100%, 0 100%);
+    }
+
+    .seal-right {
+      clip-path: polygon(55% 0, 100% 0, 100% 100%, 45% 100%);
+    }
+
+    .seal-piece::before {
       content: 'E & A';
       font-family: var(--font-heading);
-      color: rgba(255,255,255,0.8);
+      color: rgba(255,255,255,0.85);
       font-size: 0.75rem;
       letter-spacing: 1px;
-      border: 1px linear-gradient(to bottom, #fff, transparent) solid;
-      padding: 10px;
-      border-radius: 50%;
     }
 
-    .envelope-wrapper.open .wax-seal {
+    .envelope-wrapper.open .seal-left {
+      transform: translate(-18px, 6px) rotate(-15deg);
       opacity: 0;
-      transform: translate(-50%, -50%) scale(1.5);
-      pointer-events: none;
+    }
+
+    .envelope-wrapper.open .seal-right {
+      transform: translate(18px, -6px) rotate(15deg);
+      opacity: 0;
     }
 
     /* ==========================================================================
-       3. STATIONERY STACK & PAPERS
+       3. STATIONERY STACK & CARD LAYOUTS
        ========================================================================== */
     .paper-stack {
       position: absolute;
@@ -243,7 +258,6 @@
       overflow: hidden;
     }
 
-    /* Shared Typography */
     h2.card-title {
       font-family: var(--font-heading);
       font-size: 1.4rem;
@@ -270,7 +284,7 @@
     }
 
     /* CARD 1: FORMAL INVITATION */
-    #card-invitation {
+    #card1 {
       border: 12px solid #f3efe6;
       outline: 1px solid var(--gold-accent);
       outline-offset: -6px;
@@ -526,7 +540,7 @@
     }
 
     /* ==========================================================================
-       4. MEDIA QUERIES & MOBILE OPTIMIZATIONS
+       4. MEDIA QUERIES & RESPONSIVE ADJUSTMENTS
        ========================================================================== */
     @media (max-width: 768px) {
       .envelope-wrapper {
@@ -574,7 +588,7 @@
 </head>
 <body>
 
-  <!-- Scroll container drives physical timeline -->
+  <!-- Scroll track controls dynamic timeline -->
   <div class="scroll-container">
     <div class="viewport">
 
@@ -588,7 +602,7 @@
           <!-- 03 INVITATION CARD -->
           <div class="paper card" id="card1">
             <div class="sub-title">Together with their families</div>
-            <h3 class="names">Elena & Adrian</h3>
+            <h3 class="names">Elena &amp; Adrian</h3>
             <p style="font-size: 0.85rem; letter-spacing: 1px; color: #555;">REQUEST THE PLEASURE OF YOUR COMPANY</p>
             <p style="font-size: 0.85rem; letter-spacing: 1px; color: #555; margin-top: 4px;">AS THEY CELEBRATE THEIR WEDDING</p>
             
@@ -619,7 +633,7 @@
             <div style="margin-top: 25px;">
               <h4 style="font-family: var(--font-heading); font-size: 0.8rem; letter-spacing: 1px;">DRESS CODE</h4>
               <p style="font-size: 0.85rem; color: #555; margin-top: 3px;">Formal Attire / Black Tie Optional</p>
-              <span class="dress-code-badge">Motif: Deep Purple & Gold</span>
+              <span class="dress-code-badge">Motif: Deep Purple &amp; Gold</span>
             </div>
 
             <div class="countdown-container">
@@ -668,7 +682,6 @@
             <div class="letter-content">
               <p>It started with a shared cup of coffee on a rainy Tuesday morning in 2020. What was supposed to be a quick 20-minute meeting turned into hours of endless conversation, laughter, and realized dreams.</p>
               
-              <!-- Tucked small image placeholder -->
               <svg class="inline-photo" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
                 <rect width="100%" height="100%" fill="#d8d0c5"/>
                 <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Playfair Display" font-size="16" fill="#777">Photo: Our First Trip Together</text>
@@ -721,7 +734,6 @@
               <h2 class="card-title" style="margin-bottom: 10px;">Kindly Respond</h2>
               <p style="font-size: 0.85rem; color: #555;">Will you be celebrating with us?</p>
 
-              <!-- Google Forms integration point -->
               <a href="https://forms.google.com" target="_blank" rel="noopener noreferrer" class="btn-rsvp">RSVP ONLINE</a>
               <div class="deadline">Please respond on or before December 1, 2027</div>
             </div>
@@ -742,7 +754,11 @@
         <div class="envelope-pocket"></div>
         <div class="envelope-flap"></div>
         
-        <div class="wax-seal" id="waxSeal"></div>
+        <!-- SPLIT WAX SEAL -->
+        <div class="wax-seal" id="waxSeal">
+          <div class="seal-piece seal-left"></div>
+          <div class="seal-piece seal-right"></div>
+        </div>
 
         <div class="envelope-text" id="envelopeText">
           <h1>E &amp; A</h1>
@@ -781,7 +797,6 @@
           envelope.classList.add('open');
           tapHint.style.opacity = '0';
           
-          // Smooth scroll slightly to prompt physics scroll
           setTimeout(() => {
             window.scrollTo({
               top: window.innerHeight * 0.5,
@@ -834,7 +849,6 @@
             // Active phase: Unfolding & pulled up to center stage
             const cardProgress = (progress - cardStart) / cardStep;
             
-            // Slide up out of envelope, straighten, expand
             const translateY = 150 - (cardProgress * 200); 
             const scale = 0.8 + (Math.sin(cardProgress * Math.PI) * 0.25);
             const rotate = (1 - cardProgress) * (index % 2 === 0 ? -3 : 3);
@@ -844,7 +858,7 @@
             card.style.transform = `translateY(${translateY}px) scale(${scale}) rotate(${rotate}deg)`;
             card.style.zIndex = 20 + index;
 
-            // Fold out effect specifically for Program card (#card3)
+            // Fold out effect for Program card (#card3)
             if (index === 2) {
               const fold = document.getElementById('programFold');
               const foldAngle = (1 - Math.sin(cardProgress * Math.PI)) * -60;
@@ -862,12 +876,12 @@
         // Phase 3: Outro / Envelope Return Closing logic (Near bottom of scroll)
         if (progress > 0.92) {
           const returnProgress = (progress - 0.92) / 0.08;
-          envelope.classList.remove('open'); // Envelope flap re-closes
+          envelope.classList.remove('open');
           envelope.style.transform = `scale(${0.85 + returnProgress * 0.15}) translateY(${100 - returnProgress * 100}px)`;
         }
       });
 
-      // Simple Countdown Script targeting wedding date
+      // Countdown Timer Logic
       const targetDate = new Date('January 31, 2028 16:00:00').getTime();
 
       function updateCountdown() {
