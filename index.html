@@ -50,10 +50,10 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow-x: hidden;
             background-color: #1a121c;
             font-family: var(--font-body);
             color: var(--ink-black);
+            overflow-x: hidden;
         }
 
         /* SVG Grain Background Texture Overlay */
@@ -94,27 +94,22 @@
             transform: scale(1.05) rotate(-2deg);
         }
 
-        /* Main Container */
+        /* Main Journal Wrapper - Ensures Scrollability */
         .journal-container {
             position: relative;
             max-width: 900px;
+            width: 100%;
             min-height: 100vh;
             margin: 0 auto;
             background-color: var(--bg-cream);
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
         }
 
-        /* Paper Details */
+        /* Page Layout & Scroll Fixes */
         .journal-page {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            min-height: 100%;
-            padding: 40px 24px 80px 24px;
+            min-height: 100vh;
+            padding: 40px 24px 100px 24px;
             background-color: var(--bg-cream);
             background-image: 
                 radial-gradient(var(--paper-dark) 1px, transparent 0),
@@ -122,17 +117,13 @@
             background-size: 24px 24px, 100% 100%;
             display: none;
             opacity: 0;
-            transform: scale(0.98);
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            transition: opacity 0.4s ease;
             box-sizing: border-box;
-            overflow-y: auto;
         }
 
         .journal-page.active {
             display: block;
             opacity: 1;
-            transform: scale(1);
-            z-index: 10;
         }
 
         /* Back Button */
@@ -141,11 +132,11 @@
             margin-bottom: 25px;
             background: var(--purple-main);
             color: #fff;
-            padding: 6px 16px;
+            padding: 8px 18px;
             font-family: var(--font-handwriting);
             font-size: 1.3rem;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 6px;
             box-shadow: 2px 2px 0px var(--ink-black);
             cursor: pointer;
             transition: all 0.2s ease;
@@ -220,15 +211,6 @@
             background: var(--paper-aged);
         }
 
-        .scrapbook-btn:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px var(--purple-deep);
-        }
-
-        /* ==========================================================================
-           2. SPECIFIC SCREENS / PAGES
-           ========================================================================== */
-
         /* SCREEN 01: COVER */
         #page-cover {
             background-color: var(--purple-deep);
@@ -237,11 +219,15 @@
             background-position: 0 0, 30px 30px;
             color: #f6f2eb;
             text-align: center;
-            display: flex;
+            display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             border: 12px solid #28142e;
+        }
+
+        #page-cover.active {
+            display: flex;
         }
 
         .cover-frame {
@@ -287,7 +273,6 @@
             position: relative;
             margin: 20px 0;
             box-shadow: var(--shadow-paper);
-            transform: rotate(-0.5deg);
         }
 
         .travel-info-grid {
@@ -312,7 +297,7 @@
             font-size: 1.05rem;
         }
 
-        /* SCREEN 03: PASSPORT / MAIN NAVIGATION */
+        /* SCREEN 03: PASSPORT */
         .passport-container {
             background: var(--purple-deep);
             color: #f6f2eb;
@@ -360,29 +345,11 @@
             padding: 10px;
             box-shadow: var(--shadow-paper);
             transition: all 0.2s ease;
-            position: relative;
         }
-
-        .stamp-btn:nth-child(even) { transform: rotate(4deg); }
-        .stamp-btn:nth-child(odd) { transform: rotate(-3deg); }
 
         .stamp-btn:hover {
             transform: scale(1.08) rotate(0deg) !important;
             background: #fff;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        .stamp-btn .stamp-title {
-            font-family: var(--font-heading);
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-top: 4px;
-        }
-
-        .stamp-btn .stamp-sub {
-            font-family: var(--font-handwriting);
-            font-size: 0.95rem;
-            color: var(--purple-main);
         }
 
         /* SCREEN 04: THE JOURNEY SO FAR */
@@ -395,7 +362,7 @@
 
         .route-stop {
             position: relative;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             padding-left: 15px;
         }
 
@@ -418,20 +385,27 @@
             font-size: 0.95rem;
         }
 
+        /* POLAROID CENTERED LAYOUT */
+        .polaroid-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin: 25px 0 10px 0;
+        }
+
         .polaroid {
             background: #fff;
-            padding: 10px 10px 25px 10px;
+            padding: 12px 12px 25px 12px;
             box-shadow: var(--shadow-paper);
-            margin: 15px 0;
-            display: inline-block;
             width: 100%;
-            max-width: 300px;
+            max-width: 320px;
             position: relative;
+            transform: rotate(-1deg);
         }
 
         .polaroid img {
             width: 100%;
-            height: 190px;
+            height: 220px;
             object-fit: cover;
             filter: sepia(0.12) contrast(0.98);
         }
@@ -482,7 +456,7 @@
             border-left: 4px solid var(--purple-main);
         }
 
-        /* SCREEN 07: THE CREW (ENTOURAGE) */
+        /* SCREEN 07: ENTOURAGE */
         .entourage-section {
             margin-bottom: 30px;
         }
@@ -555,7 +529,6 @@
             position: relative;
         }
 
-        /* Headers */
         .section-title {
             font-family: var(--font-heading);
             font-size: 2rem;
@@ -570,7 +543,6 @@
             margin-bottom: 20px;
         }
 
-        /* Footer / Ending */
         .postcard-back {
             text-align: center;
             padding: 40px 20px;
@@ -601,9 +573,7 @@
     <!-- MAIN SCRAPBOOK CONTAINER -->
     <div class="journal-container">
 
-        <!-- ==========================================================================
-           SCREEN 01: JOURNAL COVER
-           ========================================================================== -->
+        <!-- SCREEN 01: JOURNAL COVER -->
         <section class="journal-page active" id="page-cover">
             <div class="cover-frame">
                 <div class="stamp-mark" style="position: absolute; top:-15px; right:-10px; color: var(--mustard); border-color: var(--mustard);">PASSPORT</div>
@@ -618,9 +588,7 @@
             </div>
         </section>
 
-        <!-- ==========================================================================
-           SCREEN 02: WELCOME ABOARD
-           ========================================================================== -->
+        <!-- SCREEN 02: WELCOME ABOARD -->
         <section class="journal-page" id="page-welcome">
             <h2 class="section-title">WELCOME ABOARD</h2>
             <div class="section-sub">Glad you're here!</div>
@@ -657,9 +625,7 @@
             </div>
         </section>
 
-        <!-- ==========================================================================
-           SCREEN 03: PASSPORT / MAIN NAVIGATION
-           ========================================================================== -->
+        <!-- SCREEN 03: PASSPORT -->
         <section class="journal-page" id="page-passport">
             <div class="passport-container">
                 <div class="passport-header">
@@ -708,9 +674,7 @@
             </div>
         </section>
 
-        <!-- ==========================================================================
-           SCREEN 04: THE JOURNEY SO FAR (OUR STORY)
-           ========================================================================== -->
+        <!-- SCREEN 04: THE JOURNEY SO FAR -->
         <section class="journal-page" id="page-story">
             <div class="back-to-passport" onclick="goToPage('page-passport')">← Back to Passport</div>
             
@@ -722,13 +686,19 @@
                 <div class="route-stop">
                     <div class="stamp-mark" style="font-size: 0.7rem;">STOP 01</div>
                     <h3 style="font-family: var(--font-heading); margin-top: 5px;">It Started With Coffee</h3>
+                    
                     <div class="story-card">
                         <div class="tape tape-top-right"></div>
                         We met over iced coffee on an ordinary afternoon in Manila. Neither of us knew that one simple coffee would turn into countless conversations, spontaneous adventures, inside jokes, and memories we would never trade for anything.
                     </div>
-                    <div class="polaroid" style="transform: rotate(-2deg);">
-                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80" alt="Iced Coffee Date">
-                        <div class="caption">Coffee & endless talks ☕</div>
+
+                    <!-- Photo Centered Below Story -->
+                    <div class="polaroid-wrapper">
+                        <div class="polaroid">
+                            <div class="tape tape-top-center"></div>
+                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80" alt="Iced Coffee Date">
+                            <div class="caption">Coffee & endless talks ☕</div>
+                        </div>
                     </div>
                 </div>
 
@@ -759,9 +729,7 @@
             </div>
         </section>
 
-        <!-- ==========================================================================
-           SCREEN 05: NEXT DESTINATION / WEDDING DETAILS
-           ========================================================================== -->
+        <!-- SCREEN 05: WEDDING DETAILS -->
         <section class="journal-page" id="page-details">
             <div class="back-to-passport" onclick="goToPage('page-passport')">← Back to Passport</div>
 
@@ -801,9 +769,7 @@
             </div>
         </section>
 
-        <!-- ==========================================================================
-           SCREEN 06 & 10: TICKET & RSVP
-           ========================================================================== -->
+        <!-- SCREEN 06 & 10: TICKET & RSVP -->
         <section class="journal-page" id="page-rsvp">
             <div class="back-to-passport" onclick="goToPage('page-passport')">← Back to Passport</div>
 
@@ -837,7 +803,6 @@
                 </div>
 
                 <div style="text-align: center; margin-top: 25px; border-top: 1px dashed var(--purple-main); padding-top: 20px;">
-                    <!-- EDITABLE: LINK TO YOUR RSVP FORM -->
                     <a href="https://forms.google.com" target="_blank" class="scrapbook-btn" style="background: var(--purple-main); color: #fff; width: 100%;">
                         YES, I'M COMING! (CONFIRM RSVP)
                     </a>
@@ -845,9 +810,7 @@
             </div>
         </section>
 
-        <!-- ==========================================================================
-           SCREEN 07: THE CREW (ENTOURAGE)
-           ========================================================================== -->
+        <!-- SCREEN 07: THE CREW -->
         <section class="journal-page" id="page-crew">
             <div class="back-to-passport" onclick="goToPage('page-passport')">← Back to Passport</div>
 
@@ -951,9 +914,7 @@
             </div>
         </section>
 
-        <!-- ==========================================================================
-           SCREEN 08: GALLERY / POSTCARDS
-           ========================================================================== -->
+        <!-- SCREEN 08: GALLERY -->
         <section class="journal-page" id="page-gallery">
             <div class="back-to-passport" onclick="goToPage('page-passport')">← Back to Passport</div>
 
@@ -987,9 +948,7 @@
             </div>
         </section>
 
-        <!-- ==========================================================================
-           SCREEN 11 & FINAL: GIFTS & TO BE CONTINUED
-           ========================================================================== -->
+        <!-- SCREEN 11: GIFTS -->
         <section class="journal-page" id="page-gifts">
             <div class="back-to-passport" onclick="goToPage('page-passport')">← Back to Passport</div>
 
@@ -1010,7 +969,6 @@
                 </div>
             </div>
 
-            <!-- FINAL CHAPTER & ENDING -->
             <div class="postcard-back">
                 <h2 style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--purple-main);">
                     SEE YOU AT THE DESTINATION!
@@ -1032,7 +990,6 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Navigation Handler
         function goToPage(pageId) {
             const pages = document.querySelectorAll('.journal-page');
             
@@ -1047,7 +1004,6 @@
             }
         }
 
-        // Audio Player Handler
         let isPlaying = false;
         const bgMusic = document.getElementById('bgMusic');
         const audioLabel = document.getElementById('audioLabel');
@@ -1062,7 +1018,7 @@
                     audioLabel.textContent = "Pause Music";
                     isPlaying = true;
                 }).catch(err => {
-                    console.log("Audio playback delayed by browser interactions.");
+                    console.log("Audio playback error.");
                 });
             }
         }
