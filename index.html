@@ -12,22 +12,23 @@
 
     <style>
         :root {
-            --color-bg: #111111;
+            --color-bg: #0D0D0D;
             --color-text-light: #FFFFFF;
             --color-text-muted: #D1D1D1;
-            --color-sage: #A3B899;
-            --color-dusty-blue: #9BB1C9;
-            --color-terracotta: #E07A5F;
-            --color-purple: #D8B4E2;
+            --color-sage: #A8C3A0;
+            --color-dusty-blue: #A3C1AD;
+            --color-terracotta: #E27355;
+            --color-purple: #DDB8E5;
             --color-gold: #E5C158;
-            --color-card-overlay: rgba(0, 0, 0, 0.4);
+            --color-card-bg: rgba(20, 20, 20, 0.78);
+            --color-card-border: rgba(255, 255, 255, 0.18);
             
             --font-serif: 'Bodoni Moda', Georgia, serif;
             --font-sans: 'Montserrat', sans-serif;
             --font-script: 'Alex Brush', cursive;
         }
 
-        /* --- Disable Page Scrolling Completely --- */
+        /* --- Prevent Body Page-Jumping Scroll --- */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -37,7 +38,7 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden; /* FREEZE SCROLLING */
+            overflow: hidden; /* Lock viewport from scrolling to next menu page */
             background-color: var(--color-bg);
             color: var(--color-text-light);
             font-family: var(--font-sans);
@@ -45,37 +46,55 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- Universal Section Styling with NY.jpeg + 70% Overlay --- */
+        /* --- Page Container with NY.jpeg + Dimmed Dark Overlay --- */
         .section-page {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            padding-top: 80px; /* Offset for top fixed menu */
-            padding-bottom: 2rem;
+            padding-top: 85px; /* Space for fixed navigation bar */
+            padding-bottom: 3rem;
+            
+            /* Enable internal vertical scroll if context exceeds screen height */
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             text-align: center;
+
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
-            transform: scale(0.98);
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+            transform: translateY(15px);
             box-sizing: border-box;
 
-            /* NY.jpeg Background + 70% Dark Overlay (rgba 0.7) */
-            background: linear-gradient(rgba(0, 0, 0, 0.70), rgba(0, 0, 0, 0.70)), 
-                        url('NY.jpeg') center/cover no-repeat;
+            /* NY.jpeg Dimmed Background Overlay (85% Opacity + Radial Vignette) */
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.92) 100%),
+                        linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+                        url('NY.jpeg') center/cover no-repeat fixed;
         }
 
-        /* Active Page Class triggered by Header Menu clicks */
+        /* Active Displayed Page */
         .section-page.active-page {
             opacity: 1;
             pointer-events: auto;
-            transform: scale(1);
+            transform: translateY(0);
             z-index: 10;
+        }
+
+        /* Custom Scrollbar for Inner Content */
+        .section-page::-webkit-scrollbar {
+            width: 8px;
+        }
+        .section-page::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .section-page::-webkit-scrollbar-thumb {
+            background: var(--color-terracotta);
+            border-radius: 4px;
         }
 
         /* --- Senior-Friendly Top Navigation Header --- */
@@ -85,8 +104,8 @@
             left: 0;
             right: 0;
             height: 75px;
-            background-color: rgba(10, 10, 10, 0.92);
-            backdrop-filter: blur(10px);
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(12px);
             border-bottom: 2px solid rgba(255, 255, 255, 0.15);
             z-index: 1000;
             display: flex;
@@ -132,7 +151,18 @@
             border-color: var(--color-terracotta);
         }
 
-        /* --- Helper Classes --- */
+        /* --- Content Layout Wrapper --- */
+        .page-inner-content {
+            margin: auto 0;
+            padding: 2rem 1.5rem;
+            max-width: 1000px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Helper Typography Classes */
         .serif { font-family: var(--font-serif); }
         .sans { font-family: var(--font-sans); }
         .script { font-family: var(--font-script); }
@@ -173,7 +203,7 @@
             line-height: 1.1;
             margin-bottom: 1rem;
             letter-spacing: -0.01em;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            text-shadow: 0 4px 15px rgba(0,0,0,0.9);
         }
 
         .hero .names {
@@ -181,17 +211,18 @@
             font-style: italic;
             font-size: clamp(2.2rem, 4vw, 3.5rem);
             color: var(--color-terracotta);
-            text-shadow: 0 4px 12px rgba(0,0,0,0.8);
+            text-shadow: 0 4px 12px rgba(0,0,0,0.9);
         }
 
         /* --- SECTION 2: STORY --- */
         .story-container {
-            max-width: 900px;
+            max-width: 850px;
             padding: 3rem 2.5rem;
-            background: var(--color-card-overlay);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: var(--color-card-bg);
+            border: 2px solid var(--color-card-border);
             border-radius: 6px;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .story-container h3 {
@@ -210,22 +241,18 @@
         }
 
         /* --- SECTION 3: ADVENTURES & POSTCARD --- */
-        .adventures-container {
-            max-width: 1000px;
-            width: 90%;
-        }
-
         .travel-badge-grid {
             display: flex;
             justify-content: center;
             gap: 1.5rem;
-            margin: 1.5rem 0 2.5rem;
+            margin: 1.5rem 0 2rem;
             flex-wrap: wrap;
+            width: 100%;
         }
 
         .travel-badge {
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(15, 15, 15, 0.85);
+            border: 1px solid var(--color-card-border);
             padding: 1.2rem 2rem;
             border-radius: 4px;
             min-width: 180px;
@@ -251,8 +278,8 @@
         }
 
         .postcard-card {
-            background: rgba(20, 20, 20, 0.85);
-            border: 2px solid rgba(255, 255, 255, 0.25);
+            background: rgba(15, 15, 15, 0.88);
+            border: 2px solid var(--color-card-border);
             padding: 2.5rem;
             border-radius: 6px;
             display: grid;
@@ -261,6 +288,7 @@
             align-items: center;
             text-align: left;
             position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
 
         .postcard-stamp {
@@ -280,7 +308,7 @@
 
         .postcard-image img {
             width: 100%;
-            height: 300px;
+            height: 280px;
             object-fit: cover;
             border-radius: 4px;
             border: 1px solid rgba(255,255,255,0.2);
@@ -296,7 +324,7 @@
         .postcard-body h4 {
             font-family: var(--font-serif);
             font-style: italic;
-            color: var(--color-dusty-blue);
+            color: var(--color-sage);
             font-size: 1.1rem;
             margin-bottom: 1rem;
         }
@@ -309,28 +337,25 @@
         }
 
         /* --- SECTION 4: WEDDING DETAILS --- */
-        .wedding-container {
-            max-width: 1050px;
-            width: 90%;
-        }
-
         .wedding-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 1.8rem;
             margin-top: 2rem;
+            width: 100%;
         }
 
         .detail-card {
-            background-color: rgba(0, 0, 0, 0.65);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            background-color: var(--color-card-bg);
+            border: 2px solid var(--color-card-border);
             padding: 2.5rem 1.8rem;
             text-align: center;
             border-radius: 6px;
+            backdrop-filter: blur(8px);
         }
 
         .detail-card.dress-code-card {
-            background-color: rgba(60, 30, 70, 0.5);
+            background-color: rgba(50, 25, 60, 0.7);
             border-color: var(--color-purple);
         }
 
@@ -342,7 +367,7 @@
         }
 
         .detail-card p {
-            color: var(--color-text-muted);
+            color: #E0E0E0;
             font-size: 1.05rem;
             line-height: 1.7;
         }
@@ -364,29 +389,26 @@
         }
 
         /* --- SECTION 5: OUR CREW --- */
-        .crew-container {
-            max-width: 1000px;
-            width: 90%;
-        }
-
         .entourage-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+            gap: 1.8rem;
             margin-top: 2rem;
+            width: 100%;
         }
 
         .entourage-group {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 4px;
+            background: var(--color-card-bg);
+            padding: 1.8rem;
+            border: 2px solid var(--color-card-border);
+            border-radius: 6px;
+            backdrop-filter: blur(8px);
         }
 
         .entourage-group h4 {
             font-family: var(--font-serif);
             font-style: italic;
-            color: var(--color-dusty-blue);
+            color: var(--color-sage);
             font-size: 1.3rem;
             margin-bottom: 1rem;
             font-weight: 600;
@@ -400,17 +422,19 @@
 
         .entourage-group li {
             font-size: 1rem;
-            color: #E0E0E0;
+            color: #E5E5E5;
             margin-bottom: 0.5rem;
         }
 
         /* --- SECTION 6: RSVP & FINALE --- */
         .rsvp-container {
             max-width: 800px;
-            background: rgba(0, 0, 0, 0.65);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: var(--color-card-bg);
+            border: 2px solid var(--color-card-border);
             padding: 3.5rem 2.5rem;
             border-radius: 6px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
 
         .rsvp-container h2 {
@@ -449,7 +473,7 @@
             font-style: italic;
         }
 
-        /* Responsive Fixes */
+        /* Responsive Tweaks */
         @media (max-width: 850px) {
             .postcard-card {
                 grid-template-columns: 1fr;
@@ -461,7 +485,7 @@
                 padding: 0 1rem;
             }
             .nav-links {
-                gap: 0.3rem;
+                gap: 0.2rem;
             }
             .nav-links a {
                 font-size: 0.75rem;
@@ -488,8 +512,8 @@
     </header>
 
     <!-- SECTION 1: HERO PAGE -->
-    <section class="section-page hero active-page" id="page-hero">
-        <div>
+    <section class="section-page active-page" id="page-hero">
+        <div class="page-inner-content hero">
             <p class="tagline">Our Story</p>
             <h2>Has Taken Us Places</h2>
             <h1>THE NEXT ADVENTURE</h1>
@@ -500,19 +524,21 @@
 
     <!-- SECTION 2: STORY PAGE -->
     <section class="section-page" id="page-story">
-        <div class="story-container">
-            <p class="tagline">How It All Began</p>
-            <h3>It started with a coffee.</h3>
-            <p>Elena and Adrian met over iced coffee on an ordinary afternoon in Manila. What started as one coffee turned into late-night conversations, spontaneous weekend trips, missed trains, long drives, and eventually a collection of places that became part of their story.</p>
-            <p>Seven years later, they've collected more memories than souvenirs—and they're ready for their next adventure.</p>
+        <div class="page-inner-content">
+            <div class="story-container">
+                <p class="tagline">How It All Began</p>
+                <h3>It started with a coffee.</h3>
+                <p>Elena and Adrian met over iced coffee on an ordinary afternoon in Manila. What started as one coffee turned into late-night conversations, spontaneous weekend trips, missed trains, long drives, and eventually a collection of places that became part of their story.</p>
+                <p>Seven years later, they've collected more memories than souvenirs—and they're ready for their next adventure.</p>
+            </div>
         </div>
     </section>
 
     <!-- SECTION 3: ADVENTURES & NEW YORK POSTCARD PAGE -->
     <section class="section-page" id="page-adventures">
-        <div class="adventures-container">
+        <div class="page-inner-content">
             <p class="tagline">7 Years of Exploring</p>
-            <h2 class="serif" style="font-size: 2.2rem; font-weight: 400;">OUR ADVENTURES TOGETHER</h2>
+            <h2 class="serif" style="font-size: 2.2rem; font-weight: 400; margin-bottom: 0.5rem;">OUR ADVENTURES TOGETHER</h2>
 
             <div class="travel-badge-grid">
                 <div class="travel-badge">
@@ -548,7 +574,7 @@
 
     <!-- SECTION 4: WEDDING DETAILS PAGE -->
     <section class="section-page" id="page-wedding">
-        <div class="wedding-container">
+        <div class="page-inner-content">
             <p class="tagline">The Destination</p>
             <h2 class="serif" style="font-size: 2.8rem; font-weight: 500;">OUR WEDDING DAY</h2>
             <p style="color: var(--color-terracotta); font-size: 1.2rem; margin-top: 0.3rem;" class="serif">January 31, 2028 • Manila, Philippines</p>
@@ -583,10 +609,10 @@
 
     <!-- SECTION 5: OUR CREW PAGE -->
     <section class="section-page" id="page-crew">
-        <div class="crew-container">
+        <div class="page-inner-content">
             <p class="tagline">Good Company</p>
             <h2 class="serif" style="font-size: 2.5rem; font-weight: 400;">OUR CREW</h2>
-            <p style="color: var(--color-text-muted); font-style: italic; margin-bottom: 1.5rem;">Every adventure needs good company.</p>
+            <p style="color: var(--color-text-muted); font-style: italic; margin-bottom: 0.5rem;">Every adventure needs good company.</p>
             
             <div class="entourage-grid">
                 <div class="entourage-group">
@@ -628,49 +654,34 @@
 
     <!-- SECTION 6: RSVP & FINALE PAGE -->
     <section class="section-page" id="page-rsvp">
-        <div class="rsvp-container">
-            <p class="tagline">Are You Coming?</p>
-            <h2>ONE MORE ADVENTURE?</h2>
-            <p style="font-size: 1.1rem; color: var(--color-text-muted);">This time, we'd love to have you with us.</p>
-            <p style="color: var(--color-terracotta); font-weight: 700; margin-top: 0.5rem;" class="serif">January 31, 2028 • Manila, Philippines</p>
-            
-            <br>
-            <a href="javascript:void(0)" class="btn-rsvp">Count Me In &rarr;</a>
-            <div class="rsvp-deadline">RSVP deadline: December 15, 2027</div>
+        <div class="page-inner-content">
+            <div class="rsvp-container">
+                <p class="tagline">Are You Coming?</p>
+                <h2>ONE MORE ADVENTURE?</h2>
+                <p style="font-size: 1.1rem; color: var(--color-text-muted);">This time, we'd love to have you with us.</p>
+                <p style="color: var(--color-terracotta); font-weight: 700; margin-top: 0.5rem;" class="serif">January 31, 2028 • Manila, Philippines</p>
+                
+                <a href="javascript:void(0)" class="btn-rsvp">Count Me In &rarr;</a>
+                <div class="rsvp-deadline">RSVP deadline: December 15, 2027</div>
 
-            <div style="margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem;">
-                <h3 class="serif" style="font-size: 1.8rem; font-weight: 400; color: #FFFFFF;">WHEREVER WE GO, WE GO TOGETHER.</h3>
-                <div class="serif" style="font-size: 1.5rem; color: var(--color-terracotta); font-style: italic; margin-top: 0.3rem;">Elena &amp; Adrian</div>
-                <div style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-muted); margin-top: 1.5rem;">OurStory Invites</div>
+                <div style="margin-top: 2.5rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1.8rem;">
+                    <h3 class="serif" style="font-size: 1.6rem; font-weight: 400; color: #FFFFFF;">WHEREVER WE GO, WE GO TOGETHER.</h3>
+                    <div class="serif" style="font-size: 1.4rem; color: var(--color-terracotta); font-style: italic; margin-top: 0.3rem;">Elena &amp; Adrian</div>
+                    <div style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-muted); margin-top: 1.2rem;">OurStory Invites</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- NAVIGATION SWITCHING SCRIPT -->
+    <!-- NAVIGATION SCRIPT -->
     <script>
-        // Disable Wheel Scroll / Touch Scroll Completely
-        window.addEventListener('wheel', function(e) {
-            e.preventDefault();
-        }, { passive: false });
-
-        window.addEventListener('touchmove', function(e) {
-            e.preventDefault();
-        }, { passive: false });
-
-        window.addEventListener('keydown', function(e) {
-            // Block Page Up, Page Down, Up Arrow, Down Arrow, Spacebar
-            if([32, 33, 34, 38, 40].indexOf(e.keyCode) > -1) {
-                e.preventDefault();
-            }
-        }, false);
-
         // Click Menu Navigation Handler
         function navigateTo(targetPageId) {
-            // Remove active status from all pages
+            // Deactivate all section pages
             const pages = document.querySelectorAll('.section-page');
             pages.forEach(page => page.classList.remove('active-page'));
 
-            // Remove active status from all menu links
+            // Deactivate all navigation menu highlights
             const navLinks = document.querySelectorAll('.nav-links a');
             navLinks.forEach(link => link.classList.remove('active-link'));
 
@@ -678,9 +689,11 @@
             const targetPage = document.getElementById(targetPageId);
             if (targetPage) {
                 targetPage.classList.add('active-page');
+                // Reset internal scroll back to top when switching pages
+                targetPage.scrollTop = 0;
             }
 
-            // Activate Target Menu Button Highlight
+            // Highlight Target Navigation Link
             const activeLink = document.getElementById('link-' + targetPageId);
             if (activeLink) {
                 activeLink.classList.add('active-link');
