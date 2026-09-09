@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Next Adventure | Elena & Adrian</title>
+    <title>You're Invited! Elena & Adrian's Wedding</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,8 +20,8 @@
             --color-terracotta: #F27D52;
             --color-purple: #E2C0EA;
             --color-gold: #F3C969;
-            --color-card-bg: rgba(10, 10, 10, 0.72);
-            --color-card-border: rgba(255, 255, 255, 0.25);
+            --color-card-bg: rgba(10, 10, 10, 0.78);
+            --color-card-border: rgba(255, 255, 255, 0.28);
             
             --font-serif: 'Bodoni Moda', Georgia, serif;
             --font-sans: 'Montserrat', sans-serif;
@@ -72,7 +72,7 @@
             box-sizing: border-box;
         }
 
-        /* Active Page */
+        /* Active Displayed Page */
         .section-page.active-page {
             opacity: 1;
             pointer-events: auto;
@@ -80,20 +80,20 @@
             z-index: 10;
         }
 
-        /* --- BACKGROUND DEFINITIONS WITH VISIBLE OVERLAY (45% Dim Overlay) --- */
-        /* Intro/Home Page Background -> background.jpg */
+        /* --- BACKGROUND DEFINITIONS --- */
+        /* Intro/Home Page Background -> background.jpg with EXACT 50% OVERLAY */
         #page-hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)), 
                         url('background.jpg') center/cover no-repeat fixed;
         }
 
         /* All Other Menu Pages -> NY.jpeg */
         #page-story, #page-adventures, #page-wedding, #page-crew, #page-rsvp {
-            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)), 
                         url('NY.jpeg') center/cover no-repeat fixed;
         }
 
-        /* Custom Scrollbar for Inner Page Content */
+        /* Custom Scrollbar for Inner Content */
         .section-page::-webkit-scrollbar {
             width: 8px;
         }
@@ -105,14 +105,14 @@
             border-radius: 4px;
         }
 
-        /* --- Senior-Friendly Top Navigation Header --- */
+        /* --- Top Navigation Header --- */
         .sticky-header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             height: 75px;
-            background-color: rgba(10, 10, 10, 0.90);
+            background-color: rgba(10, 10, 10, 0.92);
             backdrop-filter: blur(12px);
             border-bottom: 2px solid rgba(255, 255, 255, 0.2);
             z-index: 1000;
@@ -171,10 +171,24 @@
             align-items: center;
         }
 
-        /* Typography Classes */
+        /* Helper Typography Classes */
         .serif { font-family: var(--font-serif); }
         .sans { font-family: var(--font-sans); }
         .script { font-family: var(--font-script); }
+
+        .invitation-badge {
+            background: var(--color-terracotta);
+            color: #FFFFFF;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
 
         .annotation {
             font-family: var(--font-script);
@@ -197,14 +211,14 @@
             text-shadow: 0 2px 5px rgba(0,0,0,0.8);
         }
 
-        /* --- SECTION 1: HERO --- */
+        /* --- SECTION 1: HERO INVITATION --- */
         .hero h2 {
             font-size: 1.2rem;
             letter-spacing: 0.3em;
             text-transform: uppercase;
             color: var(--color-text-muted);
             font-weight: 500;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             text-shadow: 0 2px 8px rgba(0,0,0,0.8);
         }
 
@@ -213,7 +227,7 @@
             font-family: var(--font-serif);
             font-weight: 400;
             line-height: 1.1;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             letter-spacing: -0.01em;
             text-shadow: 0 4px 15px rgba(0,0,0,0.9);
         }
@@ -226,7 +240,16 @@
             text-shadow: 0 4px 12px rgba(0,0,0,0.9);
         }
 
-        /* --- SECTION 2: STORY --- */
+        .hero-invite-text {
+            max-width: 650px;
+            margin: 1.8rem auto 0;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #FFFFFF;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+        }
+
+        /* --- SECTION 2: OUR STORY (FIRST PERSON VOICE) --- */
         .story-container {
             max-width: 850px;
             padding: 3rem 2.5rem;
@@ -370,7 +393,7 @@
         }
 
         .detail-card.dress-code-card {
-            background-color: rgba(45, 20, 55, 0.78);
+            background-color: rgba(45, 20, 55, 0.82);
             border-color: var(--color-purple);
         }
 
@@ -516,44 +539,52 @@
         <span class="header-logo" onclick="navigateTo('page-hero')">E &amp; A</span>
         <nav>
             <ul class="nav-links">
-                <li><a onclick="navigateTo('page-hero')" id="link-page-hero" class="active-link">Home</a></li>
-                <li><a onclick="navigateTo('page-story')" id="link-page-story">Story</a></li>
+                <li><a onclick="navigateTo('page-hero')" id="link-page-hero" class="active-link">Invitation</a></li>
+                <li><a onclick="navigateTo('page-story')" id="link-page-story">Our Story</a></li>
                 <li><a onclick="navigateTo('page-adventures')" id="link-page-adventures">Adventures</a></li>
                 <li><a onclick="navigateTo('page-wedding')" id="link-page-wedding">Details</a></li>
-                <li><a onclick="navigateTo('page-crew')" id="link-page-crew">Crew</a></li>
+                <li><a onclick="navigateTo('page-crew')" id="link-page-crew">Our Crew</a></li>
                 <li><a onclick="navigateTo('page-rsvp')" id="link-page-rsvp">RSVP</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- SECTION 1: HERO PAGE (USES background.jpg) -->
+    <!-- SECTION 1: HERO INVITATION PAGE (USES background.jpg WITH 50% OVERLAY) -->
     <section class="section-page active-page" id="page-hero">
         <div class="page-inner-content hero">
-            <p class="tagline">Our Story</p>
-            <h2>Has Taken Us Places</h2>
+            <span class="invitation-badge">You Are Warmly Invited</span>
+            <p class="tagline">To Join Our Next Chapter</p>
+            <h2>WE'RE GETTING MARRIED</h2>
             <h1>THE NEXT ADVENTURE</h1>
             <div class="names">Elena &amp; Adrian</div>
-            <p style="margin-top: 2rem; font-size: 0.9rem; letter-spacing: 0.15em; color: var(--color-text-muted); text-transform: uppercase;">Use the menu above to navigate</p>
-        </div>
-    </section>
 
-    <!-- SECTION 2: STORY PAGE (USES NY.jpeg) -->
-    <section class="section-page" id="page-story">
-        <div class="page-inner-content">
-            <div class="story-container">
-                <p class="tagline">How It All Began</p>
-                <h3>It started with a coffee.</h3>
-                <p>Elena and Adrian met over iced coffee on an ordinary afternoon in Manila. What started as one coffee turned into late-night conversations, spontaneous weekend trips, missed trains, long drives, and eventually a collection of places that became part of their story.</p>
-                <p>Seven years later, they've collected more memories than souvenirs—and they're ready for their next adventure.</p>
+            <p class="hero-invite-text">
+                After 7 years of travel, missed flights, and endless iced coffee, we are taking our biggest leap yet! We would be deeply honored to have you celebrate our wedding day with us.
+            </p>
+
+            <div style="margin-top: 2rem;">
+                <a onclick="navigateTo('page-wedding')" class="btn-rsvp" style="padding: 0.8rem 2rem; font-size: 0.85rem;">View Wedding Details &rarr;</a>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 3: ADVENTURES & NEW YORK POSTCARD PAGE (USES NY.jpeg) -->
+    <!-- SECTION 2: OUR STORY PAGE (FIRST PERSON VOICE) -->
+    <section class="section-page" id="page-story">
+        <div class="page-inner-content">
+            <div class="story-container">
+                <p class="tagline">How We Started</p>
+                <h3>It all started over coffee.</h3>
+                <p>We met over iced coffee on an ordinary afternoon in Manila. What started as just one coffee quickly turned into late-night conversations, spontaneous weekend trips, missed trains, long drives, and a collection of places that became part of who we are.</p>
+                <p>Seven years later, we’ve collected more memories than souvenirs. Now, we are ready for our greatest adventure yet—and we want you by our side as we say <em>"I do."</em></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: ADVENTURES & NEW YORK POSTCARD PAGE -->
     <section class="section-page" id="page-adventures">
         <div class="page-inner-content">
-            <p class="tagline">7 Years of Exploring</p>
-            <h2 class="serif" style="font-size: 2.2rem; font-weight: 400; margin-bottom: 0.5rem; text-shadow: 0 2px 6px rgba(0,0,0,0.8);">OUR ADVENTURES TOGETHER</h2>
+            <p class="tagline">7 Years Together</p>
+            <h2 class="serif" style="font-size: 2.2rem; font-weight: 400; margin-bottom: 0.5rem; text-shadow: 0 2px 6px rgba(0,0,0,0.8);">OUR JOURNEY SO FAR</h2>
 
             <div class="travel-badge-grid">
                 <div class="travel-badge">
@@ -572,41 +603,42 @@
 
             <!-- EXCLUSIVE NEW YORK POSTCARD -->
             <div class="postcard-card">
-                <div class="postcard-stamp">Favorite City</div>
+                <div class="postcard-stamp">Our Favorite City</div>
                 <div class="postcard-image">
                     <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1000&q=80" alt="New York City">
                 </div>
                 <div class="postcard-body">
                     <h3>NEW YORK, USA</h3>
                     <h4>"Our kind of chaos"</h4>
-                    <p>Out of all the places we've visited, New York remains our ultimate favorite city.</p>
-                    <p>It was our first trip where everything seemed to go wrong—delayed flights, wrong subways, and rain without an umbrella. And somehow, we laughed through all of it.</p>
+                    <p>Out of all the cities we've visited together, New York holds the most special place in our hearts.</p>
+                    <p>It was our first trip where everything seemed to go wrong—flight delays, taking the wrong subway, and getting caught in the rain without an umbrella. Yet, we laughed through every moment of it.</p>
                     <span class="annotation">Definitely not our smoothest trip. Definitely our favorite.</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 4: WEDDING DETAILS PAGE (USES NY.jpeg) -->
+    <!-- SECTION 4: WEDDING DETAILS PAGE -->
     <section class="section-page" id="page-wedding">
         <div class="page-inner-content">
-            <p class="tagline">The Destination</p>
-            <h2 class="serif" style="font-size: 2.8rem; font-weight: 500; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">OUR WEDDING DAY</h2>
-            <p style="color: var(--color-terracotta); font-size: 1.2rem; margin-top: 0.3rem;" class="serif">January 31, 2028 • Manila, Philippines</p>
+            <p class="tagline">The Next Destination</p>
+            <h2 class="serif" style="font-size: 2.8rem; font-weight: 500; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">OUR WEDDING DETAILS</h2>
+            <p style="color: var(--color-terracotta); font-size: 1.3rem; margin-top: 0.3rem;" class="serif">January 31, 2028 • Manila, Philippines</p>
+            <p style="color: #FFFFFF; font-size: 1rem; margin-top: 0.3rem; font-style: italic;">We'd love for you to join us as our next chapter begins!</p>
 
             <div class="wedding-grid">
                 <!-- Ceremony -->
                 <div class="detail-card">
-                    <p class="tagline">The Next Stop</p>
-                    <h3>Ceremony</h3>
+                    <p class="tagline">Our Ceremony</p>
+                    <h3>The Vows</h3>
                     <p>San Sebastian Church</p>
                     <span class="highlight">3:00 PM</span>
                 </div>
 
                 <!-- Reception -->
                 <div class="detail-card">
-                    <p class="tagline">The Celebration</p>
-                    <h3>Reception</h3>
+                    <p class="tagline">Our Reception</p>
+                    <h3>The Party</h3>
                     <p>The Manila Hotel</p>
                     <span class="highlight">6:00 PM onwards</span>
                 </div>
@@ -616,18 +648,18 @@
                     <p class="tagline" style="color: var(--color-purple);">Attire</p>
                     <h3>Dress Code</h3>
                     <span class="purple-highlight">Purple</span>
-                    <p style="margin-top: 0.6rem; font-style: italic;">Come celebrate, stay awhile, and make a few memories with us.</p>
+                    <p style="margin-top: 0.6rem; font-style: italic;">Come celebrate, stay awhile, and make new memories with us!</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 5: OUR CREW PAGE (USES NY.jpeg) -->
+    <!-- SECTION 5: OUR CREW PAGE -->
     <section class="section-page" id="page-crew">
         <div class="page-inner-content">
             <p class="tagline">Good Company</p>
-            <h2 class="serif" style="font-size: 2.5rem; font-weight: 400; text-shadow: 0 2px 6px rgba(0,0,0,0.8);">OUR CREW</h2>
-            <p style="color: var(--color-text-muted); font-style: italic; margin-bottom: 0.5rem; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">Every adventure needs good company.</p>
+            <h2 class="serif" style="font-size: 2.5rem; font-weight: 400; text-shadow: 0 2px 6px rgba(0,0,0,0.8);">OUR WEDDING PARTY</h2>
+            <p style="color: #FFFFFF; font-style: italic; margin-bottom: 0.5rem; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">Every great adventure needs the best crew.</p>
             
             <div class="entourage-grid">
                 <div class="entourage-group">
@@ -667,22 +699,22 @@
         </div>
     </section>
 
-    <!-- SECTION 6: RSVP & FINALE PAGE (USES NY.jpeg) -->
+    <!-- SECTION 6: RSVP & FINALE PAGE -->
     <section class="section-page" id="page-rsvp">
         <div class="page-inner-content">
             <div class="rsvp-container">
-                <p class="tagline">Are You Coming?</p>
-                <h2>ONE MORE ADVENTURE?</h2>
-                <p style="font-size: 1.1rem; color: #FFFFFF;">This time, we'd love to have you with us.</p>
+                <p class="tagline">Join Our Adventure</p>
+                <h2>WILL YOU COME CELEBRATE WITH US?</h2>
+                <p style="font-size: 1.15rem; color: #FFFFFF;">We would be honored to have you with us in Manila!</p>
                 <p style="color: var(--color-terracotta); font-weight: 700; margin-top: 0.5rem;" class="serif">January 31, 2028 • Manila, Philippines</p>
                 
                 <a href="javascript:void(0)" class="btn-rsvp">Count Me In &rarr;</a>
-                <div class="rsvp-deadline">RSVP deadline: December 15, 2027</div>
+                <div class="rsvp-deadline">Please RSVP by December 15, 2027</div>
 
                 <div style="margin-top: 2.5rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1.8rem;">
                     <h3 class="serif" style="font-size: 1.6rem; font-weight: 400; color: #FFFFFF;">WHEREVER WE GO, WE GO TOGETHER.</h3>
                     <div class="serif" style="font-size: 1.4rem; color: var(--color-terracotta); font-style: italic; margin-top: 0.3rem;">Elena &amp; Adrian</div>
-                    <div style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-muted); margin-top: 1.2rem;">OurStory Invites</div>
+                    <p style="font-size: 0.95rem; color: var(--color-sage); margin-top: 0.5rem;">Our next adventure begins with you.</p>
                 </div>
             </div>
         </div>
