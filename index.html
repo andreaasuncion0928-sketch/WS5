@@ -178,42 +178,42 @@
     }
 
     /* ==========================================================================
-       02. TOP NAVIGATION TABS BAR & FIXED MOBILE MENU
+       02. TOP NAVIGATION TABS BAR (Header Fix to Prevent Overlaps)
        ========================================================================== */
     .app-header {
       position: fixed;
       top: 0; left: 0; right: 0;
-      height: 70px;
+      height: 80px;
       z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 3rem;
-      background: rgba(249, 246, 240, 0.95);
-      backdrop-filter: blur(10px);
+      background: rgba(249, 246, 240, 0.98);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-dark);
       transition: background 0.5s ease, border-color 0.5s ease, color 0.5s ease;
     }
 
     body.theme-purple .app-header {
-      background: rgba(31, 16, 34, 0.95);
+      background: rgba(31, 16, 34, 0.98);
       border-color: var(--border-light);
       color: var(--text-light);
     }
 
     body.theme-charcoal .app-header {
-      background: rgba(20, 20, 20, 0.95);
+      background: rgba(20, 20, 20, 0.98);
       border-color: var(--border-light);
       color: var(--text-light);
     }
 
     .brand-logo {
       font-family: var(--font-serif);
-      font-size: 1.2rem;
-      letter-spacing: 1px;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
     }
 
-    /* Desktop Navigation Tabs */
     .nav-tabs {
       display: flex;
       gap: 1.8rem;
@@ -339,11 +339,11 @@
     .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
     /* ==========================================================================
-       03. TAB VIEWPORT & PANELS
+       03. TAB VIEWPORT & PANELS (Padding Top Adjusted to Prevent Overlaps)
        ========================================================================== */
     .tab-viewport {
       position: absolute;
-      top: 70px;
+      top: 80px; /* Aligned with Header Height */
       bottom: 0; left: 0; right: 0;
       overflow: hidden;
     }
@@ -353,7 +353,7 @@
       inset: 0;
       overflow-y: auto;
       display: none;
-      padding: 5rem 2rem 8rem;
+      padding: 3rem 2rem 8rem; /* Padding top reduced so title sits right under header */
       opacity: 0;
       transition: opacity 0.5s ease;
     }
@@ -372,11 +372,11 @@
       font-size: 0.75rem;
       letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
       display: block;
     }
 
-    /* 02. OUR STORY PANEL (Wrapped Photo Face Framing) */
+    /* 02. OUR STORY PANEL */
     #tab-story { background-color: var(--bg-cream); color: var(--text-dark); }
     #tab-story .section-label { color: var(--accent-purple); }
 
@@ -406,82 +406,113 @@
       object-fit: cover;
     }
 
-    /* Second photo custom wrap alignment to ensure faces are fully visible */
     .story-photos .img-wrapper.photo-focus-faces img {
       object-position: top center;
     }
 
-    /* 03. OUR ADVENTURES PANEL (Text & Story First Layout) */
+    /* 03. OUR ADVENTURES PANEL (Redesigned: 3 Side-by-Side Sections) */
     #tab-adventures { background-color: var(--bg-cream); color: var(--text-dark); }
     #tab-adventures .section-label { color: var(--accent-purple); }
 
-    .adventure-row {
+    .adventures-container {
       display: flex;
-      flex-direction: column; /* Story First, Picture Second */
-      gap: 1.5rem;
-      margin-bottom: 5rem;
-      border-bottom: 1px solid var(--border-dark);
-      padding-bottom: 4rem;
+      flex-direction: column;
+      gap: 4rem;
     }
 
-    .adventure-row:last-child {
-      border-bottom: none;
+    .adventure-section-card {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 3.5rem;
+      align-items: center;
+      background: var(--bg-cream-card);
+      border: 1px solid var(--border-dark);
+      padding: 2.5rem;
     }
 
-    .adv-text h3 { 
-      font-size: 2.8rem; 
-      margin-bottom: 0.5rem; 
+    .adventure-section-card:nth-child(even) {
+      grid-template-columns: 1.1fr 1fr;
+    }
+
+    .adventure-section-card:nth-child(even) .adv-text-block {
+      order: 2;
+    }
+
+    .adv-text-block h3 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
       letter-spacing: 1px;
     }
 
-    .adv-text p {
-      font-size: 1.15rem;
+    .adv-text-block p {
+      font-size: 1.1rem;
       color: var(--text-muted);
-      max-width: 800px;
+      line-height: 1.6;
     }
 
-    .adv-img-wrap {
+    .adv-image-block {
       width: 100%;
-      margin-top: 1rem;
+      height: 380px;
+      overflow: hidden;
+      border: 1px solid var(--border-dark);
     }
 
-    .adv-img-wrap img { 
-      width: 100%; 
-      height: 480px; 
-      object-fit: cover; 
-      border: 1px solid var(--border-dark); 
+    .adv-image-block img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    /* 04. THE WEDDING PANEL (PURPLE WITH TRANSITION STORY) */
+    /* 04. THE WEDDING PANEL (Grid Layout for Mobile & Browser) */
     #tab-wedding { background-color: var(--bg-purple); color: var(--text-light); }
     #tab-wedding .section-label { color: var(--text-light-muted); }
 
     .wedding-intro-story {
-      max-width: 780px;
-      margin: 0 auto 4rem;
+      max-width: 800px;
+      margin: 0 auto 3rem;
       text-align: center;
     }
 
     .wedding-intro-story h2 {
-      font-size: 3.5rem;
-      margin-bottom: 1.5rem;
+      font-size: 3rem;
+      margin-bottom: 1rem;
       color: var(--text-light);
     }
 
     .wedding-intro-story p.narrative {
       font-family: var(--font-serif);
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-style: italic;
       color: var(--text-light-muted);
       line-height: 1.6;
+    }
+
+    .wedding-date-banner {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .wedding-date-banner h3 {
+      font-size: 2.2rem;
+      letter-spacing: 3px;
+      color: var(--text-light);
     }
 
     .wedding-details-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 3rem;
-      border-top: 1px solid var(--border-light);
-      padding-top: 4rem;
+    }
+
+    .wedding-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-light);
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .wedding-card h4 { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light-muted); margin-bottom: 1rem; }
@@ -492,15 +523,16 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-top: 1.8rem;
+      margin-top: 2rem;
       background: transparent;
       border: 1px solid var(--border-light);
       color: var(--text-light);
-      padding: 0.7rem 1.4rem;
+      padding: 0.8rem 1.4rem;
       font-size: 0.7rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       text-decoration: none;
+      width: fit-content;
       transition: all 0.3s ease;
     }
 
@@ -530,7 +562,7 @@
     #tab-moments {
       background-color: var(--bg-charcoal);
       color: var(--text-light);
-      padding: 4rem 0;
+      padding: 3rem 0;
       overflow: hidden;
     }
     #tab-moments .section-label {
@@ -751,7 +783,8 @@
        MOBILE LAYOUT REFINEMENTS (< 900px)
        ========================================================================== */
     @media (max-width: 900px) {
-      .app-header { padding: 0 1.5rem; }
+      .app-header { padding: 0 1.5rem; height: 70px; }
+      .tab-viewport { top: 70px; }
       
       .nav-tabs { display: none; }
       .mobile-menu-toggle { display: flex; }
@@ -770,25 +803,37 @@
       }
 
       .tab-panel {
-        padding: 3rem 1.5rem 6rem;
+        padding: 2.5rem 1.25rem 6rem;
       }
 
       .story-grid, 
       .wedding-details-grid, 
       .faqs-grid { 
         grid-template-columns: 1fr; 
-        gap: 2.5rem;
+        gap: 2rem;
       }
+
+      .adventure-section-card,
+      .adventure-section-card:nth-child(even) {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+        gap: 1.5rem;
+      }
+
+      .adventure-section-card:nth-child(even) .adv-text-block {
+        order: 0;
+      }
+
+      .adv-text-block h3 { font-size: 2.2rem; }
+      .adv-image-block { height: 280px; }
 
       .story-content h2 { font-size: 2.2rem; }
       .story-photos { grid-template-columns: 1fr; }
       .story-photos .img-wrapper { height: 280px; }
 
-      .adv-text h3 { font-size: 2.2rem; }
-      .adv-img-wrap img { height: 320px; }
-
-      .wedding-intro-story h2 { font-size: 2.4rem; }
+      .wedding-intro-story h2 { font-size: 2.2rem; }
       .wedding-intro-story p.narrative { font-size: 1.15rem; }
+      .wedding-card { padding: 1.8rem 1.5rem; }
       .wedding-card p.venue-title { font-size: 1.8rem; }
 
       .person-names { font-size: 1.6rem; }
@@ -883,7 +928,7 @@
      ========================================================================== -->
   <div class="tab-viewport">
 
-    <!-- OUR STORY PANEL (Wrapped Photos with Face Focus) -->
+    <!-- OUR STORY PANEL -->
     <div class="tab-panel active" id="tab-story">
       <div class="container">
         <span class="section-label">01 / Our Story</span>
@@ -907,38 +952,51 @@
       </div>
     </div>
 
-    <!-- OUR ADVENTURES PANEL (Story and Paragraph First Layout) -->
+    <!-- OUR ADVENTURES PANEL (Redesigned: 3 Side-by-Side Sections) -->
     <div class="tab-panel" id="tab-adventures">
       <div class="container">
         <span class="section-label">02 / Our Adventures</span>
         
-        <div class="adventure-row">
-          <div class="adv-text">
-            <h3>NEW YORK</h3>
-            <p>Somewhere between getting lost in Brooklyn and finding the best espresso in West Village, we realized we navigate chaos pretty well together.</p>
+        <div class="adventures-container">
+          
+          <!-- Section 1: New York -->
+          <div class="adventure-section-card">
+            <div class="adv-text-block">
+              <h3>NEW YORK</h3>
+              <p>Somewhere between getting lost in Brooklyn and finding the best espresso in West Village, we realized we navigate chaos pretty well together.</p>
+            </div>
+            <div class="adv-image-block">
+              <img src="new-york.jpeg" alt="New York">
+            </div>
           </div>
-          <div class="adv-img-wrap"><img src="new-york.jpeg" alt="New York"></div>
-        </div>
 
-        <div class="adventure-row">
-          <div class="adv-text">
-            <h3>TOKYO</h3>
-            <p>The 3-day trip that somehow turned into 47,000 steps a day, late-night ramen runs, and a shared love for quiet alleyways.</p>
+          <!-- Section 2: Tokyo -->
+          <div class="adventure-section-card">
+            <div class="adv-text-block">
+              <h3>TOKYO</h3>
+              <p>The 3-day trip that somehow turned into 47,000 steps a day, late-night ramen runs, and a shared love for quiet alleyways.</p>
+            </div>
+            <div class="adv-image-block">
+              <img src="tokyo.jpeg" alt="Tokyo">
+            </div>
           </div>
-          <div class="adv-img-wrap"><img src="tokyo.jpeg" alt="Tokyo"></div>
-        </div>
 
-        <div class="adventure-row">
-          <div class="adv-text">
-            <h3>PALAWAN</h3>
-            <p>Where we decided doing absolutely nothing together on a remote beach was actually our favorite vacation of all.</p>
+          <!-- Section 3: Palawan -->
+          <div class="adventure-section-card">
+            <div class="adv-text-block">
+              <h3>PALAWAN</h3>
+              <p>Where we decided doing absolutely nothing together on a remote beach was actually our favorite vacation of all.</p>
+            </div>
+            <div class="adv-image-block">
+              <img src="palawan.jpeg" alt="Palawan">
+            </div>
           </div>
-          <div class="adv-img-wrap"><img src="palawan.jpeg" alt="Palawan"></div>
+
         </div>
       </div>
     </div>
 
-    <!-- THE WEDDING PANEL (Story Narrative Transition) -->
+    <!-- THE WEDDING PANEL (Responsive Grid Layout) -->
     <div class="tab-panel" id="tab-wedding">
       <div class="container">
         <span class="section-label">03 / The Wedding</span>
@@ -948,26 +1006,30 @@
           <p class="narrative">“After traveling thousands of miles across different cities and shorelines, our favorite destination has always been each other. Now, we are coming home to where our story first began to begin our greatest chapter yet.”</p>
         </div>
 
-        <div class="wedding-header">
-          <h2 style="font-size: 2.2rem; font-family: var(--font-sans); letter-spacing: 3px; color: var(--text-light-muted);">JANUARY 31, 2028</h2>
+        <div class="wedding-date-banner">
+          <h3>JANUARY 31, 2028</h3>
         </div>
 
         <div class="wedding-details-grid">
           <div class="wedding-card">
-            <h4>Ceremony</h4>
-            <p class="venue-title">San Sebastian Church</p>
-            <p class="venue-sub">Plaza del Carmen, Quiapo, Manila</p>
-            <p class="venue-sub" style="margin-top: 0.5rem; color: #fff;">4:30 PM</p>
+            <div>
+              <h4>Ceremony</h4>
+              <p class="venue-title">San Sebastian Church</p>
+              <p class="venue-sub">Plaza del Carmen, Quiapo, Manila</p>
+              <p class="venue-sub" style="margin-top: 0.5rem; color: #fff;">4:30 PM</p>
+            </div>
             <a href="https://maps.google.com/?q=San+Sebastian+Church+Quiapo+Manila" target="_blank" rel="noopener noreferrer" class="btn-directions">
               Get Directions ↗
             </a>
           </div>
 
           <div class="wedding-card">
-            <h4>Reception</h4>
-            <p class="venue-title">The Manila Hotel</p>
-            <p class="venue-sub">One Rizal Park, Ermita, Manila</p>
-            <p class="venue-sub" style="margin-top: 0.5rem; color: #fff;">6:30 PM</p>
+            <div>
+              <h4>Reception</h4>
+              <p class="venue-title">The Manila Hotel</p>
+              <p class="venue-sub">One Rizal Park, Ermita, Manila</p>
+              <p class="venue-sub" style="margin-top: 0.5rem; color: #fff;">6:30 PM</p>
+            </div>
             <a href="https://maps.google.com/?q=The+Manila+Hotel+Rizal+Park+Manila" target="_blank" rel="noopener noreferrer" class="btn-directions">
               Get Directions ↗
             </a>
@@ -1226,11 +1288,11 @@
           centeredSlides: true,
           slidesPerView: 'auto',
           loop: true,
-          speed: 450, // Faster, energetic slide transition
+          speed: 450,
           coverflowEffect: {
-            rotate: 25,     /* Dynamic 3D rotation */
+            rotate: 25,
             stretch: 0,
-            depth: 220,     /* Aggressive perspective depth */
+            depth: 220,
             modifier: 1.2,
             slideShadows: false,
           },
@@ -1247,13 +1309,11 @@
       menuToggle.classList.toggle('open');
     }
 
-    // Direct, single-click mobile menu tab switching fix
+    // Fixed single-click mobile drawer switching
     function switchTabMobile(tabId, theme, btn) {
-      // 1. Sync mobile active state
       document.querySelectorAll('.mobile-link').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // 2. Execute main tab switch immediately
       const desktopTabs = document.querySelectorAll('.tab-link');
       let targetDesktopBtn = null;
       desktopTabs.forEach(dBtn => {
@@ -1264,7 +1324,6 @@
 
       switchTab(tabId, theme, targetDesktopBtn);
 
-      // 3. Close mobile drawer immediately
       drawer.classList.remove('open');
       menuToggle.classList.remove('open');
     }
