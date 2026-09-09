@@ -70,7 +70,7 @@
     p { line-height: 1.6; font-weight: 300; }
 
     /* ==========================================================================
-       01. COVER OVERLAY
+       01. COVER OVERLAY — MINIMIZED OPEN INVITATION & 50% OPACITY PANEL
        ========================================================================== */
     #cover {
       position: fixed;
@@ -111,7 +111,7 @@
 
     .cover-center {
       text-align: center;
-      background: rgba(249, 246, 240, 0.5);
+      background: rgba(249, 246, 240, 0.5); /* 50% Opacity Card Panel */
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       padding: 3.5rem 4rem;
@@ -213,7 +213,7 @@
 
     .nav-tabs {
       display: flex;
-      gap: 2rem;
+      gap: 1.8rem;
       list-style: none;
     }
 
@@ -338,15 +338,36 @@
 
     .wedding-details-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 3rem;
       border-top: 1px solid var(--border-light);
       padding-top: 4rem;
     }
 
     .wedding-card h4 { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light-muted); margin-bottom: 1rem; }
-    .wedding-card p.venue-title { font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem; color: var(--text-light); }
+    .wedding-card p.venue-title { font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 0.5rem; color: var(--text-light); }
     .wedding-card p.venue-sub { color: var(--text-light-muted); font-size: 0.95rem; }
+
+    .btn-directions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 1.8rem;
+      background: transparent;
+      border: 1px solid var(--border-light);
+      color: var(--text-light);
+      padding: 0.7rem 1.4rem;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-directions:hover {
+      background: var(--text-light);
+      color: var(--bg-purple);
+    }
 
     /* 05. OUR PEOPLE PANEL */
     #tab-people { background-color: var(--bg-cream); color: var(--text-dark); }
@@ -421,9 +442,7 @@
       filter: brightness(90%) contrast(100%);
     }
 
-    .swiper-slide:hover img {
-      transform: scale(1.06);
-    }
+    .swiper-slide:hover img { transform: scale(1.06); }
 
     .moments-caption {
       padding: 1rem 0 0.5rem;
@@ -464,9 +483,37 @@
       color: var(--bg-charcoal);
     }
 
-    /* ==========================================================================
-       07. RSVP PANEL — QR CODE DISPLAY
-       ========================================================================== */
+    /* 07. FAQS PANEL */
+    #tab-faqs {
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+    }
+    #tab-faqs .section-label { color: var(--accent-purple); }
+
+    .faqs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      margin-top: 1rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border-dark);
+      padding-bottom: 2rem;
+    }
+
+    .faq-item h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.8rem;
+      color: var(--text-dark);
+    }
+
+    .faq-item p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* 08. RSVP PANEL */
     #tab-rsvp { 
       background-color: var(--bg-charcoal); 
       color: var(--text-light); 
@@ -474,16 +521,8 @@
     }
     #tab-rsvp .section-label { color: var(--text-light-muted); }
 
-    .rsvp-container { 
-      max-width: 550px; 
-      margin: 0 auto; 
-    }
-
-    .rsvp-container h2 { 
-      font-size: 3rem; 
-      margin-bottom: 1rem; 
-      color: var(--text-light); 
-    }
+    .rsvp-container { max-width: 550px; margin: 0 auto; }
+    .rsvp-container h2 { font-size: 3rem; margin-bottom: 1rem; color: var(--text-light); }
 
     .rsvp-subtext {
       color: var(--text-light-muted);
@@ -509,11 +548,7 @@
       border-radius: 4px;
     }
 
-    .qr-image-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
+    .qr-image-wrap img { width: 100%; height: 100%; object-fit: contain; }
 
     .qr-instruction {
       font-size: 0.75rem;
@@ -522,7 +557,7 @@
       color: var(--text-light-muted);
     }
 
-    /* 08. CLOSING PANEL */
+    /* 09. CLOSING PANEL */
     #tab-closing { padding: 0; height: 100%; }
     .closing-sec {
       position: relative; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--text-light);
@@ -538,9 +573,9 @@
     /* Responsive Design */
     @media (max-width: 900px) {
       .app-header { padding: 0 1rem; }
-      .nav-tabs { gap: 0.8rem; }
-      .nav-tabs button { font-size: 0.65rem; }
-      .story-grid, .adventure-row, .adventure-row:nth-child(even), .wedding-details-grid { grid-template-columns: 1fr; }
+      .nav-tabs { gap: 0.6rem; }
+      .nav-tabs button { font-size: 0.6rem; letter-spacing: 1px; }
+      .story-grid, .adventure-row, .adventure-row:nth-child(even), .wedding-details-grid, .faqs-grid { grid-template-columns: 1fr; }
       .adventure-row:nth-child(even) .adv-img-wrap { order: 0; }
       .brand-logo { display: none; }
       .swiper-slide { width: 290px; }
@@ -585,6 +620,7 @@
       <li><button class="tab-link" onclick="switchTab('wedding', 'purple', this)">The Wedding</button></li>
       <li><button class="tab-link" onclick="switchTab('people', 'cream', this)">Our People</button></li>
       <li><button class="tab-link" onclick="switchTab('moments', 'charcoal', this)">Moments</button></li>
+      <li><button class="tab-link" onclick="switchTab('faqs', 'cream', this)">FAQs</button></li>
       <li><button class="tab-link" onclick="switchTab('rsvp', 'charcoal', this)">RSVP</button></li>
       <li><button class="tab-link" onclick="switchTab('closing', 'charcoal', this)">Closing</button></li>
     </ul>
@@ -651,7 +687,7 @@
       </div>
     </div>
 
-    <!-- THE WEDDING PANEL -->
+    <!-- THE WEDDING PANEL (Directions Added) -->
     <div class="tab-panel" id="tab-wedding">
       <div class="container">
         <span class="section-label">03 / The Wedding</span>
@@ -664,20 +700,20 @@
             <h4>Ceremony</h4>
             <p class="venue-title">San Sebastian Church</p>
             <p class="venue-sub">Plaza del Carmen, Quiapo, Manila</p>
-            <p class="venue-sub" style="margin-top: 1rem; color: #fff;">4:30 PM</p>
+            <p class="venue-sub" style="margin-top: 0.5rem; color: #fff;">4:30 PM</p>
+            <a href="https://maps.google.com/?q=San+Sebastian+Church+Quiapo+Manila" target="_blank" rel="noopener noreferrer" class="btn-directions">
+              Get Directions ↗
+            </a>
           </div>
 
           <div class="wedding-card">
             <h4>Reception</h4>
             <p class="venue-title">The Manila Hotel</p>
             <p class="venue-sub">One Rizal Park, Ermita, Manila</p>
-            <p class="venue-sub" style="margin-top: 1rem; color: #fff;">6:30 PM</p>
-          </div>
-
-          <div class="wedding-card">
-            <h4>Dress Code</h4>
-            <p class="venue-title">Purple</p>
-            <p class="venue-sub">Formal attire in shades of deep purple, violet, and muted neutrals.</p>
+            <p class="venue-sub" style="margin-top: 0.5rem; color: #fff;">6:30 PM</p>
+            <a href="https://maps.google.com/?q=The+Manila+Hotel+Rizal+Park+Manila" target="_blank" rel="noopener noreferrer" class="btn-directions">
+              Get Directions ↗
+            </a>
           </div>
         </div>
       </div>
@@ -813,10 +849,39 @@
       </div>
     </div>
 
-    <!-- RSVP PANEL (Replaced Form with sampleQR.png display) -->
+    <!-- 07 — FAQS PANEL (New) -->
+    <div class="tab-panel" id="tab-faqs">
+      <div class="container">
+        <span class="section-label">06 / Frequently Asked Questions</span>
+        
+        <div class="faqs-grid">
+          <div class="faq-item">
+            <h3>Dress Code</h3>
+            <p><strong>Purple & Formal Attire.</strong> We kindly invite our guests to dress formally in elegant shades of deep purple, violet, or complementary muted neutrals.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Can I Bring a Plus One?</h3>
+            <p>Due to capacity limits at our venue, we can only accommodate guests who are formally named on the invitation. Thank you for your understanding!</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Gift Registry & Monetary Gifts</h3>
+            <p>Your presence is the greatest gift of all. However, if you wish to honor us with a gift, monetary contributions toward our new beginning together would be warmly appreciated.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Unplugged Ceremony</h3>
+            <p>We ask that you kindly put away your mobile phones and cameras during the ceremony. We have hired professional photographers to capture every moment so you can relax and be present with us.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RSVP PANEL -->
     <div class="tab-panel" id="tab-rsvp">
       <div class="rsvp-container">
-        <span class="section-label">06 / RSVP</span>
+        <span class="section-label">07 / RSVP</span>
         <h2>Will you join us for the next chapter?</h2>
         <p class="rsvp-subtext">Please scan the QR code below using your mobile phone camera to confirm your attendance.</p>
         
