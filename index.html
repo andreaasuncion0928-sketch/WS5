@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Swiper.js for Fashion Editorial Gallery Carousel -->
+  <!-- Swiper.js for High-Energy 3D Coverflow Gallery -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <style>
@@ -178,7 +178,7 @@
     }
 
     /* ==========================================================================
-       02. TOP NAVIGATION TABS BAR (Desktop & Mobile Drawer)
+       02. TOP NAVIGATION TABS BAR & FIXED MOBILE MENU
        ========================================================================== */
     .app-header {
       position: fixed;
@@ -299,11 +299,13 @@
       align-items: center;
       padding: 2rem;
       transform: translateY(-100%);
-      transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+      transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+      pointer-events: none;
     }
 
     .mobile-drawer.open {
       transform: translateY(0);
+      pointer-events: auto;
     }
 
     .mobile-nav-list {
@@ -312,6 +314,7 @@
       display: flex;
       flex-direction: column;
       gap: 1.8rem;
+      width: 100%;
     }
 
     .mobile-nav-list button {
@@ -322,6 +325,8 @@
       color: var(--text-dark);
       cursor: pointer;
       transition: color 0.3s;
+      width: 100%;
+      padding: 0.3rem 0;
     }
 
     .mobile-nav-list button.active, .mobile-nav-list button:hover {
@@ -329,16 +334,9 @@
       font-style: italic;
     }
 
-    /* Active Mobile Hamburger Animation */
-    .mobile-menu-toggle.open span:nth-child(1) {
-      transform: translateY(6.5px) rotate(45deg);
-    }
-    .mobile-menu-toggle.open span:nth-child(2) {
-      opacity: 0;
-    }
-    .mobile-menu-toggle.open span:nth-child(3) {
-      transform: translateY(-6.5px) rotate(-45deg);
-    }
+    .mobile-menu-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .mobile-menu-toggle.open span:nth-child(2) { opacity: 0; }
+    .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
     /* ==========================================================================
        03. TAB VIEWPORT & PANELS
@@ -378,7 +376,7 @@
       display: block;
     }
 
-    /* 02. OUR STORY PANEL */
+    /* 02. OUR STORY PANEL (Wrapped Photo Face Framing) */
     #tab-story { background-color: var(--bg-cream); color: var(--text-dark); }
     #tab-story .section-label { color: var(--accent-purple); }
 
@@ -394,31 +392,89 @@
     .story-author { font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-purple); margin-bottom: 2rem; }
     
     .story-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .story-photos img { width: 100%; height: 320px; object-fit: cover; }
+    
+    .story-photos .img-wrapper {
+      width: 100%;
+      height: 340px;
+      overflow: hidden;
+      border: 1px solid var(--border-dark);
+    }
 
-    /* 03. OUR ADVENTURES PANEL */
+    .story-photos img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Second photo custom wrap alignment to ensure faces are fully visible */
+    .story-photos .img-wrapper.photo-focus-faces img {
+      object-position: top center;
+    }
+
+    /* 03. OUR ADVENTURES PANEL (Text & Story First Layout) */
     #tab-adventures { background-color: var(--bg-cream); color: var(--text-dark); }
     #tab-adventures .section-label { color: var(--accent-purple); }
 
     .adventure-row {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 4rem;
-      align-items: center;
+      display: flex;
+      flex-direction: column; /* Story First, Picture Second */
+      gap: 1.5rem;
       margin-bottom: 5rem;
+      border-bottom: 1px solid var(--border-dark);
+      padding-bottom: 4rem;
     }
 
-    .adventure-row:nth-child(even) { grid-template-columns: 0.8fr 1.2fr; }
-    .adventure-row:nth-child(even) .adv-img-wrap { order: 2; }
-    .adv-img-wrap img { width: 100%; height: 460px; object-fit: cover; border: 1px solid var(--border-dark); }
-    .adv-text h3 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .adventure-row:last-child {
+      border-bottom: none;
+    }
 
-    /* 04. THE WEDDING PANEL (PURPLE) */
+    .adv-text h3 { 
+      font-size: 2.8rem; 
+      margin-bottom: 0.5rem; 
+      letter-spacing: 1px;
+    }
+
+    .adv-text p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 800px;
+    }
+
+    .adv-img-wrap {
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .adv-img-wrap img { 
+      width: 100%; 
+      height: 480px; 
+      object-fit: cover; 
+      border: 1px solid var(--border-dark); 
+    }
+
+    /* 04. THE WEDDING PANEL (PURPLE WITH TRANSITION STORY) */
     #tab-wedding { background-color: var(--bg-purple); color: var(--text-light); }
     #tab-wedding .section-label { color: var(--text-light-muted); }
 
-    .wedding-header { text-align: center; margin-bottom: 4rem; }
-    .wedding-header h2 { font-size: 4rem; letter-spacing: 1px; color: var(--text-light); }
+    .wedding-intro-story {
+      max-width: 780px;
+      margin: 0 auto 4rem;
+      text-align: center;
+    }
+
+    .wedding-intro-story h2 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-light);
+    }
+
+    .wedding-intro-story p.narrative {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--text-light-muted);
+      line-height: 1.6;
+    }
 
     .wedding-details-grid {
       display: grid;
@@ -470,7 +526,7 @@
       z-index: 3000; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
 
-    /* 06. MOMENTS (GALLERY) PANEL */
+    /* 06. MOMENTS (MOMENTS/GALLERY) — AGGRESSIVE DYNAMIC 3D COVERFLOW */
     #tab-moments {
       background-color: var(--bg-charcoal);
       color: var(--text-light);
@@ -486,35 +542,34 @@
       position: relative;
       width: 100%;
       padding: 1rem 0;
+      perspective: 1200px;
     }
 
     .swiper {
       width: 100%;
-      padding: 2rem 3rem !important;
+      padding: 3rem 0 !important;
       overflow: visible !important;
     }
 
     .swiper-slide {
-      width: 380px;
-      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
-      opacity: 0.4;
-    }
-
-    .swiper-slide-active {
-      opacity: 1;
-      transform: scale(1.03);
+      width: 360px;
+      height: 520px;
+      transition: all 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .moments-card {
       position: relative;
+      width: 100%;
+      height: 100%;
       background: #1A1A1A;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.6);
     }
 
     .moments-card-img-wrap {
       width: 100%;
-      height: 520px;
+      height: 85%;
       overflow: hidden;
     }
 
@@ -522,14 +577,16 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-      filter: brightness(90%) contrast(100%);
+      transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
-    .swiper-slide:hover img { transform: scale(1.06); }
+    .swiper-slide-active .moments-card img {
+      transform: scale(1.08);
+      filter: contrast(105%);
+    }
 
     .moments-caption {
-      padding: 1rem 0 0.5rem;
+      padding: 0.8rem 1.2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -537,6 +594,7 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--text-light-muted);
+      background: #141414;
     }
 
     .moments-controls {
@@ -544,27 +602,28 @@
       gap: 1.5rem;
       align-items: center;
       padding-left: 3rem;
-      margin-top: 1.5rem;
+      margin-top: 1rem;
     }
 
     .moments-nav-btn {
       background: transparent;
       border: 1px solid var(--border-light);
       color: var(--text-light);
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 1rem;
       transition: all 0.3s ease;
     }
 
     .moments-nav-btn:hover {
       background: var(--text-light);
       color: var(--bg-charcoal);
+      transform: scale(1.1);
     }
 
     /* 07. FAQS PANEL */
@@ -689,12 +748,11 @@
     .closing-content p.couple-names { font-family: var(--font-serif); font-size: 1.8rem; }
 
     /* ==========================================================================
-       MEDIA QUERIES FOR MOBILE BREAKPOINTS (< 900px)
+       MOBILE LAYOUT REFINEMENTS (< 900px)
        ========================================================================== */
     @media (max-width: 900px) {
       .app-header { padding: 0 1.5rem; }
       
-      /* Hide horizontal desktop nav bar & show hamburger button */
       .nav-tabs { display: none; }
       .mobile-menu-toggle { display: flex; }
 
@@ -716,8 +774,6 @@
       }
 
       .story-grid, 
-      .adventure-row, 
-      .adventure-row:nth-child(even), 
       .wedding-details-grid, 
       .faqs-grid { 
         grid-template-columns: 1fr; 
@@ -726,22 +782,20 @@
 
       .story-content h2 { font-size: 2.2rem; }
       .story-photos { grid-template-columns: 1fr; }
-      .story-photos img { height: 260px; }
+      .story-photos .img-wrapper { height: 280px; }
 
-      .adventure-row:nth-child(even) .adv-img-wrap { order: 0; }
+      .adv-text h3 { font-size: 2.2rem; }
       .adv-img-wrap img { height: 320px; }
-      .adv-text h3 { font-size: 2rem; }
 
-      .wedding-header h2 { font-size: 2.8rem; }
+      .wedding-intro-story h2 { font-size: 2.4rem; }
+      .wedding-intro-story p.narrative { font-size: 1.15rem; }
       .wedding-card p.venue-title { font-size: 1.8rem; }
 
       .person-names { font-size: 1.6rem; }
       .entourage-group { flex-direction: column; gap: 0.4rem; }
 
-      .swiper-slide { width: 280px; }
-      .moments-card-img-wrap { height: 380px; }
+      .swiper-slide { width: 280px; height: 420px; }
       #tab-moments .section-label, .moments-controls { padding-left: 1.5rem; }
-      .swiper { padding: 1rem 1.5rem !important; }
 
       .rsvp-container h2 { font-size: 2.2rem; }
       .qr-card-frame { padding: 1.8rem 1.2rem; }
@@ -829,7 +883,7 @@
      ========================================================================== -->
   <div class="tab-viewport">
 
-    <!-- OUR STORY PANEL -->
+    <!-- OUR STORY PANEL (Wrapped Photos with Face Focus) -->
     <div class="tab-panel active" id="tab-story">
       <div class="container">
         <span class="section-label">01 / Our Story</span>
@@ -841,50 +895,61 @@
             <p>What was supposed to be a quick catchup turned into hours of talking about everything from worst travel mistakes to favorite albums. By the time the coffee shop was closing, we both knew something quiet and permanent had just begun.</p>
           </div>
           <div class="story-photos">
-            <img src="story-coffee-1.jpeg" alt="Story photo 1">
-            <img src="story-coffee-2.jpeg" alt="Story photo 2">
+            <div class="img-wrapper">
+              <img src="story-coffee-1.jpeg" alt="Story photo 1">
+            </div>
+            <!-- Face focus wrap on 2nd photo -->
+            <div class="img-wrapper photo-focus-faces">
+              <img src="story-coffee-2.jpeg" alt="Story photo 2">
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- OUR ADVENTURES PANEL -->
+    <!-- OUR ADVENTURES PANEL (Story and Paragraph First Layout) -->
     <div class="tab-panel" id="tab-adventures">
       <div class="container">
         <span class="section-label">02 / Our Adventures</span>
         
         <div class="adventure-row">
-          <div class="adv-img-wrap"><img src="new-york.jpeg" alt="New York"></div>
           <div class="adv-text">
             <h3>NEW YORK</h3>
             <p>Somewhere between getting lost in Brooklyn and finding the best espresso in West Village, we realized we navigate chaos pretty well together.</p>
           </div>
+          <div class="adv-img-wrap"><img src="new-york.jpeg" alt="New York"></div>
         </div>
 
         <div class="adventure-row">
-          <div class="adv-img-wrap"><img src="tokyo.jpeg" alt="Tokyo"></div>
           <div class="adv-text">
             <h3>TOKYO</h3>
             <p>The 3-day trip that somehow turned into 47,000 steps a day, late-night ramen runs, and a shared love for quiet alleyways.</p>
           </div>
+          <div class="adv-img-wrap"><img src="tokyo.jpeg" alt="Tokyo"></div>
         </div>
 
         <div class="adventure-row">
-          <div class="adv-img-wrap"><img src="palawan.jpeg" alt="Palawan"></div>
           <div class="adv-text">
             <h3>PALAWAN</h3>
             <p>Where we decided doing absolutely nothing together on a remote beach was actually our favorite vacation of all.</p>
           </div>
+          <div class="adv-img-wrap"><img src="palawan.jpeg" alt="Palawan"></div>
         </div>
       </div>
     </div>
 
-    <!-- THE WEDDING PANEL -->
+    <!-- THE WEDDING PANEL (Story Narrative Transition) -->
     <div class="tab-panel" id="tab-wedding">
       <div class="container">
         <span class="section-label">03 / The Wedding</span>
+        
+        <div class="wedding-intro-story">
+          <h2>FROM TRAVELS TO FOREVER</h2>
+          <p class="narrative">“After traveling thousands of miles across different cities and shorelines, our favorite destination has always been each other. Now, we are coming home to where our story first began to begin our greatest chapter yet.”</p>
+        </div>
+
         <div class="wedding-header">
-          <h2>JANUARY 31, 2028</h2>
+          <h2 style="font-size: 2.2rem; font-family: var(--font-sans); letter-spacing: 3px; color: var(--text-light-muted);">JANUARY 31, 2028</h2>
         </div>
 
         <div class="wedding-details-grid">
@@ -946,7 +1011,7 @@
       </div>
     </div>
 
-    <!-- MOMENTS PANEL -->
+    <!-- MOMENTS PANEL (Aggressive Dynamic 3D Coverflow) -->
     <div class="tab-panel" id="tab-moments">
       <span class="section-label">05 / Photo Journal</span>
       
@@ -1152,15 +1217,23 @@
       initMomentsCarousel();
     }
 
+    // High-Energy 3D Coverflow Carousel for Travel Couple
     function initMomentsCarousel() {
       if (!momentsSwiper) {
         momentsSwiper = new Swiper('.momentsSwiper', {
-          slidesPerView: 'auto',
-          spaceBetween: 30,
-          centeredSlides: true,
-          loop: true,
-          speed: 900,
+          effect: 'coverflow',
           grabCursor: true,
+          centeredSlides: true,
+          slidesPerView: 'auto',
+          loop: true,
+          speed: 450, // Faster, energetic slide transition
+          coverflowEffect: {
+            rotate: 25,     /* Dynamic 3D rotation */
+            stretch: 0,
+            depth: 220,     /* Aggressive perspective depth */
+            modifier: 1.2,
+            slideShadows: false,
+          },
           navigation: {
             nextEl: '.btn-next',
             prevEl: '.btn-prev',
@@ -1174,16 +1247,24 @@
       menuToggle.classList.toggle('open');
     }
 
+    // Direct, single-click mobile menu tab switching fix
     function switchTabMobile(tabId, theme, btn) {
-      // Synchronize mobile links
+      // 1. Sync mobile active state
       document.querySelectorAll('.mobile-link').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // Find matching desktop tab button to sync desktop state
-      const desktopBtn = document.querySelectorAll('.tab-link')[Array.from(btn.parentNode.parentNode.children).indexOf(btn.parentNode)];
-      switchTab(tabId, theme, desktopBtn);
+      // 2. Execute main tab switch immediately
+      const desktopTabs = document.querySelectorAll('.tab-link');
+      let targetDesktopBtn = null;
+      desktopTabs.forEach(dBtn => {
+        if (dBtn.getAttribute('onclick').includes(tabId)) {
+          targetDesktopBtn = dBtn;
+        }
+      });
 
-      // Close Mobile Menu Drawer
+      switchTab(tabId, theme, targetDesktopBtn);
+
+      // 3. Close mobile drawer immediately
       drawer.classList.remove('open');
       menuToggle.classList.remove('open');
     }
