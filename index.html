@@ -355,11 +355,11 @@
       display: none; /* Strictly hides inactive tabs */
       padding: 3rem 2rem 8rem;
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.3s ease-in-out;
     }
 
     .tab-panel.active {
-      display: block !important; /* Renders only the active panel */
+      display: block !important; /* Renders only active panel */
       opacity: 1;
     }
 
@@ -558,7 +558,7 @@
       z-index: 3000; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
 
-    /* 06. MOMENTS PANEL */
+    /* 06. MOMENTS PANEL (Instant Mobile Pre-Rendered Swiper) */
     #tab-moments {
       background-color: var(--bg-charcoal);
       color: var(--text-light);
@@ -586,7 +586,8 @@
     .swiper-slide {
       width: 360px;
       height: 520px;
-      transition: all 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      will-change: transform;
+      transition: transform 0.4s ease-out, opacity 0.4s ease-out;
     }
 
     .moments-card {
@@ -869,7 +870,7 @@
     <div class="cover-footer">JANUARY 31, 2028</div>
   </div>
 
-  <!-- Mobile Menu Drawer Overlay (Closing item removed) -->
+  <!-- Mobile Menu Drawer Overlay -->
   <div class="mobile-drawer" id="mobileDrawer">
     <ul class="mobile-nav-list">
       <li><button class="mobile-link active" onclick="switchTabMobile('story', 'cream', this)">Our Story</button></li>
@@ -886,7 +887,7 @@
   <img id="entourage-preview" src="" alt="Entourage Preview">
 
   <!-- ==========================================================================
-     02 — TOP NAVIGATION BAR (Closing item removed)
+     02 — TOP NAVIGATION BAR
      ========================================================================== -->
   <header class="app-header">
     <div class="brand-logo">E & A</div>
@@ -976,14 +977,14 @@
             </div>
           </div>
 
-          <!-- Section 3: Palawan -->
+          <!-- Section 3: Barcelona -->
           <div class="adventure-section-card">
             <div class="adv-text-block">
-              <h3>PALAWAN</h3>
-              <p>Where we decided doing absolutely nothing together on a remote beach was actually our favorite vacation of all.</p>
+              <h3>BARCELONA</h3>
+              <p>Late-night tapas, endless coastal walks, and afternoons spent doing absolutely nothing along Barceloneta Beach.</p>
             </div>
             <div class="adv-image-block">
-              <img src="palawan.jpeg" alt="Palawan">
+              <img src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=1000&q=80" alt="Barcelona">
             </div>
           </div>
 
@@ -1231,7 +1232,7 @@
       </div>
     </div>
 
-    <!-- CLOSING PANEL (Still rendered as page content, removed from top header) -->
+    <!-- CLOSING PANEL -->
     <div class="tab-panel" id="tab-closing">
       <div class="closing-sec">
         <img src="background.png" alt="Elena & Adrian Finale" class="closing-bg-image">
@@ -1260,6 +1261,11 @@
     let isPlaying = false;
     let momentsSwiper = null;
 
+    // Immediately pre-initialize Swiper so mobile view has zero animation lag
+    document.addEventListener('DOMContentLoaded', () => {
+      initMomentsCarousel();
+    });
+
     function openInvitation() {
       document.getElementById('cover').classList.add('unfolded');
       
@@ -1271,9 +1277,12 @@
         console.log("Autoplay restricted by browser.");
       });
 
-      initMomentsCarousel();
+      if (momentsSwiper) {
+        momentsSwiper.update();
+      }
     }
 
+    // High-Energy 3D Coverflow Carousel with DOM observers enabled for zero lag
     function initMomentsCarousel() {
       if (!momentsSwiper) {
         momentsSwiper = new Swiper('.momentsSwiper', {
@@ -1283,6 +1292,9 @@
           slidesPerView: 'auto',
           loop: true,
           speed: 450,
+          observer: true,            // Auto-updates on DOM visibility change
+          observeParents: true,
+          resizeObserver: true,
           coverflowEffect: {
             rotate: 25,
             stretch: 0,
@@ -1339,8 +1351,10 @@
       if (theme === 'purple') document.body.classList.add('theme-purple');
       if (theme === 'charcoal') document.body.classList.add('theme-charcoal');
 
+      // Zero-delay Swiper layout update on tab switch
       if (tabId === 'moments' && momentsSwiper) {
-        setTimeout(() => momentsSwiper.update(), 100);
+        momentsSwiper.update();
+        momentsSwiper.slideTo(0, 0);
       }
     }
 
@@ -1382,4 +1396,4 @@
     });
   </script>
 </body>
-</html> 
+</html>
