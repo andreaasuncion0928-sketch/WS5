@@ -178,7 +178,7 @@
     }
 
     /* ==========================================================================
-       02. TOP NAVIGATION TABS BAR (Fully Solid Layer to Block Bleed-through)
+       02. TOP NAVIGATION TABS BAR (Z-Index Fixed above all Viewport Layers)
        ========================================================================== */
     .app-header {
       position: fixed;
@@ -338,28 +338,28 @@
     .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
     /* ==========================================================================
-       03. TAB VIEWPORT & PANELS (Clipped Boundary Fix to Prevent Header Overlaps)
+       03. TAB VIEWPORT & PANELS (Strict Hidden Inactive Display)
        ========================================================================== */
     .tab-viewport {
       position: absolute;
-      top: 80px; /* Aligned precisely with Header Height */
+      top: 80px; /* Sits exactly below header height */
       bottom: 0; left: 0; right: 0;
       overflow: hidden;
-      clip-path: inset(0 0 0 0); /* Strict clip region so text cannot scroll over top header */
+      z-index: 1;
     }
 
     .tab-panel {
       position: absolute;
       inset: 0;
       overflow-y: auto;
-      display: none;
+      display: none; /* Strictly hides inactive tabs */
       padding: 3rem 2rem 8rem;
       opacity: 0;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.4s ease;
     }
 
     .tab-panel.active {
-      display: block;
+      display: block !important; /* Renders only the active panel */
       opacity: 1;
     }
 
@@ -410,7 +410,7 @@
       object-position: top center;
     }
 
-    /* 03. OUR ADVENTURES PANEL (3 Side-by-Side Card Sections) */
+    /* 03. OUR ADVENTURES PANEL */
     #tab-adventures { background-color: var(--bg-cream); color: var(--text-dark); }
     #tab-adventures .section-label { color: var(--accent-purple); }
 
@@ -463,7 +463,7 @@
       object-fit: cover;
     }
 
-    /* 04. THE WEDDING PANEL (Responsive Grid Layout) */
+    /* 04. THE WEDDING PANEL */
     #tab-wedding { background-color: var(--bg-purple); color: var(--text-light); }
     #tab-wedding .section-label { color: var(--text-light-muted); }
 
@@ -558,7 +558,7 @@
       z-index: 3000; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
 
-    /* 06. MOMENTS (MOMENTS/GALLERY) — AGGRESSIVE DYNAMIC 3D COVERFLOW */
+    /* 06. MOMENTS PANEL */
     #tab-moments {
       background-color: var(--bg-charcoal);
       color: var(--text-light);
@@ -779,9 +779,7 @@
     .closing-content h2 { font-size: 2.8rem; font-style: italic; margin-bottom: 1rem; }
     .closing-content p.couple-names { font-family: var(--font-serif); font-size: 1.8rem; }
 
-    /* ==========================================================================
-       MOBILE LAYOUT REFINEMENTS (< 900px)
-       ========================================================================== */
+    /* Mobile Breakpoints (< 900px) */
     @media (max-width: 900px) {
       .app-header { padding: 0 1.5rem; height: 70px; }
       .tab-viewport { top: 70px; }
@@ -943,7 +941,6 @@
             <div class="img-wrapper">
               <img src="story-coffee-1.jpeg" alt="Story photo 1">
             </div>
-            <!-- Face focus wrap on 2nd photo -->
             <div class="img-wrapper photo-focus-faces">
               <img src="story-coffee-2.jpeg" alt="Story photo 2">
             </div>
@@ -952,7 +949,7 @@
       </div>
     </div>
 
-    <!-- OUR ADVENTURES PANEL (3 Side-by-Side Sections) -->
+    <!-- OUR ADVENTURES PANEL -->
     <div class="tab-panel" id="tab-adventures">
       <div class="container">
         <span class="section-label">02 / Our Adventures</span>
@@ -996,7 +993,7 @@
       </div>
     </div>
 
-    <!-- THE WEDDING PANEL (Responsive Grid Layout) -->
+    <!-- THE WEDDING PANEL -->
     <div class="tab-panel" id="tab-wedding">
       <div class="container">
         <span class="section-label">03 / The Wedding</span>
@@ -1073,7 +1070,7 @@
       </div>
     </div>
 
-    <!-- MOMENTS PANEL (Aggressive Dynamic 3D Coverflow) -->
+    <!-- MOMENTS PANEL -->
     <div class="tab-panel" id="tab-moments">
       <span class="section-label">05 / Photo Journal</span>
       
@@ -1279,7 +1276,6 @@
       initMomentsCarousel();
     }
 
-    // High-Energy 3D Coverflow Carousel for Travel Couple
     function initMomentsCarousel() {
       if (!momentsSwiper) {
         momentsSwiper = new Swiper('.momentsSwiper', {
@@ -1309,7 +1305,6 @@
       menuToggle.classList.toggle('open');
     }
 
-    // Fixed single-click mobile drawer switching
     function switchTabMobile(tabId, theme, btn) {
       document.querySelectorAll('.mobile-link').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -1329,10 +1324,19 @@
     }
 
     function switchTab(tabId, theme, btn) {
-      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+      // Deactivate all panels and ensure display: none is respected
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
       document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
 
-      document.getElementById('tab-' + tabId).classList.add('active');
+      // Activate selected panel
+      const targetPanel = document.getElementById('tab-' + tabId);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+        targetPanel.scrollTop = 0; // Reset scroll position to top on tab change
+      }
+      
       if (btn) btn.classList.add('active');
 
       document.body.className = '';
