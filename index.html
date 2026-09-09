@@ -70,7 +70,7 @@
     p { line-height: 1.6; font-weight: 300; }
 
     /* ==========================================================================
-       01. COVER OVERLAY
+       01. COVER OVERLAY (Ultra-Smooth Unfold Transition)
        ========================================================================== */
     #cover {
       position: fixed;
@@ -82,7 +82,8 @@
       justify-content: space-between;
       align-items: center;
       padding: 3rem 1.5rem;
-      transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
+      transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1), opacity 1.2s ease;
+      will-change: transform, opacity;
     }
 
     #cover.unfolded {
@@ -100,6 +101,11 @@
       opacity: 0.85;
       filter: brightness(85%) contrast(105%);
       z-index: -1;
+      transition: transform 1.6s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    #cover.unfolded .cover-bg-image {
+      transform: scale(1.08);
     }
 
     .cover-header {
@@ -120,6 +126,12 @@
       width: 100%;
       max-width: 580px;
       box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+      transition: transform 1s ease, opacity 0.8s ease;
+    }
+
+    #cover.unfolded .cover-center {
+      transform: translateY(-30px);
+      opacity: 0;
     }
 
     .cover-center h1 {
@@ -338,7 +350,7 @@
     .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
     /* ==========================================================================
-       03. TAB VIEWPORT & PANELS
+       03. TAB VIEWPORT & PANELS (Page Smooth Scale Reveal)
        ========================================================================== */
     .tab-viewport {
       position: absolute;
@@ -346,6 +358,12 @@
       bottom: 0; left: 0; right: 0;
       overflow: hidden;
       z-index: 1;
+      transform: scale(1.04);
+      transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    body.invitation-opened .tab-viewport {
+      transform: scale(1);
     }
 
     .tab-panel {
@@ -355,7 +373,7 @@
       display: none; /* Strictly hides inactive tabs */
       padding: 3rem 2rem 8rem;
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.5s ease-in-out;
     }
 
     .tab-panel.active {
@@ -1232,7 +1250,7 @@
       </div>
     </div>
 
-    <!-- CLOSING PANEL -->
+    <!-- CLOSING PANEL (Accessible naturally as finale) -->
     <div class="tab-panel" id="tab-closing">
       <div class="closing-sec">
         <img src="background.png" alt="Elena & Adrian Finale" class="closing-bg-image">
@@ -1266,15 +1284,30 @@
     });
 
     function openInvitation() {
+      // Add opened state class for smooth page scale zoom-out reveal
+      document.body.classList.add('invitation-opened');
       document.getElementById('cover').classList.add('unfolded');
       
-      // Set audio playback position to 11.2 seconds upon opening invitation
-      audio.volume = 0.3;
+      // Smooth Audio Jump & Fade In logic
+      audio.pause();
+      audio.volume = 0;
       audio.currentTime = 11.2;
-      
+
       audio.play().then(() => {
         isPlaying = true;
         audioLabel.innerText = "Sound On";
+        
+        // Smooth Volume Ramp over 1.2 seconds
+        let targetVolume = 0.3;
+        let fadeInterval = setInterval(() => {
+          if (audio.volume < targetVolume - 0.02) {
+            audio.volume += 0.02;
+          } else {
+            audio.volume = targetVolume;
+            clearInterval(fadeInterval);
+          }
+        }, 80);
+
       }).catch(e => {
         console.log("Autoplay restricted by browser.");
       });
@@ -1349,6 +1382,9 @@
       if (btn) btn.classList.add('active');
 
       document.body.className = '';
+      if (document.getElementById('cover').classList.contains('unfolded')) {
+        document.body.classList.add('invitation-opened');
+      }
       if (theme === 'purple') document.body.classList.add('theme-purple');
       if (theme === 'charcoal') document.body.classList.add('theme-charcoal');
 
