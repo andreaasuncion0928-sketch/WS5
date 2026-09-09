@@ -1,751 +1,797 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>You're Invited! Elena & Adrian's Wedding</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mia & Lucas — The Next Chapter</title>
+  
+  <!-- Google Fonts for Editorial Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --color-bg: #0D0D0D;
-            --color-text-light: #FFFFFF;
-            --color-text-muted: #E2E2E2;
-            --color-sage: #B4D1AA;
-            --color-dusty-blue: #B0CADE;
-            --color-terracotta: #F27D52;
-            --color-purple: #E2C0EA;
-            --color-gold: #F3C969;
-            --color-card-bg: rgba(10, 10, 10, 0.78);
-            --color-card-border: rgba(255, 255, 255, 0.28);
-            
-            --font-serif: 'Bodoni Moda', Georgia, serif;
-            --font-sans: 'Montserrat', sans-serif;
-            --font-script: 'Alex Brush', cursive;
-        }
+  <style>
+    /* ==========================================================================
+       00. RESET & BASE VARIABLES (Palette: Warm Ivory, Charcoal, Muted Burgundy)
+       ========================================================================== */
+    :root {
+      --bg-cream: #F9F6F0;
+      --text-charcoal: #1C1C1C;
+      --text-muted: #666059;
+      --accent-burgundy: #6A1B29;
+      --border-color: rgba(28, 28, 28, 0.12);
+      --font-serif: 'Bodoni Moda', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
 
-        /* --- Prevent Page Jump Scroll --- */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden; /* Lock viewport from scrolling to next menu page */
-            background-color: var(--color-bg);
-            color: var(--color-text-light);
-            font-family: var(--font-sans);
-            font-size: 18px;
-            -webkit-font-smoothing: antialiased;
-        }
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-cream);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        /* --- Section Container Styling --- */
-        .section-page {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            padding-top: 85px; /* Space for fixed menu */
-            padding-bottom: 3rem;
-            
-            /* Enable inner vertical scroll if context exceeds screen height */
-            overflow-y: auto;
-            scroll-behavior: smooth;
-            
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+    body {
+      overflow-x: hidden;
+      position: relative;
+    }
 
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
-            transform: translateY(15px);
-            box-sizing: border-box;
-        }
+    /* Subtle Film Grain Overlay */
+    .film-grain {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
 
-        /* Active Displayed Page */
-        .section-page.active-page {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0);
-            z-index: 10;
-        }
+    /* Typography Utilities */
+    h1, h2, h3, .serif {
+      font-family: var(--font-serif);
+      font-weight: 400;
+    }
 
-        /* --- BACKGROUND DEFINITIONS --- */
-        /* Intro/Home Page Background -> background.jpg with EXACT 50% OVERLAY */
-        #page-hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)), 
-                        url('background.jpg') center/cover no-repeat fixed;
-        }
+    p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
 
-        /* All Other Menu Pages -> NY.jpeg */
-        #page-story, #page-adventures, #page-wedding, #page-crew, #page-rsvp {
-            background: linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)), 
-                        url('NY.jpeg') center/cover no-repeat fixed;
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        /* Custom Scrollbar for Inner Content */
-        .section-page::-webkit-scrollbar {
-            width: 8px;
-        }
-        .section-page::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .section-page::-webkit-scrollbar-thumb {
-            background: var(--color-terracotta);
-            border-radius: 4px;
-        }
+    /* ==========================================================================
+       01. COVER EXPERIENCE (Unfolds on Click)
+       ========================================================================== */
+    #cover {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background-color: var(--bg-cream);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3rem 2rem;
+      transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
+    }
 
-        /* --- Top Navigation Header --- */
-        .sticky-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 75px;
-            background-color: rgba(10, 10, 10, 0.92);
-            backdrop-filter: blur(12px);
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 2rem;
-        }
+    #cover.unfolded {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
 
-        .header-logo {
-            font-family: var(--font-serif);
-            font-weight: 700;
-            font-size: 1.3rem;
-            color: #FFFFFF;
-            text-decoration: none;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-        }
+    .cover-bg-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+      filter: sepia(10%) contrast(95%);
+      z-index: -1;
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 1rem;
-            list-style: none;
-        }
+    .cover-header {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-charcoal);
+    }
 
-        .nav-links a {
-            text-decoration: none;
-            color: #FFFFFF;
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 0.5rem 0.9rem;
-            border-radius: 4px;
-            border: 1px solid transparent;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
-        }
+    .cover-center {
+      text-align: center;
+      background: rgba(249, 246, 240, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 3rem 4rem;
+      border: 1px solid var(--border-color);
+      max-width: 550px;
+    }
 
-        .nav-links a:hover, 
-        .nav-links a.active-link {
-            background-color: var(--color-terracotta);
-            color: #FFFFFF;
-            border-color: var(--color-terracotta);
-        }
+    .cover-center h1 {
+      font-size: 3.5rem;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
 
-        /* --- Content Layout Wrapper --- */
-        .page-inner-content {
-            margin: auto 0;
-            padding: 2rem 1.5rem;
-            max-width: 1000px;
-            width: 90%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    .cover-center p {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--accent-burgundy);
+      margin-bottom: 2rem;
+    }
 
-        /* Helper Typography Classes */
-        .serif { font-family: var(--font-serif); }
-        .sans { font-family: var(--font-sans); }
-        .script { font-family: var(--font-script); }
+    .btn-open {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid var(--text-charcoal);
+      color: var(--text-charcoal);
+      padding: 1rem 2rem;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
 
-        .invitation-badge {
-            background: var(--color-terracotta);
-            color: #FFFFFF;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            display: inline-block;
-            margin-bottom: 1.2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
+    .btn-open:hover {
+      background: var(--text-charcoal);
+      color: var(--bg-cream);
+    }
 
-        .annotation {
-            font-family: var(--font-script);
-            font-size: 2.2rem;
-            color: var(--color-terracotta);
-            display: block;
-            margin-top: 0.8rem;
-            transform: rotate(-2deg);
-            line-height: 1.2;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.9);
-        }
+    .cover-footer {
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+    }
 
-        .tagline {
-            text-transform: uppercase;
-            letter-spacing: 0.25em;
-            font-size: 0.85rem;
-            color: var(--color-sage);
-            font-weight: 700;
-            margin-bottom: 0.8rem;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-        }
+    /* Audio Toggle Floating Widget */
+    .audio-control {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 900;
+      background: rgba(249, 246, 240, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        /* --- SECTION 1: HERO INVITATION --- */
-        .hero h2 {
-            font-size: 1.2rem;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: var(--color-text-muted);
-            font-weight: 500;
-            margin-bottom: 0.8rem;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
-        }
+    /* ==========================================================================
+       02. MAIN WEBSITE CONTENT
+       ========================================================================== */
+    .site-wrapper {
+      opacity: 0;
+      transition: opacity 1s ease 0.5s;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-        .hero h1 {
-            font-size: clamp(2.8rem, 6vw, 5.5rem);
-            font-family: var(--font-serif);
-            font-weight: 400;
-            line-height: 1.1;
-            margin-bottom: 0.8rem;
-            letter-spacing: -0.01em;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.9);
-        }
+    .site-wrapper.visible {
+      opacity: 1;
+    }
 
-        .hero .names {
-            font-family: var(--font-serif);
-            font-style: italic;
-            font-size: clamp(2.2rem, 4vw, 3.5rem);
-            color: var(--color-terracotta);
-            text-shadow: 0 4px 12px rgba(0,0,0,0.9);
-        }
+    section {
+      padding: 8rem 2rem;
+      border-bottom: 1px solid var(--border-color);
+    }
 
-        .hero-invite-text {
-            max-width: 650px;
-            margin: 1.8rem auto 0;
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: #FFFFFF;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.9);
-        }
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent-burgundy);
+      margin-bottom: 2rem;
+      display: block;
+    }
 
-        /* --- SECTION 2: OUR STORY (FIRST PERSON VOICE) --- */
-        .story-container {
-            max-width: 850px;
-            padding: 3rem 2.5rem;
-            background: var(--color-card-bg);
-            border: 2px solid var(--color-card-border);
-            border-radius: 6px;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
+    /* Invitation Header */
+    .invitation-sec {
+      text-align: center;
+      padding-top: 10rem;
+    }
 
-        .story-container h3 {
-            font-family: var(--font-serif);
-            font-size: 2.2rem;
-            font-weight: 500;
-            margin-bottom: 1.2rem;
-            color: var(--color-terracotta);
-        }
+    .invitation-sec h2 {
+      font-size: 3.5rem;
+      line-height: 1.2;
+      max-width: 800px;
+      margin: 0 auto 3rem;
+    }
 
-        .story-container p {
-            color: #FFFFFF;
-            font-size: 1.1rem;
-            line-height: 1.9;
-            margin-bottom: 1.2rem;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-        }
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 4rem auto 0;
+      text-align: left;
+      border-top: 1px solid var(--border-color);
+      padding-top: 2rem;
+    }
 
-        /* --- SECTION 3: ADVENTURES & POSTCARD --- */
-        .travel-badge-grid {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 1.5rem 0 2rem;
-            flex-wrap: wrap;
-            width: 100%;
-        }
+    .detail-item h4 {
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
 
-        .travel-badge {
-            background: var(--color-card-bg);
-            border: 2px solid var(--color-card-border);
-            padding: 1.2rem 2rem;
-            border-radius: 6px;
-            min-width: 180px;
-            backdrop-filter: blur(8px);
-        }
+    .detail-item p {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      color: var(--text-charcoal);
+    }
 
-        .travel-badge .count {
-            font-family: var(--font-serif);
-            font-size: 2.5rem;
-            color: var(--color-terracotta);
-            font-weight: 600;
-            display: block;
-            line-height: 1;
-        }
+    /* 03. Our Story (Editorial Magazine Layout) */
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
 
-        .travel-badge .label {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #FFFFFF;
-            margin-top: 0.4rem;
-            display: block;
-        }
+    .story-card {
+      grid-column: span 6;
+      margin-bottom: 3rem;
+    }
 
-        .postcard-card {
-            background: var(--color-card-bg);
-            border: 2px solid var(--color-card-border);
-            padding: 2.5rem;
-            border-radius: 6px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2.5rem;
-            align-items: center;
-            text-align: left;
-            position: relative;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        }
+    .story-card:nth-child(even) {
+      grid-column: 7 / -1;
+    }
 
-        .postcard-stamp {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            border: 2px dashed var(--color-terracotta);
-            padding: 0.4rem 0.8rem;
-            color: var(--color-terracotta);
-            font-family: var(--font-serif);
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            transform: rotate(4deg);
-        }
+    .story-year {
+      font-family: var(--font-serif);
+      font-size: 4rem;
+      color: var(--accent-burgundy);
+      opacity: 0.4;
+      line-height: 1;
+    }
 
-        .postcard-image img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border-radius: 4px;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
+    .story-title {
+      font-size: 1.5rem;
+      margin: 0.5rem 0;
+      font-family: var(--font-serif);
+    }
 
-        .postcard-body h3 {
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            color: #FFFFFF;
-            margin-bottom: 0.2rem;
-        }
+    /* 04. The Places We've Been (Travel Scrapbook) */
+    .places-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 3rem;
+      margin-top: 2rem;
+    }
 
-        .postcard-body h4 {
-            font-family: var(--font-serif);
-            font-style: italic;
-            color: var(--color-sage);
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
+    .place-card {
+      background: #FAF8F5;
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
+    }
 
-        .postcard-body p {
-            font-size: 1rem;
-            color: #FFFFFF;
-            line-height: 1.7;
-            margin-bottom: 0.8rem;
-        }
+    .place-image {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      margin-bottom: 1.5rem;
+      filter: grayscale(20%);
+    }
 
-        /* --- SECTION 4: WEDDING DETAILS --- */
-        .wedding-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.8rem;
-            margin-top: 2rem;
-            width: 100%;
-        }
+    .place-card h3 {
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
 
-        .detail-card {
-            background-color: var(--color-card-bg);
-            border: 2px solid var(--color-card-border);
-            padding: 2.5rem 1.8rem;
-            text-align: center;
-            border-radius: 6px;
-            backdrop-filter: blur(8px);
-        }
+    /* 05. Wedding Details */
+    .program-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 2rem;
+    }
 
-        .detail-card.dress-code-card {
-            background-color: rgba(45, 20, 55, 0.82);
-            border-color: var(--color-purple);
-        }
+    .program-block h3 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
 
-        .detail-card h3 {
-            font-family: var(--font-serif);
-            font-size: 1.8rem;
-            margin-bottom: 0.6rem;
-            font-weight: 600;
-        }
+    /* 06. Entourage (Interactive Hover Editorial) */
+    .entourage-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: relative;
+    }
 
-        .detail-card p {
-            color: #FFFFFF;
-            font-size: 1.05rem;
-            line-height: 1.7;
-        }
+    .entourage-group {
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
 
-        .detail-card .highlight {
-            color: var(--color-terracotta);
-            font-weight: 700;
-            font-size: 1.2rem;
-            display: block;
-            margin-top: 0.6rem;
-        }
+    .role-title {
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-burgundy);
+    }
 
-        .detail-card .purple-highlight {
-            color: var(--color-purple);
-            font-weight: 700;
-            font-size: 1.4rem;
-            display: block;
-            margin-top: 0.4rem;
-        }
+    .person-names {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
 
-        /* --- SECTION 5: OUR CREW --- */
-        .entourage-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.8rem;
-            margin-top: 2rem;
-            width: 100%;
-        }
+    .person-names span {
+      position: relative;
+      display: inline-block;
+    }
 
-        .entourage-group {
-            background: var(--color-card-bg);
-            padding: 1.8rem;
-            border: 2px solid var(--color-card-border);
-            border-radius: 6px;
-            backdrop-filter: blur(8px);
-        }
+    .person-names span:hover {
+      color: var(--accent-burgundy);
+    }
 
-        .entourage-group h4 {
-            font-family: var(--font-serif);
-            font-style: italic;
-            color: var(--color-sage);
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 0.4rem;
-        }
+    /* Hover image preview container */
+    #entourage-preview {
+      position: fixed;
+      width: 200px;
+      height: 260px;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.9);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 500;
+      object-fit: cover;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
 
-        .entourage-group ul {
-            list-style: none;
-        }
+    /* 07. Gallery (Horizontal Photo Scrapbook Scroll) */
+    .gallery-scroll {
+      display: flex;
+      gap: 2rem;
+      overflow-x: auto;
+      padding-bottom: 2rem;
+      scroll-snap-type: x mandatory;
+    }
 
-        .entourage-group li {
-            font-size: 1rem;
-            color: #FFFFFF;
-            margin-bottom: 0.5rem;
-        }
+    .gallery-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+    .gallery-scroll::-webkit-scrollbar-thumb {
+      background: var(--accent-burgundy);
+    }
 
-        /* --- SECTION 6: RSVP & FINALE --- */
-        .rsvp-container {
-            max-width: 800px;
-            background: var(--color-card-bg);
-            border: 2px solid var(--color-card-border);
-            padding: 3.5rem 2.5rem;
-            border-radius: 6px;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        }
+    .gallery-item {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+    }
 
-        .rsvp-container h2 {
-            font-family: var(--font-serif);
-            font-size: clamp(2.2rem, 4vw, 3.2rem);
-            font-weight: 500;
-            margin-bottom: 0.8rem;
-        }
+    .gallery-item.portrait { width: 350px; height: 500px; }
+    .gallery-item.landscape { width: 600px; height: 500px; }
 
-        .btn-rsvp {
-            display: inline-block;
-            margin-top: 1.5rem;
-            padding: 1.2rem 3.5rem;
-            background-color: var(--color-terracotta);
-            color: #FFFFFF;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            border: 2px solid var(--color-terracotta);
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(95%);
+    }
 
-        .btn-rsvp:hover {
-            background-color: transparent;
-            color: var(--color-terracotta);
-        }
+    /* 08. RSVP Section */
+    .rsvp-sec {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+      border: none;
+    }
 
-        .rsvp-deadline {
-            font-size: 0.95rem;
-            color: var(--color-text-muted);
-            margin-top: 1.5rem;
-            font-style: italic;
-        }
+    .rsvp-sec h2 {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+    }
 
-        /* Responsive Fixes */
-        @media (max-width: 850px) {
-            .postcard-card {
-                grid-template-columns: 1fr;
-            }
-            .postcard-image img {
-                height: 200px;
-            }
-            .sticky-header {
-                padding: 0 1rem;
-            }
-            .nav-links {
-                gap: 0.2rem;
-            }
-            .nav-links a {
-                font-size: 0.75rem;
-                padding: 0.4rem 0.5rem;
-            }
-        }
-    </style>
+    .rsvp-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .btn-rsvp {
+      background: transparent;
+      border: 1px solid var(--text-charcoal);
+      padding: 1rem 1.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-rsvp.active, .btn-rsvp:hover {
+      background: var(--accent-burgundy);
+      border-color: var(--accent-burgundy);
+      color: #fff;
+    }
+
+    .rsvp-form {
+      display: none;
+      flex-direction: column;
+      gap: 1rem;
+      text-align: left;
+      margin-top: 2rem;
+      animation: fadeIn 0.5s forwards;
+    }
+
+    .rsvp-form input, .rsvp-form textarea {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      font-family: var(--font-sans);
+      color: var(--text-charcoal);
+    }
+
+    /* 09. Closing */
+    .closing-sec {
+      text-align: center;
+      padding: 6rem 2rem;
+      border-bottom: none;
+    }
+
+    .closing-sec h2 {
+      font-size: 2.5rem;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .closing-image {
+      width: 100%;
+      height: 80vh;
+      object-fit: cover;
+      margin-top: 3rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .story-card, .story-card:nth-child(even) { grid-column: span 12; }
+      .program-grid { grid-template-columns: 1fr; }
+      .cover-center h1 { font-size: 2.5rem; }
+      .invitation-sec h2 { font-size: 2.2rem; }
+      .gallery-item.portrait, .gallery-item.landscape { width: 280px; height: 400px; }
+      .entourage-group { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- TOP NAVIGATION MENU -->
-    <header class="sticky-header">
-        <span class="header-logo" onclick="navigateTo('page-hero')">E &amp; A</span>
-        <nav>
-            <ul class="nav-links">
-                <li><a onclick="navigateTo('page-hero')" id="link-page-hero" class="active-link">Invitation</a></li>
-                <li><a onclick="navigateTo('page-story')" id="link-page-story">Our Story</a></li>
-                <li><a onclick="navigateTo('page-adventures')" id="link-page-adventures">Adventures</a></li>
-                <li><a onclick="navigateTo('page-wedding')" id="link-page-wedding">Details</a></li>
-                <li><a onclick="navigateTo('page-crew')" id="link-page-crew">Our Crew</a></li>
-                <li><a onclick="navigateTo('page-rsvp')" id="link-page-rsvp">RSVP</a></li>
-            </ul>
-        </nav>
-    </header>
+  <div class="film-grain"></div>
 
-    <!-- SECTION 1: HERO INVITATION PAGE (USES background.jpg WITH 50% OVERLAY) -->
-    <section class="section-page active-page" id="page-hero">
-        <div class="page-inner-content hero">
-            <span class="invitation-badge">You Are Warmly Invited</span>
-            <p class="tagline">To Join Our Next Chapter</p>
-            <h2>WE'RE GETTING MARRIED</h2>
-            <h1>THE NEXT ADVENTURE</h1>
-            <div class="names">Elena &amp; Adrian</div>
+  <!-- Audio Control (Music Toggle) -->
+  <button class="audio-control" id="audioToggle">
+    <span id="audioIcon">🎵</span> <span id="audioLabel">Sound On</span>
+  </button>
+  
+  <!-- Subtle Instrumental Audio -->
+  <audio id="bgMusic" loop>
+    <!-- Royalty free soft piano track placeholder -->
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-100-bpm-121529.mp3" type="audio/mpeg">
+  </audio>
 
-            <p class="hero-invite-text">
-                After 7 years of travel, missed flights, and endless iced coffee, we are taking our biggest leap yet! We would be deeply honored to have you celebrate our wedding day with us.
-            </p>
+  <!-- ==========================================================================
+     01 — COVER PAGE
+     ========================================================================== -->
+  <div id="cover">
+    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80" alt="Mia & Lucas" class="cover-bg-image">
+    
+    <div class="cover-header">Vol. 01 — The Wedding Brief</div>
+    
+    <div class="cover-center">
+      <h1>MIA & LUCAS</h1>
+      <p>are getting married</p>
+      <button class="btn-open" onclick="openInvitation()">Open Invitation →</button>
+    </div>
 
-            <div style="margin-top: 2rem;">
-                <a onclick="navigateTo('page-wedding')" class="btn-rsvp" style="padding: 0.8rem 2rem; font-size: 0.85rem;">View Wedding Details &rarr;</a>
-            </div>
+    <div class="cover-footer">OCTOBER 17, 2027</div>
+  </div>
+
+  <!-- Hover Preview Container for Entourage -->
+  <img id="entourage-preview" src="" alt="Entourage Preview">
+
+  <!-- ==========================================================================
+     MAIN WEBSITE EXPERIENCE
+     ========================================================================== -->
+  <div class="site-wrapper" id="mainSite">
+
+    <!-- 02 — THE INVITATION -->
+    <section class="invitation-sec">
+      <span class="section-label">01 / The Invitation</span>
+      <h2>We're getting married.<br>And we'd love for you to be there.</h2>
+      
+      <div class="details-grid">
+        <div class="detail-item">
+          <h4>Date</h4>
+          <p>October 17, 2027</p>
         </div>
+        <div class="detail-item">
+          <h4>Ceremony</h4>
+          <p>4:30 PM<br>San Sebastian Church</p>
+        </div>
+        <div class="detail-item">
+          <h4>Reception</h4>
+          <p>6:30 PM<br>The Manila Hotel</p>
+        </div>
+        <div class="detail-item">
+          <h4>Dress Code</h4>
+          <p>Formal — Burgundy & Neutrals</p>
+        </div>
+      </div>
     </section>
 
-    <!-- SECTION 2: OUR STORY PAGE (FIRST PERSON VOICE) -->
-    <section class="section-page" id="page-story">
-        <div class="page-inner-content">
-            <div class="story-container">
-                <p class="tagline">How We Started</p>
-                <h3>It all started over coffee.</h3>
-                <p>We met over iced coffee on an ordinary afternoon in Manila. What started as just one coffee quickly turned into late-night conversations, spontaneous weekend trips, missed trains, long drives, and a collection of places that became part of who we are.</p>
-                <p>Seven years later, we’ve collected more memories than souvenirs. Now, we are ready for our greatest adventure yet—and we want you by our side as we say <em>"I do."</em></p>
-            </div>
+    <!-- 03 — OUR STORY -->
+    <section>
+      <span class="section-label">02 / Our Story</span>
+      <div class="story-grid">
+        <div class="story-card">
+          <div class="story-year">2019</div>
+          <div class="story-title">The Beginning</div>
+          <p>A coffee shop. Two strangers. One terrible first impression.</p>
         </div>
+        <div class="story-card">
+          <div class="story-year">2021</div>
+          <div class="story-title">The Plot Twist</div>
+          <p>Somehow, the person we almost didn't text back became our favorite person.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-year">2024</div>
+          <div class="story-title">The Adventure</div>
+          <p>First trip together. Lots of wrong turns. Zero regrets.</p>
+        </div>
+        <div class="story-card">
+          <div class="story-year">2027</div>
+          <div class="story-title">The Next Chapter</div>
+          <p>And now we're here.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- SECTION 3: ADVENTURES & NEW YORK POSTCARD PAGE -->
-    <section class="section-page" id="page-adventures">
-        <div class="page-inner-content">
-            <p class="tagline">7 Years Together</p>
-            <h2 class="serif" style="font-size: 2.2rem; font-weight: 400; margin-bottom: 0.5rem; text-shadow: 0 2px 6px rgba(0,0,0,0.8);">OUR JOURNEY SO FAR</h2>
-
-            <div class="travel-badge-grid">
-                <div class="travel-badge">
-                    <span class="count">9</span>
-                    <span class="label">Countries Explored</span>
-                </div>
-                <div class="travel-badge">
-                    <span class="count">24</span>
-                    <span class="label">Cities Visited</span>
-                </div>
-                <div class="travel-badge">
-                    <span class="count">14</span>
-                    <span class="label">Beaches Discovered</span>
-                </div>
-            </div>
-
-            <!-- EXCLUSIVE NEW YORK POSTCARD -->
-            <div class="postcard-card">
-                <div class="postcard-stamp">Our Favorite City</div>
-                <div class="postcard-image">
-                    <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1000&q=80" alt="New York City">
-                </div>
-                <div class="postcard-body">
-                    <h3>NEW YORK, USA</h3>
-                    <h4>"Our kind of chaos"</h4>
-                    <p>Out of all the cities we've visited together, New York holds the most special place in our hearts.</p>
-                    <p>It was our first trip where everything seemed to go wrong—flight delays, taking the wrong subway, and getting caught in the rain without an umbrella. Yet, we laughed through every moment of it.</p>
-                    <span class="annotation">Definitely not our smoothest trip. Definitely our favorite.</span>
-                </div>
-            </div>
+    <!-- 04 — THE PLACES WE'VE BEEN -->
+    <section>
+      <span class="section-label">03 / The Places We've Been</span>
+      <div class="places-container">
+        
+        <div class="place-card">
+          <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80" class="place-image" alt="New York">
+          <h3>NEW YORK</h3>
+          <p>The trip where we discovered that neither of us knows how to navigate the subway.</p>
         </div>
+
+        <div class="place-card">
+          <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80" class="place-image" alt="Tokyo">
+          <h3>TOKYO</h3>
+          <p>The 3-day trip that somehow turned into 47,000 steps a day.</p>
+        </div>
+
+        <div class="place-card">
+          <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=800&q=80" class="place-image" alt="Palawan">
+          <h3>PALAWAN</h3>
+          <p>Where we decided doing absolutely nothing together was actually a pretty great vacation.</p>
+        </div>
+
+      </div>
     </section>
 
-    <!-- SECTION 4: WEDDING DETAILS PAGE -->
-    <section class="section-page" id="page-wedding">
-        <div class="page-inner-content">
-            <p class="tagline">The Next Destination</p>
-            <h2 class="serif" style="font-size: 2.8rem; font-weight: 500; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">OUR WEDDING DETAILS</h2>
-            <p style="color: var(--color-terracotta); font-size: 1.3rem; margin-top: 0.3rem;" class="serif">January 31, 2028 • Manila, Philippines</p>
-            <p style="color: #FFFFFF; font-size: 1rem; margin-top: 0.3rem; font-style: italic;">We'd love for you to join us as our next chapter begins!</p>
-
-            <div class="wedding-grid">
-                <!-- Ceremony -->
-                <div class="detail-card">
-                    <p class="tagline">Our Ceremony</p>
-                    <h3>The Vows</h3>
-                    <p>San Sebastian Church</p>
-                    <span class="highlight">3:00 PM</span>
-                </div>
-
-                <!-- Reception -->
-                <div class="detail-card">
-                    <p class="tagline">Our Reception</p>
-                    <h3>The Party</h3>
-                    <p>The Manila Hotel</p>
-                    <span class="highlight">6:00 PM onwards</span>
-                </div>
-
-                <!-- Dress Code -->
-                <div class="detail-card dress-code-card">
-                    <p class="tagline" style="color: var(--color-purple);">Attire</p>
-                    <h3>Dress Code</h3>
-                    <span class="purple-highlight">Purple</span>
-                    <p style="margin-top: 0.6rem; font-style: italic;">Come celebrate, stay awhile, and make new memories with us!</p>
-                </div>
-            </div>
+    <!-- 05 — WEDDING DETAILS -->
+    <section>
+      <span class="section-label">04 / Details</span>
+      <div class="program-grid">
+        <div class="program-block">
+          <h3>THE CEREMONY</h3>
+          <p><strong>4:30 PM</strong></p>
+          <p>San Sebastian Church</p>
+          <p style="margin-top: 0.5rem; font-size: 0.9rem;">Plaza del Carmen, Quiapo, Manila</p>
         </div>
+        <div class="program-block">
+          <h3>THE RECEPTION</h3>
+          <p><strong>6:30 PM</strong></p>
+          <p>The Manila Hotel</p>
+          <p style="margin-top: 0.5rem; font-size: 0.9rem;">One Rizal Park, Ermita, Manila</p>
+        </div>
+      </div>
     </section>
 
-    <!-- SECTION 5: OUR CREW PAGE -->
-    <section class="section-page" id="page-crew">
-        <div class="page-inner-content">
-            <p class="tagline">Good Company</p>
-            <h2 class="serif" style="font-size: 2.5rem; font-weight: 400; text-shadow: 0 2px 6px rgba(0,0,0,0.8);">OUR WEDDING PARTY</h2>
-            <p style="color: #FFFFFF; font-style: italic; margin-bottom: 0.5rem; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">Every great adventure needs the best crew.</p>
-            
-            <div class="entourage-grid">
-                <div class="entourage-group">
-                    <h4>Honorary Support</h4>
-                    <ul>
-                        <li><strong>Sofia Reyes</strong><br><span style="font-size:0.85rem; color:var(--color-sage);">Maid of Honor</span></li>
-                        <li style="margin-top: 0.8rem;"><strong>Marco Santos</strong><br><span style="font-size:0.85rem; color:var(--color-sage);">Best Man</span></li>
-                    </ul>
-                </div>
-
-                <div class="entourage-group">
-                    <h4>Bridesmaids</h4>
-                    <ul>
-                        <li>Clara Mendoza</li>
-                        <li>Isabel Cruz</li>
-                        <li>Nina Garcia</li>
-                    </ul>
-                </div>
-
-                <div class="entourage-group">
-                    <h4>Groomsmen</h4>
-                    <ul>
-                        <li>Lucas Reyes</li>
-                        <li>Daniel Flores</li>
-                        <li>Miguel Santos</li>
-                    </ul>
-                </div>
-
-                <div class="entourage-group">
-                    <h4>Little Explorers</h4>
-                    <ul>
-                        <li><strong>Lia</strong><br><span style="font-size:0.85rem; color:var(--color-sage);">Flower Girl</span></li>
-                        <li style="margin-top: 0.8rem;"><strong>Theo</strong><br><span style="font-size:0.85rem; color:var(--color-sage);">Ring Bearer</span></li>
-                    </ul>
-                </div>
-            </div>
+    <!-- 06 — ENTOURAGE -->
+    <section>
+      <span class="section-label">05 / Our People</span>
+      <div class="entourage-list">
+        
+        <div class="entourage-group">
+          <span class="role-title">Maid of Honor</span>
+          <div class="person-names">
+            <span data-img="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80">Sofia Reyes</span>
+          </div>
         </div>
+
+        <div class="entourage-group">
+          <span class="role-title">Best Man</span>
+          <div class="person-names">
+            <span data-img="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80">Daniel Cruz</span>
+          </div>
+        </div>
+
+        <div class="entourage-group">
+          <span class="role-title">Bridesmaids</span>
+          <div class="person-names">
+            <span data-img="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80">Clara</span> • 
+            <span data-img="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80">Nina</span> • 
+            <span data-img="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80">Bea</span> • 
+            <span data-img="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80">Isabelle</span>
+          </div>
+        </div>
+
+        <div class="entourage-group">
+          <span class="role-title">Groomsmen</span>
+          <div class="person-names">
+            <span data-img="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80">Marco</span> • 
+            <span data-img="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=500&q=80">Ethan</span> • 
+            <span data-img="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=500&q=80">James</span> • 
+            <span data-img="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=500&q=80">Rafael</span>
+          </div>
+        </div>
+
+      </div>
     </section>
 
-    <!-- SECTION 6: RSVP & FINALE PAGE -->
-    <section class="section-page" id="page-rsvp">
-        <div class="page-inner-content">
-            <div class="rsvp-container">
-                <p class="tagline">Join Our Adventure</p>
-                <h2>WILL YOU COME CELEBRATE WITH US?</h2>
-                <p style="font-size: 1.15rem; color: #FFFFFF;">We would be honored to have you with us in Manila!</p>
-                <p style="color: var(--color-terracotta); font-weight: 700; margin-top: 0.5rem;" class="serif">January 31, 2028 • Manila, Philippines</p>
-                
-                <a href="javascript:void(0)" class="btn-rsvp">Count Me In &rarr;</a>
-                <div class="rsvp-deadline">Please RSVP by December 15, 2027</div>
-
-                <div style="margin-top: 2.5rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1.8rem;">
-                    <h3 class="serif" style="font-size: 1.6rem; font-weight: 400; color: #FFFFFF;">WHEREVER WE GO, WE GO TOGETHER.</h3>
-                    <div class="serif" style="font-size: 1.4rem; color: var(--color-terracotta); font-style: italic; margin-top: 0.3rem;">Elena &amp; Adrian</div>
-                    <p style="font-size: 0.95rem; color: var(--color-sage); margin-top: 0.5rem;">Our next adventure begins with you.</p>
-                </div>
-            </div>
+    <!-- 07 — GALLERY -->
+    <section>
+      <span class="section-label">06 / Photo Journal</span>
+      <div class="gallery-scroll">
+        <div class="gallery-item portrait">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80" alt="Scrapbook 1">
         </div>
+        <div class="gallery-item landscape">
+          <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1200&q=80" alt="Scrapbook 2">
+        </div>
+        <div class="gallery-item portrait">
+          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80" alt="Scrapbook 3">
+        </div>
+        <div class="gallery-item landscape">
+          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80" alt="Scrapbook 4">
+        </div>
+      </div>
     </section>
 
-    <!-- NAVIGATION SCRIPT -->
-    <script>
-        // Click Navigation Handler
-        function navigateTo(targetPageId) {
-            // Deactivate all section pages
-            const pages = document.querySelectorAll('.section-page');
-            pages.forEach(page => page.classList.remove('active-page'));
+    <!-- 08 — RSVP -->
+    <section class="rsvp-sec">
+      <span class="section-label">07 / RSVP</span>
+      <h2>Will you join us for the next chapter?</h2>
+      
+      <div class="rsvp-actions">
+        <button class="btn-rsvp" onclick="toggleRSVP('attending')">YES, I'LL BE THERE →</button>
+        <button class="btn-rsvp" onclick="toggleRSVP('declining')">SORRY, I CAN'T MAKE IT →</button>
+      </div>
 
-            // Deactivate menu link highlights
-            const navLinks = document.querySelectorAll('.nav-links a');
-            navLinks.forEach(link => link.classList.remove('active-link'));
+      <form class="rsvp-form" id="rsvpForm" onsubmit="submitRSVP(event)">
+        <input type="text" placeholder="Your Full Name(s)" required>
+        <input type="email" placeholder="Email Address" required>
+        <textarea rows="3" placeholder="Dietary restrictions or a note for Mia & Lucas..."></textarea>
+        <button type="submit" class="btn-open" style="width: 100%;">Confirm Response</button>
+      </form>
+      <p style="font-size: 0.8rem; margin-top: 1.5rem;">Kindly respond by September 1, 2027</p>
+    </section>
 
-            // Activate Target Page
-            const targetPage = document.getElementById(targetPageId);
-            if (targetPage) {
-                targetPage.classList.add('active-page');
-                // Reset internal scroll position back to top on switch
-                targetPage.scrollTop = 0;
-            }
+    <!-- 09 — CLOSING -->
+    <section class="closing-sec">
+      <h2>Until then...</h2>
+      <p class="serif" style="font-size: 1.5rem; color: var(--text-charcoal);">Mia & Lucas</p>
+      <p style="margin-top: 0.5rem;">We can't wait to celebrate with you.</p>
+      <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1600&q=80" alt="Final Celebration" class="closing-image">
+    </section>
 
-            // Highlight Active Menu Button
-            const activeLink = document.getElementById('link-' + targetPageId);
-            if (activeLink) {
-                activeLink.classList.add('active-link');
-            }
+  </div>
+
+  <!-- ==========================================================================
+     SCRIPT INTERACTIONS
+     ========================================================================== -->
+  <script>
+    const audio = document.getElementById('bgMusic');
+    const audioToggle = document.getElementById('audioToggle');
+    const audioLabel = document.getElementById('audioLabel');
+    let isPlaying = false;
+
+    // Open Cover Animation & Trigger Audio
+    function openInvitation() {
+      document.getElementById('cover').classList.add('unfolded');
+      document.getElementById('mainSite').classList.add('visible');
+      
+      // Play Audio softly on user interaction
+      audio.volume = 0.3;
+      audio.play().then(() => {
+        isPlaying = true;
+        audioLabel.innerText = "Sound On";
+      }).catch(e => {
+        console.log("Autoplay restricted by browser.");
+      });
+    }
+
+    // Audio Controls
+    audioToggle.addEventListener('click', () => {
+      if (isPlaying) {
+        audio.pause();
+        audioLabel.innerText = "Sound Off";
+      } else {
+        audio.play();
+        audioLabel.innerText = "Sound On";
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // Entourage Hover Effect
+    const preview = document.getElementById('entourage-preview');
+    const entourageNames = document.querySelectorAll('.person-names span');
+
+    entourageNames.forEach(name => {
+      name.addEventListener('mouseenter', (e) => {
+        const imgSrc = name.getAttribute('data-img');
+        if (imgSrc) {
+          preview.src = imgSrc;
+          preview.style.opacity = '1';
+          preview.style.transform = 'translate(-50%, -50%) scale(1)';
         }
-    </script>
+      });
+
+      name.addEventListener('mouseleave', () => {
+        preview.style.opacity = '0';
+        preview.style.transform = 'translate(-50%, -50%) scale(0.9)';
+      });
+
+      name.addEventListener('mousemove', (e) => {
+        preview.style.left = e.clientX + 'px';
+        preview.style.top = e.clientY + 'px';
+      });
+    });
+
+    // RSVP Form Logic
+    function toggleRSVP(status) {
+      const form = document.getElementById('rsvpForm');
+      form.style.display = 'flex';
+      const btns = document.querySelectorAll('.btn-rsvp');
+      btns.forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function submitRSVP(e) {
+      e.preventDefault();
+      alert("Thank you! Your response has been received.");
+    }
+  </script>
 </body>
 </html>
