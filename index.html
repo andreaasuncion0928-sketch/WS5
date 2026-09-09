@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mia & Lucas — The Next Chapter</title>
+  <title>Elena & Adrian — The Next Chapter</title>
   
   <!-- Google Fonts for Editorial Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,13 +12,13 @@
 
   <style>
     /* ==========================================================================
-       00. RESET & BASE VARIABLES (Palette: Warm Ivory, Charcoal, Muted Burgundy)
+       00. RESET & BASE VARIABLES (Palette: Warm Ivory, Charcoal, Muted Purple Accent)
        ========================================================================== */
     :root {
       --bg-cream: #F9F6F0;
       --text-charcoal: #1C1C1C;
       --text-muted: #666059;
-      --accent-burgundy: #6A1B29;
+      --accent-purple: #4A2E52; /* Updated accent color to muted royal purple */
       --border-color: rgba(28, 28, 28, 0.12);
       --font-serif: 'Bodoni Moda', Georgia, serif;
       --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
@@ -132,7 +132,7 @@
       font-family: var(--font-serif);
       font-style: italic;
       font-size: 1.2rem;
-      color: var(--accent-burgundy);
+      color: var(--accent-purple);
       margin-bottom: 2rem;
     }
 
@@ -203,81 +203,41 @@
       font-size: 0.75rem;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--accent-burgundy);
+      color: var(--accent-purple);
       margin-bottom: 2rem;
       display: block;
     }
 
-    /* Invitation Header */
-    .invitation-sec {
+    /* Section: The Beginning / Our Story */
+    .story-sec {
       text-align: center;
-      padding-top: 10rem;
+      max-width: 850px;
+      margin: 0 auto;
     }
 
-    .invitation-sec h2 {
-      font-size: 3.5rem;
+    .story-sec h2 {
+      font-size: 3.2rem;
       line-height: 1.2;
-      max-width: 800px;
-      margin: 0 auto 3rem;
+      margin-bottom: 2rem;
     }
 
-    .details-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 900px;
-      margin: 4rem auto 0;
-      text-align: left;
-      border-top: 1px solid var(--border-color);
-      padding-top: 2rem;
-    }
-
-    .detail-item h4 {
-      font-size: 0.75rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
-    }
-
-    .detail-item p {
+    .story-quote {
       font-family: var(--font-serif);
-      font-size: 1.4rem;
+      font-size: 1.6rem;
+      font-style: italic;
       color: var(--text-charcoal);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
     }
 
-    /* 03. Our Story (Editorial Magazine Layout) */
-    .story-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 2rem;
-      align-items: center;
+    .story-author {
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-purple);
     }
 
-    .story-card {
-      grid-column: span 6;
-      margin-bottom: 3rem;
-    }
-
-    .story-card:nth-child(even) {
-      grid-column: 7 / -1;
-    }
-
-    .story-year {
-      font-family: var(--font-serif);
-      font-size: 4rem;
-      color: var(--accent-burgundy);
-      opacity: 0.4;
-      line-height: 1;
-    }
-
-    .story-title {
-      font-size: 1.5rem;
-      margin: 0.5rem 0;
-      font-family: var(--font-serif);
-    }
-
-    /* 04. The Places We've Been (Travel Scrapbook) */
+    /* Section: Our Adventures */
     .places-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -305,20 +265,42 @@
       margin-bottom: 0.5rem;
     }
 
-    /* 05. Wedding Details */
-    .program-grid {
+    /* Section: The Wedding (Details Grid) */
+    .wedding-sec {
+      text-align: center;
+    }
+
+    .wedding-sec h2 {
+      font-size: 3.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .details-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      margin-top: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: left;
+      border-top: 1px solid var(--border-color);
+      padding-top: 2rem;
     }
 
-    .program-block h3 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+    .detail-item h4 {
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
     }
 
-    /* 06. Entourage (Interactive Hover Editorial) */
+    .detail-item p {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      color: var(--text-charcoal);
+    }
+
+    /* Section: Our People (Entourage with Interactive Hover) */
     .entourage-list {
       display: flex;
       flex-direction: column;
@@ -338,7 +320,7 @@
       font-size: 0.85rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--accent-burgundy);
+      color: var(--accent-purple);
     }
 
     .person-names {
@@ -354,7 +336,7 @@
     }
 
     .person-names span:hover {
-      color: var(--accent-burgundy);
+      color: var(--accent-purple);
     }
 
     /* Hover image preview container */
@@ -371,7 +353,7 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     }
 
-    /* 07. Gallery (Horizontal Photo Scrapbook Scroll) */
+    /* Section: Moments (Gallery) */
     .gallery-scroll {
       display: flex;
       gap: 2rem;
@@ -384,7 +366,7 @@
       height: 4px;
     }
     .gallery-scroll::-webkit-scrollbar-thumb {
-      background: var(--accent-burgundy);
+      background: var(--accent-purple);
     }
 
     .gallery-item {
@@ -402,7 +384,7 @@
       filter: contrast(95%);
     }
 
-    /* 08. RSVP Section */
+    /* Section: RSVP */
     .rsvp-sec {
       text-align: center;
       max-width: 600px;
@@ -433,8 +415,8 @@
     }
 
     .btn-rsvp.active, .btn-rsvp:hover {
-      background: var(--accent-burgundy);
-      border-color: var(--accent-burgundy);
+      background: var(--accent-purple);
+      border-color: var(--accent-purple);
       color: #fff;
     }
 
@@ -455,7 +437,7 @@
       color: var(--text-charcoal);
     }
 
-    /* 09. Closing */
+    /* Section: The Next Chapter (Closing) */
     .closing-sec {
       text-align: center;
       padding: 6rem 2rem;
@@ -482,10 +464,9 @@
 
     /* Responsive adjustments */
     @media (max-width: 768px) {
-      .story-card, .story-card:nth-child(even) { grid-column: span 12; }
-      .program-grid { grid-template-columns: 1fr; }
       .cover-center h1 { font-size: 2.5rem; }
-      .invitation-sec h2 { font-size: 2.2rem; }
+      .story-sec h2 { font-size: 2.2rem; }
+      .wedding-sec h2 { font-size: 2.5rem; }
       .gallery-item.portrait, .gallery-item.landscape { width: 280px; height: 400px; }
       .entourage-group { flex-direction: column; gap: 0.5rem; }
     }
@@ -502,7 +483,6 @@
   
   <!-- Subtle Instrumental Audio -->
   <audio id="bgMusic" loop>
-    <!-- Royalty free soft piano track placeholder -->
     <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-100-bpm-121529.mp3" type="audio/mpeg">
   </audio>
 
@@ -510,17 +490,17 @@
      01 — COVER PAGE
      ========================================================================== -->
   <div id="cover">
-    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80" alt="Mia & Lucas" class="cover-bg-image">
+    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80" alt="Elena & Adrian" class="cover-bg-image">
     
-    <div class="cover-header">Vol. 01 — The Wedding Brief</div>
+    <div class="cover-header">Vol. 01 — The Wedding Invitation</div>
     
     <div class="cover-center">
-      <h1>MIA & LUCAS</h1>
+      <h1>ELENA & ADRIAN</h1>
       <p>are getting married</p>
       <button class="btn-open" onclick="openInvitation()">Open Invitation →</button>
     </div>
 
-    <div class="cover-footer">OCTOBER 17, 2027</div>
+    <div class="cover-footer">JANUARY 31, 2028</div>
   </div>
 
   <!-- Hover Preview Container for Entourage -->
@@ -531,61 +511,17 @@
      ========================================================================== -->
   <div class="site-wrapper" id="mainSite">
 
-    <!-- 02 — THE INVITATION -->
-    <section class="invitation-sec">
-      <span class="section-label">01 / The Invitation</span>
-      <h2>We're getting married.<br>And we'd love for you to be there.</h2>
-      
-      <div class="details-grid">
-        <div class="detail-item">
-          <h4>Date</h4>
-          <p>October 17, 2027</p>
-        </div>
-        <div class="detail-item">
-          <h4>Ceremony</h4>
-          <p>4:30 PM<br>San Sebastian Church</p>
-        </div>
-        <div class="detail-item">
-          <h4>Reception</h4>
-          <p>6:30 PM<br>The Manila Hotel</p>
-        </div>
-        <div class="detail-item">
-          <h4>Dress Code</h4>
-          <p>Formal — Burgundy & Neutrals</p>
-        </div>
-      </div>
+    <!-- 02 — THE BEGINNING (OUR STORY) -->
+    <section class="story-sec">
+      <span class="section-label">01 / The Beginning</span>
+      <h2>A Little Story About Us</h2>
+      <p class="story-quote">“It started with coffee. We met over iced coffee on an ordinary afternoon in Manila…”</p>
+      <div class="story-author">— Elena & Adrian</div>
     </section>
 
-    <!-- 03 — OUR STORY -->
+    <!-- 03 — OUR ADVENTURES -->
     <section>
-      <span class="section-label">02 / Our Story</span>
-      <div class="story-grid">
-        <div class="story-card">
-          <div class="story-year">2019</div>
-          <div class="story-title">The Beginning</div>
-          <p>A coffee shop. Two strangers. One terrible first impression.</p>
-        </div>
-        <div class="story-card">
-          <div class="story-year">2021</div>
-          <div class="story-title">The Plot Twist</div>
-          <p>Somehow, the person we almost didn't text back became our favorite person.</p>
-        </div>
-        <div class="story-card">
-          <div class="story-year">2024</div>
-          <div class="story-title">The Adventure</div>
-          <p>First trip together. Lots of wrong turns. Zero regrets.</p>
-        </div>
-        <div class="story-card">
-          <div class="story-year">2027</div>
-          <div class="story-title">The Next Chapter</div>
-          <p>And now we're here.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 04 — THE PLACES WE'VE BEEN -->
-    <section>
-      <span class="section-label">03 / The Places We've Been</span>
+      <span class="section-label">02 / Our Adventures</span>
       <div class="places-container">
         
         <div class="place-card">
@@ -609,28 +545,30 @@
       </div>
     </section>
 
-    <!-- 05 — WEDDING DETAILS -->
-    <section>
-      <span class="section-label">04 / Details</span>
-      <div class="program-grid">
-        <div class="program-block">
-          <h3>THE CEREMONY</h3>
-          <p><strong>4:30 PM</strong></p>
+    <!-- 04 — THE WEDDING (DETAILS) -->
+    <section class="wedding-sec">
+      <span class="section-label">03 / The Wedding</span>
+      <h2>January 31, 2028</h2>
+      
+      <div class="details-grid">
+        <div class="detail-item">
+          <h4>Ceremony</h4>
           <p>San Sebastian Church</p>
-          <p style="margin-top: 0.5rem; font-size: 0.9rem;">Plaza del Carmen, Quiapo, Manila</p>
         </div>
-        <div class="program-block">
-          <h3>THE RECEPTION</h3>
-          <p><strong>6:30 PM</strong></p>
+        <div class="detail-item">
+          <h4>Reception</h4>
           <p>The Manila Hotel</p>
-          <p style="margin-top: 0.5rem; font-size: 0.9rem;">One Rizal Park, Ermita, Manila</p>
+        </div>
+        <div class="detail-item">
+          <h4>Dress Code</h4>
+          <p>Purple</p>
         </div>
       </div>
     </section>
 
-    <!-- 06 — ENTOURAGE -->
+    <!-- 05 — OUR PEOPLE -->
     <section>
-      <span class="section-label">05 / Our People</span>
+      <span class="section-label">04 / Our People</span>
       <div class="entourage-list">
         
         <div class="entourage-group">
@@ -670,28 +608,28 @@
       </div>
     </section>
 
-    <!-- 07 — GALLERY -->
+    <!-- 06 — MOMENTS -->
     <section>
-      <span class="section-label">06 / Photo Journal</span>
+      <span class="section-label">05 / Moments</span>
       <div class="gallery-scroll">
         <div class="gallery-item portrait">
-          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80" alt="Scrapbook 1">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80" alt="Moment 1">
         </div>
         <div class="gallery-item landscape">
-          <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1200&q=80" alt="Scrapbook 2">
+          <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1200&q=80" alt="Moment 2">
         </div>
         <div class="gallery-item portrait">
-          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80" alt="Scrapbook 3">
+          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80" alt="Moment 3">
         </div>
         <div class="gallery-item landscape">
-          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80" alt="Scrapbook 4">
+          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80" alt="Moment 4">
         </div>
       </div>
     </section>
 
-    <!-- 08 — RSVP -->
+    <!-- 07 — RSVP -->
     <section class="rsvp-sec">
-      <span class="section-label">07 / RSVP</span>
+      <span class="section-label">06 / RSVP</span>
       <h2>Will you join us for the next chapter?</h2>
       
       <div class="rsvp-actions">
@@ -702,18 +640,18 @@
       <form class="rsvp-form" id="rsvpForm" onsubmit="submitRSVP(event)">
         <input type="text" placeholder="Your Full Name(s)" required>
         <input type="email" placeholder="Email Address" required>
-        <textarea rows="3" placeholder="Dietary restrictions or a note for Mia & Lucas..."></textarea>
-        <button type="submit" class="btn-open" style="width: 100%;">Confirm Response</button>
+        <textarea rows="3" placeholder="Dietary restrictions or a note for Elena & Adrian..."></textarea>
+        <button type="submit" class="btn-open" style="width: 100%;">Confirm Attendance</button>
       </form>
-      <p style="font-size: 0.8rem; margin-top: 1.5rem;">Kindly respond by September 1, 2027</p>
     </section>
 
-    <!-- 09 — CLOSING -->
+    <!-- 08 — THE NEXT CHAPTER (CLOSING) -->
     <section class="closing-sec">
+      <span class="section-label">07 / The Next Chapter</span>
       <h2>Until then...</h2>
-      <p class="serif" style="font-size: 1.5rem; color: var(--text-charcoal);">Mia & Lucas</p>
+      <p class="serif" style="font-size: 1.5rem; color: var(--text-charcoal);">Elena & Adrian</p>
       <p style="margin-top: 0.5rem;">We can't wait to celebrate with you.</p>
-      <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1600&q=80" alt="Final Celebration" class="closing-image">
+      <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1600&q=80" alt="Elena & Adrian Closing" class="closing-image">
     </section>
 
   </div>
