@@ -1268,7 +1268,10 @@
     function openInvitation() {
       document.getElementById('cover').classList.add('unfolded');
       
+      // Set audio playback position to 11.2 seconds upon opening invitation
       audio.volume = 0.3;
+      audio.currentTime = 11.2;
+      
       audio.play().then(() => {
         isPlaying = true;
         audioLabel.innerText = "Sound On";
