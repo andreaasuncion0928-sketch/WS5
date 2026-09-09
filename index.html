@@ -70,7 +70,7 @@
     p { line-height: 1.6; font-weight: 300; }
 
     /* ==========================================================================
-       01. COVER OVERLAY — MINIMIZED OPEN INVITATION & 50% OPACITY PANEL
+       01. COVER OVERLAY
        ========================================================================== */
     #cover {
       position: fixed;
@@ -81,7 +81,7 @@
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      padding: 3rem 2rem;
+      padding: 3rem 1.5rem;
       transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
     }
 
@@ -107,6 +107,7 @@
       letter-spacing: 3px;
       font-size: 0.75rem;
       color: var(--text-light);
+      text-align: center;
     }
 
     .cover-center {
@@ -114,8 +115,9 @@
       background: rgba(249, 246, 240, 0.5); /* 50% Opacity Card Panel */
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      padding: 3.5rem 4rem;
+      padding: 3.5rem 2.5rem;
       border: 1px solid rgba(255, 255, 255, 0.25);
+      width: 100%;
       max-width: 580px;
       box-shadow: 0 30px 60px rgba(0,0,0,0.15);
     }
@@ -176,7 +178,7 @@
     }
 
     /* ==========================================================================
-       02. TOP NAVIGATION TABS BAR
+       02. TOP NAVIGATION TABS BAR (Desktop & Mobile Drawer)
        ========================================================================== */
     .app-header {
       position: fixed;
@@ -211,6 +213,7 @@
       letter-spacing: 1px;
     }
 
+    /* Desktop Navigation Tabs */
     .nav-tabs {
       display: flex;
       gap: 1.8rem;
@@ -244,6 +247,12 @@
       background-color: currentColor;
     }
 
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
     .audio-control {
       background: transparent;
       border: 1px solid currentColor;
@@ -254,6 +263,81 @@
       text-transform: uppercase;
       cursor: pointer;
       color: inherit;
+    }
+
+    /* Mobile Hamburger Trigger */
+    .mobile-menu-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      padding: 0.5rem;
+      flex-direction: column;
+      gap: 5px;
+      z-index: 1100;
+    }
+
+    .mobile-menu-toggle span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background-color: currentColor;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* Mobile Drawer Overlay */
+    .mobile-drawer {
+      position: fixed;
+      inset: 0;
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      z-index: 1050;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      transform: translateY(-100%);
+      transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .mobile-drawer.open {
+      transform: translateY(0);
+    }
+
+    .mobile-nav-list {
+      list-style: none;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .mobile-nav-list button {
+      background: none;
+      border: none;
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .mobile-nav-list button.active, .mobile-nav-list button:hover {
+      color: var(--accent-purple);
+      font-style: italic;
+    }
+
+    /* Active Mobile Hamburger Animation */
+    .mobile-menu-toggle.open span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+    .mobile-menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .mobile-menu-toggle.open span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
     }
 
     /* ==========================================================================
@@ -513,6 +597,40 @@
       font-size: 1rem;
     }
 
+    .palette-wrapper {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .swatch-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .swatch {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border-dark);
+    }
+
+    .swatch.plum { background-color: #38153A; }
+    .swatch.royal { background-color: #582163; }
+    .swatch.purple { background-color: #7B438D; }
+    .swatch.lilac { background-color: #A379B5; }
+    .swatch.mauve { background-color: #CBB2D6; }
+
+    .swatch-label {
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
     /* 08. RSVP PANEL */
     #tab-rsvp { 
       background-color: var(--bg-charcoal); 
@@ -570,19 +688,67 @@
     .closing-content h2 { font-size: 2.8rem; font-style: italic; margin-bottom: 1rem; }
     .closing-content p.couple-names { font-family: var(--font-serif); font-size: 1.8rem; }
 
-    /* Responsive Design */
+    /* ==========================================================================
+       MEDIA QUERIES FOR MOBILE BREAKPOINTS (< 900px)
+       ========================================================================== */
     @media (max-width: 900px) {
-      .app-header { padding: 0 1rem; }
-      .nav-tabs { gap: 0.6rem; }
-      .nav-tabs button { font-size: 0.6rem; letter-spacing: 1px; }
-      .story-grid, .adventure-row, .adventure-row:nth-child(even), .wedding-details-grid, .faqs-grid { grid-template-columns: 1fr; }
+      .app-header { padding: 0 1.5rem; }
+      
+      /* Hide horizontal desktop nav bar & show hamburger button */
+      .nav-tabs { display: none; }
+      .mobile-menu-toggle { display: flex; }
+
+      .cover-center {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .cover-center h1 {
+        font-size: 2.5rem;
+      }
+
+      .cover-center p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+      }
+
+      .tab-panel {
+        padding: 3rem 1.5rem 6rem;
+      }
+
+      .story-grid, 
+      .adventure-row, 
+      .adventure-row:nth-child(even), 
+      .wedding-details-grid, 
+      .faqs-grid { 
+        grid-template-columns: 1fr; 
+        gap: 2.5rem;
+      }
+
+      .story-content h2 { font-size: 2.2rem; }
+      .story-photos { grid-template-columns: 1fr; }
+      .story-photos img { height: 260px; }
+
       .adventure-row:nth-child(even) .adv-img-wrap { order: 0; }
-      .brand-logo { display: none; }
-      .swiper-slide { width: 290px; }
-      .moments-card-img-wrap { height: 400px; }
+      .adv-img-wrap img { height: 320px; }
+      .adv-text h3 { font-size: 2rem; }
+
+      .wedding-header h2 { font-size: 2.8rem; }
+      .wedding-card p.venue-title { font-size: 1.8rem; }
+
+      .person-names { font-size: 1.6rem; }
+      .entourage-group { flex-direction: column; gap: 0.4rem; }
+
+      .swiper-slide { width: 280px; }
+      .moments-card-img-wrap { height: 380px; }
       #tab-moments .section-label, .moments-controls { padding-left: 1.5rem; }
       .swiper { padding: 1rem 1.5rem !important; }
-      .qr-image-wrap { width: 180px; height: 180px; }
+
+      .rsvp-container h2 { font-size: 2.2rem; }
+      .qr-card-frame { padding: 1.8rem 1.2rem; }
+      .qr-image-wrap { width: 170px; height: 170px; }
+
+      .closing-content { padding: 2.5rem 1.5rem; width: 90%; }
+      .closing-content h2 { font-size: 2rem; }
     }
   </style>
 </head>
@@ -606,6 +772,20 @@
     <div class="cover-footer">JANUARY 31, 2028</div>
   </div>
 
+  <!-- Mobile Menu Drawer Overlay -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <ul class="mobile-nav-list">
+      <li><button class="mobile-link active" onclick="switchTabMobile('story', 'cream', this)">Our Story</button></li>
+      <li><button class="mobile-link" onclick="switchTabMobile('adventures', 'cream', this)">Adventures</button></li>
+      <li><button class="mobile-link" onclick="switchTabMobile('wedding', 'purple', this)">The Wedding</button></li>
+      <li><button class="mobile-link" onclick="switchTabMobile('people', 'cream', this)">Our People</button></li>
+      <li><button class="mobile-link" onclick="switchTabMobile('moments', 'charcoal', this)">Moments</button></li>
+      <li><button class="mobile-link" onclick="switchTabMobile('faqs', 'cream', this)">FAQs</button></li>
+      <li><button class="mobile-link" onclick="switchTabMobile('rsvp', 'charcoal', this)">RSVP</button></li>
+      <li><button class="mobile-link" onclick="switchTabMobile('closing', 'charcoal', this)">Closing</button></li>
+    </ul>
+  </div>
+
   <!-- Hover Portrait Preview for Entourage -->
   <img id="entourage-preview" src="" alt="Entourage Preview">
 
@@ -614,6 +794,8 @@
      ========================================================================== -->
   <header class="app-header">
     <div class="brand-logo">E & A</div>
+    
+    <!-- Desktop Navigation Tabs -->
     <ul class="nav-tabs">
       <li><button class="tab-link active" onclick="switchTab('story', 'cream', this)">Our Story</button></li>
       <li><button class="tab-link" onclick="switchTab('adventures', 'cream', this)">Adventures</button></li>
@@ -624,7 +806,17 @@
       <li><button class="tab-link" onclick="switchTab('rsvp', 'charcoal', this)">RSVP</button></li>
       <li><button class="tab-link" onclick="switchTab('closing', 'charcoal', this)">Closing</button></li>
     </ul>
-    <button class="audio-control" id="audioToggle"><span id="audioLabel">Sound On</span></button>
+
+    <div class="header-actions">
+      <button class="audio-control" id="audioToggle"><span id="audioLabel">Sound On</span></button>
+      
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-menu-toggle" id="menuToggle" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </header>
 
   <!-- Background Music Element -->
@@ -687,7 +879,7 @@
       </div>
     </div>
 
-    <!-- THE WEDDING PANEL (Directions Added) -->
+    <!-- THE WEDDING PANEL -->
     <div class="tab-panel" id="tab-wedding">
       <div class="container">
         <span class="section-label">03 / The Wedding</span>
@@ -849,15 +1041,38 @@
       </div>
     </div>
 
-    <!-- 07 — FAQS PANEL (New) -->
+    <!-- 07 — FAQS PANEL -->
     <div class="tab-panel" id="tab-faqs">
       <div class="container">
         <span class="section-label">06 / Frequently Asked Questions</span>
         
         <div class="faqs-grid">
           <div class="faq-item">
-            <h3>Dress Code</h3>
-            <p><strong>Purple & Formal Attire.</strong> We kindly invite our guests to dress formally in elegant shades of deep purple, violet, or complementary muted neutrals.</p>
+            <h3>Dress Code & Palette</h3>
+            <p><strong>Formal Attire in Shades of Purple.</strong> We kindly invite guests to celebrate in rich or muted tones of purple—from deep plum and royal violet to soft lavender and mauve.</p>
+            
+            <div class="palette-wrapper">
+              <div class="swatch-item">
+                <div class="swatch plum"></div>
+                <span class="swatch-label">Plum</span>
+              </div>
+              <div class="swatch-item">
+                <div class="swatch royal"></div>
+                <span class="swatch-label">Violet</span>
+              </div>
+              <div class="swatch-item">
+                <div class="swatch purple"></div>
+                <span class="swatch-label">Purple</span>
+              </div>
+              <div class="swatch-item">
+                <div class="swatch lilac"></div>
+                <span class="swatch-label">Lilac</span>
+              </div>
+              <div class="swatch-item">
+                <div class="swatch mauve"></div>
+                <span class="swatch-label">Mauve</span>
+              </div>
+            </div>
           </div>
 
           <div class="faq-item">
@@ -918,6 +1133,8 @@
     const audio = document.getElementById('bgMusic');
     const audioToggle = document.getElementById('audioToggle');
     const audioLabel = document.getElementById('audioLabel');
+    const drawer = document.getElementById('mobileDrawer');
+    const menuToggle = document.getElementById('menuToggle');
     let isPlaying = false;
     let momentsSwiper = null;
 
@@ -952,12 +1169,31 @@
       }
     }
 
+    function toggleMobileMenu() {
+      drawer.classList.toggle('open');
+      menuToggle.classList.toggle('open');
+    }
+
+    function switchTabMobile(tabId, theme, btn) {
+      // Synchronize mobile links
+      document.querySelectorAll('.mobile-link').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Find matching desktop tab button to sync desktop state
+      const desktopBtn = document.querySelectorAll('.tab-link')[Array.from(btn.parentNode.parentNode.children).indexOf(btn.parentNode)];
+      switchTab(tabId, theme, desktopBtn);
+
+      // Close Mobile Menu Drawer
+      drawer.classList.remove('open');
+      menuToggle.classList.remove('open');
+    }
+
     function switchTab(tabId, theme, btn) {
       document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
       document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
 
       document.getElementById('tab-' + tabId).classList.add('active');
-      btn.classList.add('active');
+      if (btn) btn.classList.add('active');
 
       document.body.className = '';
       if (theme === 'purple') document.body.classList.add('theme-purple');
