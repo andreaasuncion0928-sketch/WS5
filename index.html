@@ -5,21 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elena & Adrian — The Next Chapter</title>
   
-  <!-- Google Fonts for Editorial Typography -->
+  <!-- Editorial Fonts: Bodoni Moda (Serif) & Plus Jakarta Sans (Sans-Serif) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
-       00. RESET & BASE VARIABLES (Palette: Warm Ivory, Charcoal, Muted Purple Accent)
+       00. COLOR SYSTEM & GLOBAL STYLES
        ========================================================================== */
     :root {
       --bg-cream: #F9F6F0;
-      --text-charcoal: #1C1C1C;
+      --bg-cream-card: #FAF8F5;
+      --bg-purple: #1F1022;      /* Deep Muted Royal Purple for Wedding Details */
+      --bg-charcoal: #141414;    /* Dark Cinematic Background for RSVP */
+      
+      --text-dark: #1A1A1A;
       --text-muted: #666059;
-      --accent-purple: #4A2E52; /* Updated accent color to muted royal purple */
-      --border-color: rgba(28, 28, 28, 0.12);
+      --text-light: #F9F6F0;
+      --text-light-muted: #A09A93;
+      --accent-purple: #7B438D;
+
+      --border-dark: rgba(26, 26, 26, 0.12);
+      --border-light: rgba(249, 246, 240, 0.15);
+
       --font-serif: 'Bodoni Moda', Georgia, serif;
       --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
     }
@@ -33,7 +42,7 @@
     html {
       scroll-behavior: smooth;
       background-color: var(--bg-cream);
-      color: var(--text-charcoal);
+      color: var(--text-dark);
       font-family: var(--font-sans);
       font-size: 16px;
       -webkit-font-smoothing: antialiased;
@@ -44,41 +53,56 @@
       position: relative;
     }
 
-    /* Subtle Film Grain Overlay */
+    /* Subtle Grain Overlay Across Whole Site */
     .film-grain {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
       pointer-events: none;
       z-index: 9999;
-      opacity: 0.04;
+      opacity: 0.035;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
 
-    /* Typography Utilities */
     h1, h2, h3, .serif {
       font-family: var(--font-serif);
       font-weight: 400;
     }
 
     p {
-      color: var(--text-muted);
       line-height: 1.6;
       font-weight: 300;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    /* Floating Audio Button */
+    .audio-control {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 900;
+      background: rgba(249, 246, 240, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-dark);
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dark);
+      transition: all 0.3s ease;
     }
 
     /* ==========================================================================
-       01. COVER EXPERIENCE (Unfolds on Click)
+       01. COVER — FULL BACKGROUND (Sunset Cityscape)
        ========================================================================== */
     #cover {
       position: fixed;
       inset: 0;
       z-index: 1000;
-      background-color: var(--bg-cream);
+      background-color: #000;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -100,25 +124,27 @@
       height: 100%;
       object-fit: cover;
       opacity: 0.85;
-      filter: sepia(10%) contrast(95%);
+      filter: brightness(85%) contrast(105%);
       z-index: -1;
     }
 
     .cover-header {
       text-transform: uppercase;
       letter-spacing: 3px;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 500;
-      color: var(--text-charcoal);
+      color: var(--text-light);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
     }
 
     .cover-center {
       text-align: center;
-      background: rgba(249, 246, 240, 0.85);
-      backdrop-filter: blur(8px);
-      padding: 3rem 4rem;
-      border: 1px solid var(--border-color);
-      max-width: 550px;
+      background: rgba(249, 246, 240, 0.9);
+      backdrop-filter: blur(12px);
+      padding: 3.5rem 4rem;
+      border: 1px solid var(--border-dark);
+      max-width: 580px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
 
     .cover-center h1 {
@@ -126,12 +152,13 @@
       letter-spacing: -0.5px;
       line-height: 1.1;
       margin-bottom: 0.5rem;
+      color: var(--text-dark);
     }
 
     .cover-center p {
       font-family: var(--font-serif);
       font-style: italic;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: var(--accent-purple);
       margin-bottom: 2rem;
     }
@@ -139,8 +166,8 @@
     .btn-open {
       display: inline-block;
       background: transparent;
-      border: 1px solid var(--text-charcoal);
-      color: var(--text-charcoal);
+      border: 1px solid var(--text-dark);
+      color: var(--text-dark);
       padding: 1rem 2rem;
       font-family: var(--font-sans);
       font-size: 0.75rem;
@@ -151,43 +178,23 @@
     }
 
     .btn-open:hover {
-      background: var(--text-charcoal);
+      background: var(--text-dark);
       color: var(--bg-cream);
     }
 
     .cover-footer {
       font-size: 0.85rem;
-      letter-spacing: 1.5px;
-    }
-
-    /* Audio Toggle Floating Widget */
-    .audio-control {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 900;
-      background: rgba(249, 246, 240, 0.8);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border-color);
-      padding: 0.6rem 1.2rem;
-      border-radius: 40px;
-      font-size: 0.75rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      letter-spacing: 2px;
+      color: var(--text-light);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
     }
 
     /* ==========================================================================
-       02. MAIN WEBSITE CONTENT
+       SITE WRAPPER & SECTIONS
        ========================================================================== */
     .site-wrapper {
       opacity: 0;
       transition: opacity 1s ease 0.5s;
-      max-width: 1400px;
-      margin: 0 auto;
     }
 
     .site-wrapper.visible {
@@ -196,38 +203,52 @@
 
     section {
       padding: 8rem 2rem;
-      border-bottom: 1px solid var(--border-color);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .section-label {
       font-size: 0.75rem;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--accent-purple);
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
       display: block;
     }
 
-    /* Section: The Beginning / Our Story */
+    /* ==========================================================================
+       02. OUR STORY — PHOTO + CLEAN IVORY TEXTURED BACKGROUND
+       ========================================================================== */
     .story-sec {
-      text-align: center;
-      max-width: 850px;
-      margin: 0 auto;
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      border-bottom: 1px solid var(--border-dark);
     }
 
-    .story-sec h2 {
-      font-size: 3.2rem;
-      line-height: 1.2;
-      margin-bottom: 2rem;
+    .story-sec .section-label { color: var(--accent-purple); }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .story-content h2 {
+      font-size: 3rem;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
     }
 
     .story-quote {
       font-family: var(--font-serif);
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       font-style: italic;
-      color: var(--text-charcoal);
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
+      color: var(--text-dark);
+      line-height: 1.6;
+      margin-bottom: 1rem;
     }
 
     .story-author {
@@ -235,82 +256,142 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--accent-purple);
+      margin-bottom: 2rem;
     }
 
-    /* Section: Our Adventures */
-    .places-container {
+    .story-photos {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 3rem;
-      margin-top: 2rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
     }
 
-    .place-card {
-      background: #FAF8F5;
-      padding: 1.5rem;
-      border: 1px solid var(--border-color);
-    }
-
-    .place-image {
+    .story-photos img {
       width: 100%;
-      height: 380px;
+      height: 320px;
       object-fit: cover;
-      margin-bottom: 1.5rem;
-      filter: grayscale(20%);
+      filter: contrast(95%);
     }
 
-    .place-card h3 {
-      font-size: 1.8rem;
-      letter-spacing: 1px;
-      margin-bottom: 0.5rem;
+    .story-photos img:first-child {
+      margin-top: -2rem;
     }
 
-    /* Section: The Wedding (Details Grid) */
-    .wedding-sec {
-      text-align: center;
+    /* ==========================================================================
+       03. OUR ADVENTURES — TRAVEL JOURNAL CARDS
+       ========================================================================== */
+    .adventures-sec {
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      border-bottom: 1px solid var(--border-dark);
     }
 
-    .wedding-sec h2 {
-      font-size: 3.5rem;
-      margin-bottom: 3rem;
-    }
+    .adventures-sec .section-label { color: var(--accent-purple); }
 
-    .details-grid {
+    .adventure-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: left;
-      border-top: 1px solid var(--border-color);
-      padding-top: 2rem;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+      align-items: center;
+      margin-bottom: 6rem;
     }
 
-    .detail-item h4 {
-      font-size: 0.75rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
+    .adventure-row:nth-child(even) {
+      grid-template-columns: 0.8fr 1.2fr;
+    }
+
+    .adventure-row:nth-child(even) .adv-img-wrap {
+      order: 2;
+    }
+
+    .adv-img-wrap img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      border: 1px solid var(--border-dark);
+    }
+
+    .adv-text h3 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+    }
+
+    .adv-text p {
       color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* ==========================================================================
+       04. THE WEDDING — DEEP MUTED PURPLE / CHARCOAL BACKGROUND
+       ========================================================================== */
+    .wedding-sec {
+      background-color: var(--bg-purple);
+      color: var(--text-light);
+      padding: 10rem 2rem;
+    }
+
+    .wedding-sec .section-label { color: var(--text-light-muted); }
+
+    .wedding-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .wedding-header h2 {
+      font-size: 4.5rem;
+      letter-spacing: 1px;
+      color: var(--text-light);
+    }
+
+    .wedding-details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      border-top: 1px solid var(--border-light);
+      padding-top: 4rem;
+    }
+
+    .wedding-card h4 {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-light-muted);
+      margin-bottom: 1rem;
+    }
+
+    .wedding-card p.venue-title {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      color: var(--text-light);
       margin-bottom: 0.5rem;
     }
 
-    .detail-item p {
-      font-family: var(--font-serif);
-      font-size: 1.4rem;
-      color: var(--text-charcoal);
+    .wedding-card p.venue-sub {
+      color: var(--text-light-muted);
+      font-size: 0.95rem;
     }
 
-    /* Section: Our People (Entourage with Interactive Hover) */
+    /* ==========================================================================
+       05. OUR PEOPLE — LIGHT EDITORIAL MAGAZINE BACKGROUND
+       ========================================================================== */
+    .entourage-sec {
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      border-bottom: 1px solid var(--border-dark);
+    }
+
+    .entourage-sec .section-label { color: var(--accent-purple); }
+
     .entourage-list {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 2.5rem;
       position: relative;
     }
 
     .entourage-group {
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-dark);
+      padding-bottom: 2rem;
       display: flex;
       justify-content: space-between;
       align-items: baseline;
@@ -325,40 +406,51 @@
 
     .person-names {
       font-family: var(--font-serif);
-      font-size: 2rem;
-      cursor: pointer;
-      transition: color 0.3s;
+      font-size: 2.2rem;
     }
 
     .person-names span {
       position: relative;
-      display: inline-block;
+      cursor: pointer;
+      transition: color 0.3s;
     }
 
     .person-names span:hover {
       color: var(--accent-purple);
     }
 
-    /* Hover image preview container */
+    /* Floating Portrait Preview */
     #entourage-preview {
       position: fixed;
-      width: 200px;
-      height: 260px;
+      width: 220px;
+      height: 290px;
       pointer-events: none;
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.9);
       transition: opacity 0.3s ease, transform 0.3s ease;
       z-index: 500;
       object-fit: cover;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
 
-    /* Section: Moments (Gallery) */
+    /* ==========================================================================
+       06. GALLERY — FULL-BLEED PHOTO JOURNAL
+       ========================================================================== */
+    .gallery-sec {
+      background-color: #0d0d0d;
+      padding: 6rem 0;
+    }
+
+    .gallery-sec .section-label {
+      color: var(--text-light-muted);
+      padding-left: 2rem;
+    }
+
     .gallery-scroll {
       display: flex;
       gap: 2rem;
       overflow-x: auto;
-      padding-bottom: 2rem;
+      padding: 0 2rem 2rem 2rem;
       scroll-snap-type: x mandatory;
     }
 
@@ -366,7 +458,7 @@
       height: 4px;
     }
     .gallery-scroll::-webkit-scrollbar-thumb {
-      background: var(--accent-purple);
+      background: rgba(255,255,255,0.3);
     }
 
     .gallery-item {
@@ -374,87 +466,131 @@
       scroll-snap-align: start;
     }
 
-    .gallery-item.portrait { width: 350px; height: 500px; }
-    .gallery-item.landscape { width: 600px; height: 500px; }
+    .gallery-item.portrait { width: 380px; height: 540px; }
+    .gallery-item.landscape { width: 680px; height: 540px; }
 
     .gallery-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: contrast(95%);
+      filter: brightness(90%) contrast(100%);
     }
 
-    /* Section: RSVP */
+    /* ==========================================================================
+       07. RSVP — DARK, CINEMATIC
+       ========================================================================== */
     .rsvp-sec {
+      background-color: var(--bg-charcoal);
+      color: var(--text-light);
       text-align: center;
+      padding: 10rem 2rem;
+    }
+
+    .rsvp-sec .section-label { color: var(--text-light-muted); }
+
+    .rsvp-container {
       max-width: 600px;
       margin: 0 auto;
-      border: none;
     }
 
     .rsvp-sec h2 {
-      font-size: 3rem;
-      margin-bottom: 2rem;
+      font-size: 3.2rem;
+      margin-bottom: 2.5rem;
+      color: var(--text-light);
     }
 
     .rsvp-actions {
       display: flex;
-      gap: 1rem;
+      gap: 1.5rem;
       justify-content: center;
       margin-bottom: 2rem;
     }
 
     .btn-rsvp {
       background: transparent;
-      border: 1px solid var(--text-charcoal);
-      padding: 1rem 1.5rem;
+      border: 1px solid var(--border-light);
+      color: var(--text-light);
+      padding: 1.1rem 1.8rem;
       font-size: 0.75rem;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
     .btn-rsvp.active, .btn-rsvp:hover {
-      background: var(--accent-purple);
-      border-color: var(--accent-purple);
-      color: #fff;
+      background: var(--text-light);
+      border-color: var(--text-light);
+      color: var(--bg-charcoal);
     }
 
     .rsvp-form {
       display: none;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.2rem;
       text-align: left;
-      margin-top: 2rem;
+      margin-top: 2.5rem;
       animation: fadeIn 0.5s forwards;
     }
 
     .rsvp-form input, .rsvp-form textarea {
-      background: transparent;
-      border: 1px solid var(--border-color);
-      padding: 1rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-light);
+      padding: 1.1rem;
       font-family: var(--font-sans);
-      color: var(--text-charcoal);
+      color: var(--text-light);
     }
 
-    /* Section: The Next Chapter (Closing) */
+    .rsvp-form input::placeholder, .rsvp-form textarea::placeholder {
+      color: var(--text-light-muted);
+    }
+
+    /* ==========================================================================
+       08. FINAL / CLOSING — SUNSET IMAGE BOOKEND
+       ========================================================================== */
     .closing-sec {
+      position: relative;
+      height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 6rem 2rem;
-      border-bottom: none;
+      color: var(--text-light);
+      overflow: hidden;
+      padding: 0;
     }
 
-    .closing-sec h2 {
-      font-size: 2.5rem;
+    .closing-bg-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(60%) contrast(105%);
+      z-index: 1;
+    }
+
+    .closing-content {
+      position: relative;
+      z-index: 2;
+      background: rgba(20, 20, 20, 0.7);
+      backdrop-filter: blur(8px);
+      padding: 4rem 5rem;
+      border: 1px solid var(--border-light);
+      max-width: 650px;
+    }
+
+    .closing-content h2 {
+      font-size: 2.8rem;
       font-style: italic;
       margin-bottom: 1rem;
+      color: var(--text-light);
     }
 
-    .closing-image {
-      width: 100%;
-      height: 80vh;
-      object-fit: cover;
-      margin-top: 3rem;
+    .closing-content p.couple-names {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
     }
 
     @keyframes fadeIn {
@@ -462,13 +598,16 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
+    /* Responsive Design */
+    @media (max-width: 900px) {
+      .story-grid { grid-template-columns: 1fr; }
+      .adventure-row, .adventure-row:nth-child(even) { grid-template-columns: 1fr; }
+      .adventure-row:nth-child(even) .adv-img-wrap { order: 0; }
+      .wedding-details-grid { grid-template-columns: 1fr; }
       .cover-center h1 { font-size: 2.5rem; }
-      .story-sec h2 { font-size: 2.2rem; }
-      .wedding-sec h2 { font-size: 2.5rem; }
-      .gallery-item.portrait, .gallery-item.landscape { width: 280px; height: 400px; }
+      .wedding-header h2 { font-size: 3rem; }
       .entourage-group { flex-direction: column; gap: 0.5rem; }
+      .closing-content { padding: 2.5rem 2rem; }
     }
   </style>
 </head>
@@ -476,141 +615,177 @@
 
   <div class="film-grain"></div>
 
-  <!-- Audio Control (Music Toggle) -->
+  <!-- Audio Toggle -->
   <button class="audio-control" id="audioToggle">
     <span id="audioIcon">🎵</span> <span id="audioLabel">Sound On</span>
   </button>
   
-  <!-- Subtle Instrumental Audio -->
   <audio id="bgMusic" loop>
     <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-100-bpm-121529.mp3" type="audio/mpeg">
   </audio>
 
   <!-- ==========================================================================
-     01 — COVER PAGE
+     01 — COVER PAGE (Sunset Cityscape Background)
      ========================================================================== -->
   <div id="cover">
-    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80" alt="Elena & Adrian" class="cover-bg-image">
+    <!-- Atmospheric Sunset Cityscape Image -->
+    <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1800&q=80" alt="Elena & Adrian Sunset" class="cover-bg-image">
     
-    <div class="cover-header">Vol. 01 — The Wedding Invitation</div>
+    <div class="cover-header">Vol. 01 — The Wedding Brief</div>
     
     <div class="cover-center">
       <h1>ELENA & ADRIAN</h1>
-      <p>are getting married</p>
+      <p>The Next Chapter</p>
       <button class="btn-open" onclick="openInvitation()">Open Invitation →</button>
     </div>
 
     <div class="cover-footer">JANUARY 31, 2028</div>
   </div>
 
-  <!-- Hover Preview Container for Entourage -->
+  <!-- Hover Portrait Preview for Entourage -->
   <img id="entourage-preview" src="" alt="Entourage Preview">
 
   <!-- ==========================================================================
-     MAIN WEBSITE EXPERIENCE
+     MAIN SITE EXPERIENCE
      ========================================================================== -->
   <div class="site-wrapper" id="mainSite">
 
-    <!-- 02 — THE BEGINNING (OUR STORY) -->
+    <!-- 02 — OUR STORY (Clean Ivory Background + Photos) -->
     <section class="story-sec">
-      <span class="section-label">01 / The Beginning</span>
-      <h2>A Little Story About Us</h2>
-      <p class="story-quote">“It started with coffee. We met over iced coffee on an ordinary afternoon in Manila…”</p>
-      <div class="story-author">— Elena & Adrian</div>
+      <div class="container">
+        <span class="section-label">01 / Our Story</span>
+        <div class="story-grid">
+          <div class="story-content">
+            <h2>IT STARTED WITH COFFEE.</h2>
+            <p class="story-quote">“We met over iced coffee on an ordinary afternoon in Manila…”</p>
+            <div class="story-author">— Elena & Adrian</div>
+            <p>What was supposed to be a quick 30-minute catchup turned into four hours of talking about everything from worst travel mistakes to favorite albums. By the time the coffee shop was closing, we both knew something quiet and permanent had just begun.</p>
+          </div>
+          <div class="story-photos">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80" alt="Coffee story portrait 1">
+            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80" alt="Coffee story portrait 2">
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- 03 — OUR ADVENTURES -->
-    <section>
-      <span class="section-label">02 / Our Adventures</span>
-      <div class="places-container">
+    <!-- 03 — OUR ADVENTURES (Travel Journal Layout) -->
+    <section class="adventures-sec">
+      <div class="container">
+        <span class="section-label">02 / Our Adventures</span>
         
-        <div class="place-card">
-          <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80" class="place-image" alt="New York">
-          <h3>NEW YORK</h3>
-          <p>The trip where we discovered that neither of us knows how to navigate the subway.</p>
+        <div class="adventure-row">
+          <div class="adv-img-wrap">
+            <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1000&q=80" alt="New York">
+          </div>
+          <div class="adv-text">
+            <h3>NEW YORK</h3>
+            <p>Somewhere between getting lost in Brooklyn and finding the best espresso in West Village, we realized we navigate chaos pretty well together.</p>
+          </div>
         </div>
 
-        <div class="place-card">
-          <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80" class="place-image" alt="Tokyo">
-          <h3>TOKYO</h3>
-          <p>The 3-day trip that somehow turned into 47,000 steps a day.</p>
+        <div class="adventure-row">
+          <div class="adv-img-wrap">
+            <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80" alt="Tokyo">
+          </div>
+          <div class="adv-text">
+            <h3>TOKYO</h3>
+            <p>The 3-day trip that somehow turned into 47,000 steps a day, late-night ramen runs, and a shared love for quiet alleyways.</p>
+          </div>
         </div>
 
-        <div class="place-card">
-          <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=800&q=80" class="place-image" alt="Palawan">
-          <h3>PALAWAN</h3>
-          <p>Where we decided doing absolutely nothing together was actually a pretty great vacation.</p>
+        <div class="adventure-row">
+          <div class="adv-img-wrap">
+            <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=1000&q=80" alt="Palawan">
+          </div>
+          <div class="adv-text">
+            <h3>PALAWAN</h3>
+            <p>Where we decided doing absolutely nothing together on a remote beach was actually our favorite vacation of all.</p>
+          </div>
         </div>
 
       </div>
     </section>
 
-    <!-- 04 — THE WEDDING (DETAILS) -->
+    <!-- 04 — THE WEDDING (Deep Muted Purple / Charcoal Background) -->
     <section class="wedding-sec">
-      <span class="section-label">03 / The Wedding</span>
-      <h2>January 31, 2028</h2>
-      
-      <div class="details-grid">
-        <div class="detail-item">
-          <h4>Ceremony</h4>
-          <p>San Sebastian Church</p>
-        </div>
-        <div class="detail-item">
-          <h4>Reception</h4>
-          <p>The Manila Hotel</p>
-        </div>
-        <div class="detail-item">
-          <h4>Dress Code</h4>
-          <p>Purple</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 05 — OUR PEOPLE -->
-    <section>
-      <span class="section-label">04 / Our People</span>
-      <div class="entourage-list">
+      <div class="container">
+        <span class="section-label">03 / The Wedding</span>
         
-        <div class="entourage-group">
-          <span class="role-title">Maid of Honor</span>
-          <div class="person-names">
-            <span data-img="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80">Sofia Reyes</span>
-          </div>
+        <div class="wedding-header">
+          <h2>JANUARY 31, 2028</h2>
         </div>
 
-        <div class="entourage-group">
-          <span class="role-title">Best Man</span>
-          <div class="person-names">
-            <span data-img="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80">Daniel Cruz</span>
+        <div class="wedding-details-grid">
+          <div class="wedding-card">
+            <h4>Ceremony</h4>
+            <p class="venue-title">San Sebastian Church</p>
+            <p class="venue-sub">Plaza del Carmen, Quiapo, Manila</p>
+            <p class="venue-sub" style="margin-top: 1rem; color: #fff;">4:30 PM</p>
+          </div>
+
+          <div class="wedding-card">
+            <h4>Reception</h4>
+            <p class="venue-title">The Manila Hotel</p>
+            <p class="venue-sub">One Rizal Park, Ermita, Manila</p>
+            <p class="venue-sub" style="margin-top: 1rem; color: #fff;">6:30 PM</p>
+          </div>
+
+          <div class="wedding-card">
+            <h4>Dress Code</h4>
+            <p class="venue-title">Purple</p>
+            <p class="venue-sub">Formal attire in shades of deep purple, violet, and muted neutrals.</p>
           </div>
         </div>
-
-        <div class="entourage-group">
-          <span class="role-title">Bridesmaids</span>
-          <div class="person-names">
-            <span data-img="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80">Clara</span> • 
-            <span data-img="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80">Nina</span> • 
-            <span data-img="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80">Bea</span> • 
-            <span data-img="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80">Isabelle</span>
-          </div>
-        </div>
-
-        <div class="entourage-group">
-          <span class="role-title">Groomsmen</span>
-          <div class="person-names">
-            <span data-img="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80">Marco</span> • 
-            <span data-img="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=500&q=80">Ethan</span> • 
-            <span data-img="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=500&q=80">James</span> • 
-            <span data-img="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=500&q=80">Rafael</span>
-          </div>
-        </div>
-
       </div>
     </section>
 
-    <!-- 06 — MOMENTS -->
-    <section>
-      <span class="section-label">05 / Moments</span>
+    <!-- 05 — OUR PEOPLE (Editorial Light Background) -->
+    <section class="entourage-sec">
+      <div class="container">
+        <span class="section-label">04 / Our People</span>
+        
+        <div class="entourage-list">
+          <div class="entourage-group">
+            <span class="role-title">Maid of Honor</span>
+            <div class="person-names">
+              <span data-img="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80">Sofia Reyes</span>
+            </div>
+          </div>
+
+          <div class="entourage-group">
+            <span class="role-title">Best Man</span>
+            <div class="person-names">
+              <span data-img="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80">Daniel Cruz</span>
+            </div>
+          </div>
+
+          <div class="entourage-group">
+            <span class="role-title">Bridesmaids</span>
+            <div class="person-names">
+              <span data-img="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80">Clara</span> • 
+              <span data-img="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80">Nina</span> • 
+              <span data-img="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80">Bea</span> • 
+              <span data-img="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80">Isabelle</span>
+            </div>
+          </div>
+
+          <div class="entourage-group">
+            <span class="role-title">Groomsmen</span>
+            <div class="person-names">
+              <span data-img="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80">Marco</span> • 
+              <span data-img="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=500&q=80">Ethan</span> • 
+              <span data-img="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=500&q=80">James</span> • 
+              <span data-img="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=500&q=80">Rafael</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 — GALLERY (Full-Bleed Photos) -->
+    <section class="gallery-sec">
+      <span class="section-label">05 / Photo Journal</span>
       <div class="gallery-scroll">
         <div class="gallery-item portrait">
           <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80" alt="Moment 1">
@@ -627,37 +802,42 @@
       </div>
     </section>
 
-    <!-- 07 — RSVP -->
+    <!-- 07 — RSVP (Dark, Cinematic Charcoal) -->
     <section class="rsvp-sec">
-      <span class="section-label">06 / RSVP</span>
-      <h2>Will you join us for the next chapter?</h2>
-      
-      <div class="rsvp-actions">
-        <button class="btn-rsvp" onclick="toggleRSVP('attending')">YES, I'LL BE THERE →</button>
-        <button class="btn-rsvp" onclick="toggleRSVP('declining')">SORRY, I CAN'T MAKE IT →</button>
-      </div>
+      <div class="rsvp-container">
+        <span class="section-label">06 / RSVP</span>
+        <h2>Will you join us for the next chapter?</h2>
+        
+        <div class="rsvp-actions">
+          <button class="btn-rsvp" onclick="toggleRSVP('attending')">YES, I'LL BE THERE →</button>
+          <button class="btn-rsvp" onclick="toggleRSVP('declining')">SORRY, I CAN'T MAKE IT →</button>
+        </div>
 
-      <form class="rsvp-form" id="rsvpForm" onsubmit="submitRSVP(event)">
-        <input type="text" placeholder="Your Full Name(s)" required>
-        <input type="email" placeholder="Email Address" required>
-        <textarea rows="3" placeholder="Dietary restrictions or a note for Elena & Adrian..."></textarea>
-        <button type="submit" class="btn-open" style="width: 100%;">Confirm Attendance</button>
-      </form>
+        <form class="rsvp-form" id="rsvpForm" onsubmit="submitRSVP(event)">
+          <input type="text" placeholder="Your Full Name(s)" required>
+          <input type="email" placeholder="Email Address" required>
+          <textarea rows="3" placeholder="Dietary restrictions or a note for Elena & Adrian..."></textarea>
+          <button type="submit" class="btn-rsvp active" style="width: 100%;">Confirm Attendance</button>
+        </form>
+      </div>
     </section>
 
-    <!-- 08 — THE NEXT CHAPTER (CLOSING) -->
+    <!-- 08 — FINAL / CLOSING (Sunset Image Visual Callback) -->
     <section class="closing-sec">
-      <span class="section-label">07 / The Next Chapter</span>
-      <h2>Until then...</h2>
-      <p class="serif" style="font-size: 1.5rem; color: var(--text-charcoal);">Elena & Adrian</p>
-      <p style="margin-top: 0.5rem;">We can't wait to celebrate with you.</p>
-      <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1600&q=80" alt="Elena & Adrian Closing" class="closing-image">
+      <!-- Same Sunset Image as Opening for the Bookend Effect -->
+      <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1800&q=80" alt="Elena & Adrian Sunset Finale" class="closing-bg-image">
+      
+      <div class="closing-content">
+        <h2>And this is only the beginning.</h2>
+        <p class="couple-names">Elena & Adrian</p>
+        <p style="color: var(--text-light-muted); font-size: 0.9rem; margin-top: 1rem;">We can't wait to celebrate with you.</p>
+      </div>
     </section>
 
   </div>
 
   <!-- ==========================================================================
-     SCRIPT INTERACTIONS
+     INTERACTIVE SCRIPTS
      ========================================================================== -->
   <script>
     const audio = document.getElementById('bgMusic');
@@ -665,12 +845,11 @@
     const audioLabel = document.getElementById('audioLabel');
     let isPlaying = false;
 
-    // Open Cover Animation & Trigger Audio
+    // Unfold Cover & Start Music
     function openInvitation() {
       document.getElementById('cover').classList.add('unfolded');
       document.getElementById('mainSite').classList.add('visible');
       
-      // Play Audio softly on user interaction
       audio.volume = 0.3;
       audio.play().then(() => {
         isPlaying = true;
@@ -692,7 +871,7 @@
       isPlaying = !isPlaying;
     });
 
-    // Entourage Hover Effect
+    // Entourage Hover Portrait Preview
     const preview = document.getElementById('entourage-preview');
     const entourageNames = document.querySelectorAll('.person-names span');
 
@@ -717,7 +896,7 @@
       });
     });
 
-    // RSVP Form Logic
+    // RSVP Toggle Form Logic
     function toggleRSVP(status) {
       const form = document.getElementById('rsvpForm');
       form.style.display = 'flex';
