@@ -5,20 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elena & Adrian — The Next Chapter</title>
   
-  <!-- Editorial Fonts: Bodoni Moda (Serif) & Plus Jakarta Sans (Sans-Serif) -->
+  <!-- Editorial Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
-       00. COLOR SYSTEM & GLOBAL STYLES
+       00. COLOR SYSTEM & BASE STYLES
        ========================================================================== */
     :root {
       --bg-cream: #F9F6F0;
       --bg-cream-card: #FAF8F5;
-      --bg-purple: #1F1022;      /* Deep Muted Royal Purple for Wedding Details */
-      --bg-charcoal: #141414;    /* Dark Cinematic Background for RSVP */
+      --bg-purple: #1F1022;      /* Deep Muted Purple for Wedding View */
+      --bg-charcoal: #141414;    /* Dark Charcoal for RSVP & Gallery */
       
       --text-dark: #1A1A1A;
       --text-muted: #666059;
@@ -39,21 +39,17 @@
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden; /* App view with tabbed scroll frames */
       background-color: var(--bg-cream);
       color: var(--text-dark);
       font-family: var(--font-sans);
-      font-size: 16px;
       -webkit-font-smoothing: antialiased;
     }
 
-    body {
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Subtle Grain Overlay Across Whole Site */
+    /* Film Grain Overlay */
     .film-grain {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -68,40 +64,15 @@
       font-weight: 400;
     }
 
-    p {
-      line-height: 1.6;
-      font-weight: 300;
-    }
-
-    /* Floating Audio Button */
-    .audio-control {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 900;
-      background: rgba(249, 246, 240, 0.85);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border-dark);
-      padding: 0.6rem 1.2rem;
-      border-radius: 40px;
-      font-size: 0.75rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-dark);
-      transition: all 0.3s ease;
-    }
+    p { line-height: 1.6; font-weight: 300; }
 
     /* ==========================================================================
-       01. COVER — FULL BACKGROUND (Sunset Cityscape)
+       01. COVER OVERLAY
        ========================================================================== */
     #cover {
       position: fixed;
       inset: 0;
-      z-index: 1000;
+      z-index: 2000;
       background-color: #000;
       display: flex;
       flex-direction: column;
@@ -132,9 +103,7 @@
       text-transform: uppercase;
       letter-spacing: 3px;
       font-size: 0.75rem;
-      font-weight: 500;
       color: var(--text-light);
-      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
     }
 
     .cover-center {
@@ -144,12 +113,10 @@
       padding: 3.5rem 4rem;
       border: 1px solid var(--border-dark);
       max-width: 580px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
 
     .cover-center h1 {
       font-size: 3.5rem;
-      letter-spacing: -0.5px;
       line-height: 1.1;
       margin-bottom: 0.5rem;
       color: var(--text-dark);
@@ -169,7 +136,6 @@
       border: 1px solid var(--text-dark);
       color: var(--text-dark);
       padding: 1rem 2rem;
-      font-family: var(--font-sans);
       font-size: 0.75rem;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -186,27 +152,117 @@
       font-size: 0.85rem;
       letter-spacing: 2px;
       color: var(--text-light);
-      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
     }
 
     /* ==========================================================================
-       SITE WRAPPER & SECTIONS
+       02. TOP NAVIGATION TABS BAR
        ========================================================================== */
-    .site-wrapper {
-      opacity: 0;
-      transition: opacity 1s ease 0.5s;
+    .app-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 70px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      background: rgba(249, 246, 240, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-dark);
+      transition: background 0.5s ease, border-color 0.5s ease, color 0.5s ease;
     }
 
-    .site-wrapper.visible {
+    /* Dynamic Header Themes */
+    body.theme-purple .app-header {
+      background: rgba(31, 16, 34, 0.95);
+      border-color: var(--border-light);
+      color: var(--text-light);
+    }
+
+    body.theme-charcoal .app-header {
+      background: rgba(20, 20, 20, 0.95);
+      border-color: var(--border-light);
+      color: var(--text-light);
+    }
+
+    .brand-logo {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-tabs button {
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: inherit;
+      opacity: 0.6;
+      cursor: pointer;
+      padding: 0.5rem 0;
+      position: relative;
+      transition: opacity 0.3s;
+    }
+
+    .nav-tabs button:hover, .nav-tabs button.active {
       opacity: 1;
     }
 
-    section {
-      padding: 8rem 2rem;
+    .nav-tabs button.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; width: 100%;
+      height: 1.5px;
+      background-color: currentColor;
+    }
+
+    .audio-control {
+      background: transparent;
+      border: 1px solid currentColor;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: inherit;
+    }
+
+    /* ==========================================================================
+       03. TAB VIEWPORT & PANELS
+       ========================================================================== */
+    .tab-viewport {
+      position: absolute;
+      top: 70px;
+      bottom: 0; left: 0; right: 0;
+      overflow: hidden;
+    }
+
+    .tab-panel {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      display: none;
+      padding: 5rem 2rem 8rem;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .tab-panel.active {
+      display: block;
+      opacity: 1;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
     }
 
@@ -218,16 +274,9 @@
       display: block;
     }
 
-    /* ==========================================================================
-       02. OUR STORY — PHOTO + CLEAN IVORY TEXTURED BACKGROUND
-       ========================================================================== */
-    .story-sec {
-      background-color: var(--bg-cream);
-      color: var(--text-dark);
-      border-bottom: 1px solid var(--border-dark);
-    }
-
-    .story-sec .section-label { color: var(--accent-purple); }
+    /* 02. OUR STORY PANEL */
+    #tab-story { background-color: var(--bg-cream); color: var(--text-dark); }
+    #tab-story .section-label { color: var(--accent-purple); }
 
     .story-grid {
       display: grid;
@@ -236,112 +285,36 @@
       align-items: center;
     }
 
-    .story-content h2 {
-      font-size: 3rem;
-      line-height: 1.15;
-      margin-bottom: 1.5rem;
-    }
+    .story-content h2 { font-size: 3rem; line-height: 1.15; margin-bottom: 1.5rem; }
+    .story-quote { font-family: var(--font-serif); font-size: 1.3rem; font-style: italic; margin-bottom: 1rem; }
+    .story-author { font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-purple); margin-bottom: 2rem; }
+    
+    .story-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .story-photos img { width: 100%; height: 320px; object-fit: cover; }
 
-    .story-quote {
-      font-family: var(--font-serif);
-      font-size: 1.4rem;
-      font-style: italic;
-      color: var(--text-dark);
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-
-    .story-author {
-      font-size: 0.85rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent-purple);
-      margin-bottom: 2rem;
-    }
-
-    .story-photos {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-    }
-
-    .story-photos img {
-      width: 100%;
-      height: 320px;
-      object-fit: cover;
-      filter: contrast(95%);
-    }
-
-    .story-photos img:first-child {
-      margin-top: -2rem;
-    }
-
-    /* ==========================================================================
-       03. OUR ADVENTURES — TRAVEL JOURNAL CARDS
-       ========================================================================== */
-    .adventures-sec {
-      background-color: var(--bg-cream);
-      color: var(--text-dark);
-      border-bottom: 1px solid var(--border-dark);
-    }
-
-    .adventures-sec .section-label { color: var(--accent-purple); }
+    /* 03. OUR ADVENTURES PANEL */
+    #tab-adventures { background-color: var(--bg-cream); color: var(--text-dark); }
+    #tab-adventures .section-label { color: var(--accent-purple); }
 
     .adventure-row {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
       gap: 4rem;
       align-items: center;
-      margin-bottom: 6rem;
-    }
-
-    .adventure-row:nth-child(even) {
-      grid-template-columns: 0.8fr 1.2fr;
-    }
-
-    .adventure-row:nth-child(even) .adv-img-wrap {
-      order: 2;
-    }
-
-    .adv-img-wrap img {
-      width: 100%;
-      height: 520px;
-      object-fit: cover;
-      border: 1px solid var(--border-dark);
-    }
-
-    .adv-text h3 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      letter-spacing: 1px;
-    }
-
-    .adv-text p {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-    }
-
-    /* ==========================================================================
-       04. THE WEDDING — DEEP MUTED PURPLE / CHARCOAL BACKGROUND
-       ========================================================================== */
-    .wedding-sec {
-      background-color: var(--bg-purple);
-      color: var(--text-light);
-      padding: 10rem 2rem;
-    }
-
-    .wedding-sec .section-label { color: var(--text-light-muted); }
-
-    .wedding-header {
-      text-align: center;
       margin-bottom: 5rem;
     }
 
-    .wedding-header h2 {
-      font-size: 4.5rem;
-      letter-spacing: 1px;
-      color: var(--text-light);
-    }
+    .adventure-row:nth-child(even) { grid-template-columns: 0.8fr 1.2fr; }
+    .adventure-row:nth-child(even) .adv-img-wrap { order: 2; }
+    .adv-img-wrap img { width: 100%; height: 460px; object-fit: cover; border: 1px solid var(--border-dark); }
+    .adv-text h3 { font-size: 2.5rem; margin-bottom: 1rem; }
+
+    /* 04. THE WEDDING PANEL (PURPLE) */
+    #tab-wedding { background-color: var(--bg-purple); color: var(--text-light); }
+    #tab-wedding .section-label { color: var(--text-light-muted); }
+
+    .wedding-header { text-align: center; margin-bottom: 4rem; }
+    .wedding-header h2 { font-size: 4rem; letter-spacing: 1px; color: var(--text-light); }
 
     .wedding-details-grid {
       display: grid;
@@ -351,263 +324,84 @@
       padding-top: 4rem;
     }
 
-    .wedding-card h4 {
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-light-muted);
-      margin-bottom: 1rem;
-    }
+    .wedding-card h4 { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light-muted); margin-bottom: 1rem; }
+    .wedding-card p.venue-title { font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem; color: var(--text-light); }
+    .wedding-card p.venue-sub { color: var(--text-light-muted); font-size: 0.95rem; }
 
-    .wedding-card p.venue-title {
-      font-family: var(--font-serif);
-      font-size: 2rem;
-      color: var(--text-light);
-      margin-bottom: 0.5rem;
-    }
+    /* 05. OUR PEOPLE PANEL */
+    #tab-people { background-color: var(--bg-cream); color: var(--text-dark); }
+    #tab-people .section-label { color: var(--accent-purple); }
 
-    .wedding-card p.venue-sub {
-      color: var(--text-light-muted);
-      font-size: 0.95rem;
-    }
+    .entourage-list { display: flex; flex-direction: column; gap: 2.5rem; }
+    .entourage-group { border-bottom: 1px solid var(--border-dark); padding-bottom: 2rem; display: flex; justify-content: space-between; align-items: baseline; }
+    .role-title { font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-purple); }
+    .person-names { font-family: var(--font-serif); font-size: 2.2rem; }
+    .person-names span { position: relative; cursor: pointer; transition: color 0.3s; }
+    .person-names span:hover { color: var(--accent-purple); }
 
-    /* ==========================================================================
-       05. OUR PEOPLE — LIGHT EDITORIAL MAGAZINE BACKGROUND
-       ========================================================================== */
-    .entourage-sec {
-      background-color: var(--bg-cream);
-      color: var(--text-dark);
-      border-bottom: 1px solid var(--border-dark);
-    }
-
-    .entourage-sec .section-label { color: var(--accent-purple); }
-
-    .entourage-list {
-      display: flex;
-      flex-direction: column;
-      gap: 2.5rem;
-      position: relative;
-    }
-
-    .entourage-group {
-      border-bottom: 1px solid var(--border-dark);
-      padding-bottom: 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-
-    .role-title {
-      font-size: 0.85rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent-purple);
-    }
-
-    .person-names {
-      font-family: var(--font-serif);
-      font-size: 2.2rem;
-    }
-
-    .person-names span {
-      position: relative;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-
-    .person-names span:hover {
-      color: var(--accent-purple);
-    }
-
-    /* Floating Portrait Preview */
     #entourage-preview {
-      position: fixed;
-      width: 220px;
-      height: 290px;
-      pointer-events: none;
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.9);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      z-index: 500;
-      object-fit: cover;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      position: fixed; width: 220px; height: 290px; pointer-events: none; opacity: 0;
+      transform: translate(-50%, -50%) scale(0.9); transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 3000; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
 
-    /* ==========================================================================
-       06. GALLERY — FULL-BLEED PHOTO JOURNAL
-       ========================================================================== */
-    .gallery-sec {
-      background-color: #0d0d0d;
-      padding: 6rem 0;
-    }
-
-    .gallery-sec .section-label {
-      color: var(--text-light-muted);
-      padding-left: 2rem;
-    }
+    /* 06. MOMENTS (GALLERY) PANEL (CHARCOAL) */
+    #tab-moments { background-color: var(--bg-charcoal); color: var(--text-light); padding-left: 0; padding-right: 0; }
+    #tab-moments .section-label { color: var(--text-light-muted); padding-left: 2rem; }
 
     .gallery-scroll {
-      display: flex;
-      gap: 2rem;
-      overflow-x: auto;
-      padding: 0 2rem 2rem 2rem;
-      scroll-snap-type: x mandatory;
+      display: flex; gap: 2rem; overflow-x: auto; padding: 0 2rem 2rem 2rem; scroll-snap-type: x mandatory;
     }
+    .gallery-scroll::-webkit-scrollbar { height: 4px; }
+    .gallery-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); }
 
-    .gallery-scroll::-webkit-scrollbar {
-      height: 4px;
-    }
-    .gallery-scroll::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,0.3);
-    }
+    .gallery-item { flex: 0 0 auto; scroll-snap-align: start; }
+    .gallery-item.portrait { width: 360px; height: 500px; }
+    .gallery-item.landscape { width: 640px; height: 500px; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-    .gallery-item {
-      flex: 0 0 auto;
-      scroll-snap-align: start;
-    }
+    /* 07. RSVP PANEL (CHARCOAL) */
+    #tab-rsvp { background-color: var(--bg-charcoal); color: var(--text-light); text-align: center; }
+    #tab-rsvp .section-label { color: var(--text-light-muted); }
 
-    .gallery-item.portrait { width: 380px; height: 540px; }
-    .gallery-item.landscape { width: 680px; height: 540px; }
-
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(90%) contrast(100%);
-    }
-
-    /* ==========================================================================
-       07. RSVP — DARK, CINEMATIC
-       ========================================================================== */
-    .rsvp-sec {
-      background-color: var(--bg-charcoal);
-      color: var(--text-light);
-      text-align: center;
-      padding: 10rem 2rem;
-    }
-
-    .rsvp-sec .section-label { color: var(--text-light-muted); }
-
-    .rsvp-container {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .rsvp-sec h2 {
-      font-size: 3.2rem;
-      margin-bottom: 2.5rem;
-      color: var(--text-light);
-    }
-
-    .rsvp-actions {
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      margin-bottom: 2rem;
-    }
-
+    .rsvp-container { max-width: 600px; margin: 0 auto; }
+    .rsvp-container h2 { font-size: 3.2rem; margin-bottom: 2.5rem; color: var(--text-light); }
+    
+    .rsvp-actions { display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 2rem; }
     .btn-rsvp {
-      background: transparent;
-      border: 1px solid var(--border-light);
-      color: var(--text-light);
-      padding: 1.1rem 1.8rem;
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      background: transparent; border: 1px solid var(--border-light); color: var(--text-light);
+      padding: 1.1rem 1.8rem; font-size: 0.75rem; letter-spacing: 2px; cursor: pointer; transition: all 0.3s ease;
     }
+    .btn-rsvp.active, .btn-rsvp:hover { background: var(--text-light); border-color: var(--text-light); color: var(--bg-charcoal); }
 
-    .btn-rsvp.active, .btn-rsvp:hover {
-      background: var(--text-light);
-      border-color: var(--text-light);
-      color: var(--bg-charcoal);
-    }
-
-    .rsvp-form {
-      display: none;
-      flex-direction: column;
-      gap: 1.2rem;
-      text-align: left;
-      margin-top: 2.5rem;
-      animation: fadeIn 0.5s forwards;
-    }
-
+    .rsvp-form { display: none; flex-direction: column; gap: 1.2rem; text-align: left; margin-top: 2.5rem; }
     .rsvp-form input, .rsvp-form textarea {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--border-light);
-      padding: 1.1rem;
-      font-family: var(--font-sans);
-      color: var(--text-light);
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border-light); padding: 1.1rem;
+      font-family: var(--font-sans); color: var(--text-light);
     }
 
-    .rsvp-form input::placeholder, .rsvp-form textarea::placeholder {
-      color: var(--text-light-muted);
-    }
-
-    /* ==========================================================================
-       08. FINAL / CLOSING — SUNSET IMAGE BOOKEND
-       ========================================================================== */
+    /* 08. CLOSING PANEL */
+    #tab-closing { padding: 0; height: 100%; }
     .closing-sec {
-      position: relative;
-      height: 90vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: var(--text-light);
-      overflow: hidden;
-      padding: 0;
+      position: relative; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--text-light);
     }
-
-    .closing-bg-image {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(60%) contrast(105%);
-      z-index: 1;
-    }
-
+    .closing-bg-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(60%); }
     .closing-content {
-      position: relative;
-      z-index: 2;
-      background: rgba(20, 20, 20, 0.7);
-      backdrop-filter: blur(8px);
-      padding: 4rem 5rem;
-      border: 1px solid var(--border-light);
-      max-width: 650px;
+      position: relative; z-index: 2; background: rgba(20, 20, 20, 0.75); backdrop-filter: blur(8px);
+      padding: 4rem 5rem; border: 1px solid var(--border-light); max-width: 650px;
     }
-
-    .closing-content h2 {
-      font-size: 2.8rem;
-      font-style: italic;
-      margin-bottom: 1rem;
-      color: var(--text-light);
-    }
-
-    .closing-content p.couple-names {
-      font-family: var(--font-serif);
-      font-size: 1.8rem;
-      letter-spacing: 1px;
-      margin-bottom: 0.5rem;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .closing-content h2 { font-size: 2.8rem; font-style: italic; margin-bottom: 1rem; }
+    .closing-content p.couple-names { font-family: var(--font-serif); font-size: 1.8rem; }
 
     /* Responsive Design */
     @media (max-width: 900px) {
-      .story-grid { grid-template-columns: 1fr; }
-      .adventure-row, .adventure-row:nth-child(even) { grid-template-columns: 1fr; }
+      .app-header { padding: 0 1rem; }
+      .nav-tabs { gap: 0.8rem; }
+      .nav-tabs button { font-size: 0.65rem; }
+      .story-grid, .adventure-row, .adventure-row:nth-child(even), .wedding-details-grid { grid-template-columns: 1fr; }
       .adventure-row:nth-child(even) .adv-img-wrap { order: 0; }
-      .wedding-details-grid { grid-template-columns: 1fr; }
-      .cover-center h1 { font-size: 2.5rem; }
-      .wedding-header h2 { font-size: 3rem; }
-      .entourage-group { flex-direction: column; gap: 0.5rem; }
-      .closing-content { padding: 2.5rem 2rem; }
+      .gallery-item.portrait, .gallery-item.landscape { width: 280px; height: 400px; }
+      .brand-logo { display: none; }
     }
   </style>
 </head>
@@ -615,22 +409,11 @@
 
   <div class="film-grain"></div>
 
-  <!-- Audio Toggle -->
-  <button class="audio-control" id="audioToggle">
-    <span id="audioIcon">🎵</span> <span id="audioLabel">Sound On</span>
-  </button>
-  
-  <audio id="bgMusic" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-100-bpm-121529.mp3" type="audio/mpeg">
-  </audio>
-
   <!-- ==========================================================================
-     01 — COVER PAGE (Sunset Cityscape Background)
+     01 — COVER PAGE OVERLAY (Using cover-sunset.png)
      ========================================================================== -->
   <div id="cover">
-    <!-- Atmospheric Sunset Cityscape Image -->
-    <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1800&q=80" alt="Elena & Adrian Sunset" class="cover-bg-image">
-    
+    <img src="cover-sunset.png" alt="Elena & Adrian Sunset" class="cover-bg-image">
     <div class="cover-header">Vol. 01 — The Wedding Brief</div>
     
     <div class="cover-center">
@@ -646,12 +429,33 @@
   <img id="entourage-preview" src="" alt="Entourage Preview">
 
   <!-- ==========================================================================
-     MAIN SITE EXPERIENCE
+     02 — TOP NAVIGATION BAR
      ========================================================================== -->
-  <div class="site-wrapper" id="mainSite">
+  <header class="app-header">
+    <div class="brand-logo">E & A</div>
+    <ul class="nav-tabs">
+      <li><button class="tab-link active" onclick="switchTab('story', 'cream', this)">Our Story</button></li>
+      <li><button class="tab-link" onclick="switchTab('adventures', 'cream', this)">Adventures</button></li>
+      <li><button class="tab-link" onclick="switchTab('wedding', 'purple', this)">The Wedding</button></li>
+      <li><button class="tab-link" onclick="switchTab('people', 'cream', this)">Our People</button></li>
+      <li><button class="tab-link" onclick="switchTab('moments', 'charcoal', this)">Moments</button></li>
+      <li><button class="tab-link" onclick="switchTab('rsvp', 'charcoal', this)">RSVP</button></li>
+      <li><button class="tab-link" onclick="switchTab('closing', 'charcoal', this)">Closing</button></li>
+    </ul>
+    <button class="audio-control" id="audioToggle"><span id="audioLabel">Sound On</span></button>
+  </header>
 
-    <!-- 02 — OUR STORY (Clean Ivory Background + Photos) -->
-    <section class="story-sec">
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-100-bpm-121529.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ==========================================================================
+     03 — TABBED VIEWPORT
+     ========================================================================== -->
+  <div class="tab-viewport">
+
+    <!-- OUR STORY PANEL -->
+    <div class="tab-panel active" id="tab-story">
       <div class="container">
         <span class="section-label">01 / Our Story</span>
         <div class="story-grid">
@@ -659,25 +463,23 @@
             <h2>IT STARTED WITH COFFEE.</h2>
             <p class="story-quote">“We met over iced coffee on an ordinary afternoon in Manila…”</p>
             <div class="story-author">— Elena & Adrian</div>
-            <p>What was supposed to be a quick 30-minute catchup turned into four hours of talking about everything from worst travel mistakes to favorite albums. By the time the coffee shop was closing, we both knew something quiet and permanent had just begun.</p>
+            <p>What was supposed to be a quick catchup turned into hours of talking about everything from worst travel mistakes to favorite albums. By the time the coffee shop was closing, we both knew something quiet and permanent had just begun.</p>
           </div>
           <div class="story-photos">
-            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80" alt="Coffee story portrait 1">
-            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80" alt="Coffee story portrait 2">
+            <img src="story-coffee-1.jpeg" alt="Story photo 1">
+            <img src="story-coffee-2.jpeg" alt="Story photo 2">
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- 03 — OUR ADVENTURES (Travel Journal Layout) -->
-    <section class="adventures-sec">
+    <!-- OUR ADVENTURES PANEL -->
+    <div class="tab-panel" id="tab-adventures">
       <div class="container">
         <span class="section-label">02 / Our Adventures</span>
         
         <div class="adventure-row">
-          <div class="adv-img-wrap">
-            <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1000&q=80" alt="New York">
-          </div>
+          <div class="adv-img-wrap"><img src="new-york.jpeg" alt="New York"></div>
           <div class="adv-text">
             <h3>NEW YORK</h3>
             <p>Somewhere between getting lost in Brooklyn and finding the best espresso in West Village, we realized we navigate chaos pretty well together.</p>
@@ -685,9 +487,7 @@
         </div>
 
         <div class="adventure-row">
-          <div class="adv-img-wrap">
-            <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80" alt="Tokyo">
-          </div>
+          <div class="adv-img-wrap"><img src="tokyo.jpeg" alt="Tokyo"></div>
           <div class="adv-text">
             <h3>TOKYO</h3>
             <p>The 3-day trip that somehow turned into 47,000 steps a day, late-night ramen runs, and a shared love for quiet alleyways.</p>
@@ -695,23 +495,19 @@
         </div>
 
         <div class="adventure-row">
-          <div class="adv-img-wrap">
-            <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=1000&q=80" alt="Palawan">
-          </div>
+          <div class="adv-img-wrap"><img src="palawan.jpeg" alt="Palawan"></div>
           <div class="adv-text">
             <h3>PALAWAN</h3>
             <p>Where we decided doing absolutely nothing together on a remote beach was actually our favorite vacation of all.</p>
           </div>
         </div>
-
       </div>
-    </section>
+    </div>
 
-    <!-- 04 — THE WEDDING (Deep Muted Purple / Charcoal Background) -->
-    <section class="wedding-sec">
+    <!-- THE WEDDING PANEL -->
+    <div class="tab-panel" id="tab-wedding">
       <div class="container">
         <span class="section-label">03 / The Wedding</span>
-        
         <div class="wedding-header">
           <h2>JANUARY 31, 2028</h2>
         </div>
@@ -738,72 +534,63 @@
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- 05 — OUR PEOPLE (Editorial Light Background) -->
-    <section class="entourage-sec">
+    <!-- OUR PEOPLE PANEL -->
+    <div class="tab-panel" id="tab-people">
       <div class="container">
         <span class="section-label">04 / Our People</span>
-        
         <div class="entourage-list">
           <div class="entourage-group">
             <span class="role-title">Maid of Honor</span>
-            <div class="person-names">
-              <span data-img="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80">Sofia Reyes</span>
-            </div>
+            <div class="person-names"><span data-img="photo1.jpeg">Sofia Reyes</span></div>
           </div>
-
           <div class="entourage-group">
             <span class="role-title">Best Man</span>
-            <div class="person-names">
-              <span data-img="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80">Daniel Cruz</span>
-            </div>
+            <div class="person-names"><span data-img="photo2.jpeg">Daniel Cruz</span></div>
           </div>
-
           <div class="entourage-group">
             <span class="role-title">Bridesmaids</span>
             <div class="person-names">
-              <span data-img="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80">Clara</span> • 
-              <span data-img="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80">Nina</span> • 
-              <span data-img="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80">Bea</span> • 
-              <span data-img="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80">Isabelle</span>
+              <span data-img="photo3.jpeg">Clara</span> • 
+              <span data-img="photo4.jpeg">Nina</span> • 
+              <span data-img="photo5.jpeg">Bea</span> • 
+              <span data-img="photo6.jpeg">Isabelle</span>
             </div>
           </div>
-
           <div class="entourage-group">
             <span class="role-title">Groomsmen</span>
             <div class="person-names">
-              <span data-img="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80">Marco</span> • 
-              <span data-img="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=500&q=80">Ethan</span> • 
-              <span data-img="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=500&q=80">James</span> • 
-              <span data-img="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=500&q=80">Rafael</span>
+              <span data-img="photo7.jpeg">Marco</span> • 
+              <span data-img="photo8.jpeg">Ethan</span> • 
+              <span data-img="photo9.jpeg">James</span> • 
+              <span data-img="photo10.jpeg">Rafael</span>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- 06 — GALLERY (Full-Bleed Photos) -->
-    <section class="gallery-sec">
+    <!-- MOMENTS PANEL (11 Uploaded Photos: photo1.jpeg to photo11.jpeg) -->
+    <div class="tab-panel" id="tab-moments">
       <span class="section-label">05 / Photo Journal</span>
       <div class="gallery-scroll">
-        <div class="gallery-item portrait">
-          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80" alt="Moment 1">
-        </div>
-        <div class="gallery-item landscape">
-          <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1200&q=80" alt="Moment 2">
-        </div>
-        <div class="gallery-item portrait">
-          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80" alt="Moment 3">
-        </div>
-        <div class="gallery-item landscape">
-          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80" alt="Moment 4">
-        </div>
+        <div class="gallery-item portrait"><img src="photo1.jpeg" alt="Moment 1"></div>
+        <div class="gallery-item landscape"><img src="photo2.jpeg" alt="Moment 2"></div>
+        <div class="gallery-item portrait"><img src="photo3.jpeg" alt="Moment 3"></div>
+        <div class="gallery-item landscape"><img src="photo4.jpeg" alt="Moment 4"></div>
+        <div class="gallery-item portrait"><img src="photo5.jpeg" alt="Moment 5"></div>
+        <div class="gallery-item portrait"><img src="photo6.jpeg" alt="Moment 6"></div>
+        <div class="gallery-item landscape"><img src="photo7.jpeg" alt="Moment 7"></div>
+        <div class="gallery-item portrait"><img src="photo8.jpeg" alt="Moment 8"></div>
+        <div class="gallery-item portrait"><img src="photo9.jpeg" alt="Moment 9"></div>
+        <div class="gallery-item landscape"><img src="photo10.jpeg" alt="Moment 10"></div>
+        <div class="gallery-item portrait"><img src="photo11.jpeg" alt="Moment 11"></div>
       </div>
-    </section>
+    </div>
 
-    <!-- 07 — RSVP (Dark, Cinematic Charcoal) -->
-    <section class="rsvp-sec">
+    <!-- RSVP PANEL -->
+    <div class="tab-panel" id="tab-rsvp">
       <div class="rsvp-container">
         <span class="section-label">06 / RSVP</span>
         <h2>Will you join us for the next chapter?</h2>
@@ -820,24 +607,24 @@
           <button type="submit" class="btn-rsvp active" style="width: 100%;">Confirm Attendance</button>
         </form>
       </div>
-    </section>
+    </div>
 
-    <!-- 08 — FINAL / CLOSING (Sunset Image Visual Callback) -->
-    <section class="closing-sec">
-      <!-- Same Sunset Image as Opening for the Bookend Effect -->
-      <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1800&q=80" alt="Elena & Adrian Sunset Finale" class="closing-bg-image">
-      
-      <div class="closing-content">
-        <h2>And this is only the beginning.</h2>
-        <p class="couple-names">Elena & Adrian</p>
-        <p style="color: var(--text-light-muted); font-size: 0.9rem; margin-top: 1rem;">We can't wait to celebrate with you.</p>
+    <!-- CLOSING PANEL -->
+    <div class="tab-panel" id="tab-closing">
+      <div class="closing-sec">
+        <img src="cover-sunset.png" alt="Elena & Adrian Sunset Finale" class="closing-bg-image">
+        <div class="closing-content">
+          <h2>And this is only the beginning.</h2>
+          <p class="couple-names">Elena & Adrian</p>
+          <p style="color: var(--text-light-muted); font-size: 0.9rem; margin-top: 1rem;">We can't wait to celebrate with you.</p>
+        </div>
       </div>
-    </section>
+    </div>
 
   </div>
 
   <!-- ==========================================================================
-     INTERACTIVE SCRIPTS
+     INTERACTIVE TABBED SWITCHING & SCRIPTS
      ========================================================================== -->
   <script>
     const audio = document.getElementById('bgMusic');
@@ -845,10 +632,8 @@
     const audioLabel = document.getElementById('audioLabel');
     let isPlaying = false;
 
-    // Unfold Cover & Start Music
     function openInvitation() {
       document.getElementById('cover').classList.add('unfolded');
-      document.getElementById('mainSite').classList.add('visible');
       
       audio.volume = 0.3;
       audio.play().then(() => {
@@ -857,6 +642,22 @@
       }).catch(e => {
         console.log("Autoplay restricted by browser.");
       });
+    }
+
+    // Tabbed Switching Mechanism
+    function switchTab(tabId, theme, btn) {
+      // Deactivate active tab panels
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+      document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
+
+      // Activate selected panel & button
+      document.getElementById('tab-' + tabId).classList.add('active');
+      btn.classList.add('active');
+
+      // Update Body Theme for Navbar styling match
+      document.body.className = '';
+      if (theme === 'purple') document.body.classList.add('theme-purple');
+      if (theme === 'charcoal') document.body.classList.add('theme-charcoal');
     }
 
     // Audio Controls
@@ -871,7 +672,7 @@
       isPlaying = !isPlaying;
     });
 
-    // Entourage Hover Portrait Preview
+    // Entourage Hover Preview
     const preview = document.getElementById('entourage-preview');
     const entourageNames = document.querySelectorAll('.person-names span');
 
@@ -896,7 +697,7 @@
       });
     });
 
-    // RSVP Toggle Form Logic
+    // RSVP Logic
     function toggleRSVP(status) {
       const form = document.getElementById('rsvpForm');
       form.style.display = 'flex';
