@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+  <!-- Swiper.js for Fashion Editorial Gallery Carousel -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
   <style>
     /* ==========================================================================
        00. COLOR SYSTEM & BASE STYLES
@@ -67,7 +70,7 @@
     p { line-height: 1.6; font-weight: 300; }
 
     /* ==========================================================================
-       01. COVER OVERLAY
+       01. COVER OVERLAY — MINIMIZED OPEN INVITATION & 50% OPACITY PANEL
        ========================================================================== */
     #cover {
       position: fixed;
@@ -108,11 +111,13 @@
 
     .cover-center {
       text-align: center;
-      background: rgba(249, 246, 240, 0.9);
-      backdrop-filter: blur(12px);
+      background: rgba(249, 246, 240, 0.5); /* 50% Opacity Card Panel */
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       padding: 3.5rem 4rem;
-      border: 1px solid var(--border-dark);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       max-width: 580px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
     }
 
     .cover-center h1 {
@@ -127,25 +132,42 @@
       font-style: italic;
       font-size: 1.3rem;
       color: var(--accent-purple);
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
     }
 
+    /* Minimized Text-Only Link Button (No Heavy Box Border) */
     .btn-open {
       display: inline-block;
       background: transparent;
-      border: 1px solid var(--text-dark);
+      border: none;
       color: var(--text-dark);
-      padding: 1rem 2rem;
+      font-family: var(--font-sans);
       font-size: 0.75rem;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.4s ease;
+      position: relative;
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
+    }
+
+    .btn-open::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; width: 100%;
+      height: 1px;
+      background-color: var(--text-dark);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      transform-origin: right;
+    }
+
+    .btn-open:hover::after {
+      transform: scaleX(0.7);
+      background-color: var(--accent-purple);
     }
 
     .btn-open:hover {
-      background: var(--text-dark);
-      color: var(--bg-cream);
+      color: var(--accent-purple);
     }
 
     .cover-footer {
@@ -345,20 +367,107 @@
       z-index: 3000; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
 
-    /* 06. MOMENTS (GALLERY) PANEL (CHARCOAL) */
-    #tab-moments { background-color: var(--bg-charcoal); color: var(--text-light); padding-left: 0; padding-right: 0; }
-    #tab-moments .section-label { color: var(--text-light-muted); padding-left: 2rem; }
-
-    .gallery-scroll {
-      display: flex; gap: 2rem; overflow-x: auto; padding: 0 2rem 2rem 2rem; scroll-snap-type: x mandatory;
+    /* ==========================================================================
+       06. MOMENTS (MOMENTS/GALLERY) — FASHION MAGAZINE CAROUSEL
+       ========================================================================== */
+    #tab-moments {
+      background-color: var(--bg-charcoal);
+      color: var(--text-light);
+      padding: 4rem 0;
+      overflow: hidden;
     }
-    .gallery-scroll::-webkit-scrollbar { height: 4px; }
-    .gallery-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); }
+    #tab-moments .section-label {
+      color: var(--text-light-muted);
+      padding-left: 3rem;
+    }
 
-    .gallery-item { flex: 0 0 auto; scroll-snap-align: start; }
-    .gallery-item.portrait { width: 360px; height: 500px; }
-    .gallery-item.landscape { width: 640px; height: 500px; }
-    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .moments-slider-wrapper {
+      position: relative;
+      width: 100%;
+      padding: 1rem 0;
+    }
+
+    .swiper {
+      width: 100%;
+      padding: 2rem 3rem !important;
+      overflow: visible !important;
+    }
+
+    .swiper-slide {
+      width: 380px;
+      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
+      opacity: 0.4;
+    }
+
+    .swiper-slide-active {
+      opacity: 1;
+      transform: scale(1.03);
+    }
+
+    .moments-card {
+      position: relative;
+      background: #1A1A1A;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .moments-card-img-wrap {
+      width: 100%;
+      height: 520px;
+      overflow: hidden;
+    }
+
+    .moments-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+      filter: brightness(90%) contrast(100%);
+    }
+
+    .swiper-slide:hover img {
+      transform: scale(1.06); /* Calm, sophisticated slow zoom */
+    }
+
+    .moments-caption {
+      padding: 1rem 0 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-light-muted);
+    }
+
+    /* Custom Navigation Controls for Moments */
+    .moments-controls {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      padding-left: 3rem;
+      margin-top: 1.5rem;
+    }
+
+    .moments-nav-btn {
+      background: transparent;
+      border: 1px solid var(--border-light);
+      color: var(--text-light);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .moments-nav-btn:hover {
+      background: var(--text-light);
+      color: var(--bg-charcoal);
+    }
 
     /* 07. RSVP PANEL (CHARCOAL) */
     #tab-rsvp { background-color: var(--bg-charcoal); color: var(--text-light); text-align: center; }
@@ -380,11 +489,14 @@
       font-family: var(--font-sans); color: var(--text-light);
     }
 
-    /* 08. CLOSING PANEL */
+    /* ==========================================================================
+       08. CLOSING PANEL — USING background.png
+       ========================================================================== */
     #tab-closing { padding: 0; height: 100%; }
     .closing-sec {
       position: relative; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--text-light);
     }
+    /* Updated background image source to background.png */
     .closing-bg-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(60%); }
     .closing-content {
       position: relative; z-index: 2; background: rgba(20, 20, 20, 0.75); backdrop-filter: blur(8px);
@@ -400,8 +512,11 @@
       .nav-tabs button { font-size: 0.65rem; }
       .story-grid, .adventure-row, .adventure-row:nth-child(even), .wedding-details-grid { grid-template-columns: 1fr; }
       .adventure-row:nth-child(even) .adv-img-wrap { order: 0; }
-      .gallery-item.portrait, .gallery-item.landscape { width: 280px; height: 400px; }
       .brand-logo { display: none; }
+      .swiper-slide { width: 290px; }
+      .moments-card-img-wrap { height: 400px; }
+      #tab-moments .section-label, .moments-controls { padding-left: 1.5rem; }
+      .swiper { padding: 1rem 1.5rem !important; }
     }
   </style>
 </head>
@@ -410,7 +525,7 @@
   <div class="film-grain"></div>
 
   <!-- ==========================================================================
-     01 — COVER PAGE OVERLAY (Using cover-sunset.png)
+     01 — COVER PAGE OVERLAY (With 50% Opacity Card Panel & Minimized Open Link)
      ========================================================================== -->
   <div id="cover">
     <img src="cover-sunset.png" alt="Elena & Adrian Sunset" class="cover-bg-image">
@@ -419,6 +534,7 @@
     <div class="cover-center">
       <h1>ELENA & ADRIAN</h1>
       <p>The Next Chapter</p>
+      <!-- Minimized Open Invitation text button -->
       <button class="btn-open" onclick="openInvitation()">Open Invitation →</button>
     </div>
 
@@ -571,21 +687,98 @@
       </div>
     </div>
 
-    <!-- MOMENTS PANEL (11 Uploaded Photos: photo1.jpeg to photo11.jpeg) -->
+    <!-- MOMENTS PANEL (High-Fashion Editorial Carousel Layout) -->
     <div class="tab-panel" id="tab-moments">
       <span class="section-label">05 / Photo Journal</span>
-      <div class="gallery-scroll">
-        <div class="gallery-item portrait"><img src="photo1.jpeg" alt="Moment 1"></div>
-        <div class="gallery-item landscape"><img src="photo2.jpeg" alt="Moment 2"></div>
-        <div class="gallery-item portrait"><img src="photo3.jpeg" alt="Moment 3"></div>
-        <div class="gallery-item landscape"><img src="photo4.jpeg" alt="Moment 4"></div>
-        <div class="gallery-item portrait"><img src="photo5.jpeg" alt="Moment 5"></div>
-        <div class="gallery-item portrait"><img src="photo6.jpeg" alt="Moment 6"></div>
-        <div class="gallery-item landscape"><img src="photo7.jpeg" alt="Moment 7"></div>
-        <div class="gallery-item portrait"><img src="photo8.jpeg" alt="Moment 8"></div>
-        <div class="gallery-item portrait"><img src="photo9.jpeg" alt="Moment 9"></div>
-        <div class="gallery-item landscape"><img src="photo10.jpeg" alt="Moment 10"></div>
-        <div class="gallery-item portrait"><img src="photo11.jpeg" alt="Moment 11"></div>
+      
+      <div class="moments-slider-wrapper">
+        <div class="swiper momentsSwiper">
+          <div class="swiper-wrapper">
+            
+            <div class="swiper-slide">
+              <div class="moments-card">
+                <div class="moments-card-img-wrap"><img src="photo1.jpeg" alt="Moment 1"></div>
+                <div class="moments-caption"><span>Elena & Adrian</span> <span>01 / 11</span></div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="moments-card">
+                <div class="moments-card-img-wrap"><img src="photo2.jpeg" alt="Moment 2"></div>
+                <div class="moments-caption"><span>Chronicles</span> <span>02 / 11</span></div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="moments-card">
+                <div class="moments-card-img-wrap"><img src="photo3.jpeg" alt="Moment 3"></div>
+                <div class="moments-caption"><span>Monochrome & Gold</span> <span>03 / 11</span></div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="moments-card">
+                <div class="moments-card-img-wrap"><img src="photo4.jpeg" alt="Moment 4"></div>
+                <div class="moments-caption"><span>Quiet Hours</span> <span>04 / 11</span></div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="moments-card">
+                <div class="moments-card-img-wrap"><img src="photo5.jpeg" alt="Moment 5"></div>
+                <div class="moments-caption"><span>Travel Journal</span> <span>05 / 11</span></div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="moments-card">
+                <div class="moments-card-img-wrap"><img src="photo6.jpeg" alt="Moment 6"></div>
+                <div class="moments-caption"><span>Scrapbook</span> <span>06 / 11</span></div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="moments-card">
+                <div class="moments-card-img-wrap"><img src="photo7.jpeg" alt="Moment 7"></div>
+                <div class="moments-caption"><span>Warm Light</span> <span>07 / 11</span></div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="moments-card">
+                <div class="moments-card-img-wrap"><img src="photo8.jpeg" alt="Moment 8"></div>
+                <div class="moments-caption"><span>Archive</span> <span>08 / 11</span></div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="moments-card">
+                <div class="moments-card-img-wrap"><img src="photo9.jpeg" alt="Moment 9"></div>
+                <div class="moments-caption"><span>Portraits</span> <span>09 / 11</span></div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="moments-card">
+                <div class="moments-card-img-wrap"><img src="photo10.jpeg" alt="Moment 10"></div>
+                <div class="moments-caption"><span>Film Grain</span> <span>10 / 11</span></div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="moments-card">
+                <div class="moments-card-img-wrap"><img src="photo11.jpeg" alt="Moment 11"></div>
+                <div class="moments-caption"><span>Until Then</span> <span>11 / 11</span></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="moments-controls">
+          <button class="moments-nav-btn btn-prev">←</button>
+          <button class="moments-nav-btn btn-next">→</button>
+        </div>
       </div>
     </div>
 
@@ -609,10 +802,11 @@
       </div>
     </div>
 
-    <!-- CLOSING PANEL -->
+    <!-- CLOSING PANEL (Using background.png) -->
     <div class="tab-panel" id="tab-closing">
       <div class="closing-sec">
-        <img src="cover-sunset.png" alt="Elena & Adrian Sunset Finale" class="closing-bg-image">
+        <!-- Background image updated to background.png -->
+        <img src="background.png" alt="Elena & Adrian Finale" class="closing-bg-image">
         <div class="closing-content">
           <h2>And this is only the beginning.</h2>
           <p class="couple-names">Elena & Adrian</p>
@@ -623,6 +817,9 @@
 
   </div>
 
+  <!-- Swiper.js Script for Carousel -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
   <!-- ==========================================================================
      INTERACTIVE TABBED SWITCHING & SCRIPTS
      ========================================================================== -->
@@ -631,6 +828,7 @@
     const audioToggle = document.getElementById('audioToggle');
     const audioLabel = document.getElementById('audioLabel');
     let isPlaying = false;
+    let momentsSwiper = null;
 
     function openInvitation() {
       document.getElementById('cover').classList.add('unfolded');
@@ -642,22 +840,45 @@
       }).catch(e => {
         console.log("Autoplay restricted by browser.");
       });
+
+      // Initialize Swiper carousel once opened
+      initMomentsCarousel();
+    }
+
+    // Initialize Swiper.js Carousel with calm, fashion-forward animation settings
+    function initMomentsCarousel() {
+      if (!momentsSwiper) {
+        momentsSwiper = new Swiper('.momentsSwiper', {
+          slidesPerView: 'auto',
+          spaceBetween: 30,
+          centeredSlides: true,
+          loop: true,
+          speed: 900,
+          grabCursor: true,
+          navigation: {
+            nextEl: '.btn-next',
+            prevEl: '.btn-prev',
+          },
+        });
+      }
     }
 
     // Tabbed Switching Mechanism
     function switchTab(tabId, theme, btn) {
-      // Deactivate active tab panels
       document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
       document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
 
-      // Activate selected panel & button
       document.getElementById('tab-' + tabId).classList.add('active');
       btn.classList.add('active');
 
-      // Update Body Theme for Navbar styling match
       document.body.className = '';
       if (theme === 'purple') document.body.classList.add('theme-purple');
       if (theme === 'charcoal') document.body.classList.add('theme-charcoal');
+
+      // Update Swiper carousel layout if Moments tab selected
+      if (tabId === 'moments' && momentsSwiper) {
+        setTimeout(() => momentsSwiper.update(), 100);
+      }
     }
 
     // Audio Controls
