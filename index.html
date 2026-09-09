@@ -355,7 +355,7 @@
       display: none; /* Strictly hides inactive tabs */
       padding: 3rem 2rem 8rem;
       opacity: 0;
-      transition: opacity 0.3s ease-in-out;
+      transition: opacity 0.4s ease;
     }
 
     .tab-panel.active {
@@ -558,7 +558,7 @@
       z-index: 3000; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
 
-    /* 06. MOMENTS PANEL (Instant Mobile Pre-Rendered Swiper) */
+    /* 06. MOMENTS PANEL */
     #tab-moments {
       background-color: var(--bg-charcoal);
       color: var(--text-light);
@@ -977,14 +977,14 @@
             </div>
           </div>
 
-          <!-- Section 3: Barcelona -->
+          <!-- Section 3: Barcelona (Using local palawan.jpeg) -->
           <div class="adventure-section-card">
             <div class="adv-text-block">
               <h3>BARCELONA</h3>
               <p>Late-night tapas, endless coastal walks, and afternoons spent doing absolutely nothing along Barceloneta Beach.</p>
             </div>
             <div class="adv-image-block">
-              <img src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=1000&q=80" alt="Barcelona">
+              <img src="palawan.jpeg" alt="Barcelona">
             </div>
           </div>
 
@@ -1261,7 +1261,6 @@
     let isPlaying = false;
     let momentsSwiper = null;
 
-    // Immediately pre-initialize Swiper so mobile view has zero animation lag
     document.addEventListener('DOMContentLoaded', () => {
       initMomentsCarousel();
     });
@@ -1282,7 +1281,6 @@
       }
     }
 
-    // High-Energy 3D Coverflow Carousel with DOM observers enabled for zero lag
     function initMomentsCarousel() {
       if (!momentsSwiper) {
         momentsSwiper = new Swiper('.momentsSwiper', {
@@ -1292,7 +1290,7 @@
           slidesPerView: 'auto',
           loop: true,
           speed: 450,
-          observer: true,            // Auto-updates on DOM visibility change
+          observer: true,
           observeParents: true,
           resizeObserver: true,
           coverflowEffect: {
@@ -1351,7 +1349,6 @@
       if (theme === 'purple') document.body.classList.add('theme-purple');
       if (theme === 'charcoal') document.body.classList.add('theme-charcoal');
 
-      // Zero-delay Swiper layout update on tab switch
       if (tabId === 'moments' && momentsSwiper) {
         momentsSwiper.update();
         momentsSwiper.slideTo(0, 0);
