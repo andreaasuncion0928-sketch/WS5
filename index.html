@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elena & Adrian — The Next Chapter</title>
-  
+
   <!-- Editorial Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,12 +22,12 @@
       --bg-cream-card: #FAF8F5;
       --bg-purple: #1F1022;      /* Deep Muted Purple for Wedding View */
       --bg-charcoal: #141414;    /* Dark Charcoal for RSVP & Gallery */
-      
+
       --text-dark: #1A1A1A;
       --text-muted: #666059;
       --text-light: #F9F6F0;
       --text-light-muted: #A09A93;
-      --accent-purple: #7B438D;
+      --accent-purple: #DDA0EE;  /* Brightened for contrast over dark photo background */
 
       --border-dark: rgba(26, 26, 26, 0.12);
       --border-light: rgba(249, 246, 240, 0.15);
@@ -98,8 +98,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.85;
-      filter: brightness(85%) contrast(105%);
+      opacity: 0.60; /* Adjusted overlay density for optimal contrast */
+      filter: brightness(60%) contrast(105%);
       z-index: -1;
       transition: transform 1.6s cubic-bezier(0.65, 0, 0.35, 1);
     }
@@ -116,16 +116,15 @@
       text-align: center;
     }
 
+    /* Minimalist seamless cover center block (Card frame removed) */
     .cover-center {
       text-align: center;
-      background: rgba(249, 246, 240, 0.5); /* 50% Opacity Card Panel */
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      padding: 3.5rem 2.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: transparent;
+      padding: 0;
+      border: none;
       width: 100%;
       max-width: 580px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+      box-shadow: none;
       transition: transform 1s ease, opacity 0.8s ease;
     }
 
@@ -138,7 +137,8 @@
       font-size: 3.5rem;
       line-height: 1.1;
       margin-bottom: 0.5rem;
-      color: var(--text-dark);
+      color: var(--text-light);
+      text-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
 
     .cover-center p {
@@ -147,13 +147,14 @@
       font-size: 1.3rem;
       color: var(--accent-purple);
       margin-bottom: 2.5rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
 
     .btn-open {
       display: inline-block;
       background: transparent;
       border: none;
-      color: var(--text-dark);
+      color: var(--text-light);
       font-family: var(--font-sans);
       font-size: 0.75rem;
       letter-spacing: 3px;
@@ -169,7 +170,7 @@
       position: absolute;
       bottom: 0; left: 0; width: 100%;
       height: 1px;
-      background-color: var(--text-dark);
+      background-color: var(--text-light);
       transition: transform 0.3s ease, background-color 0.3s ease;
       transform-origin: right;
     }
@@ -341,7 +342,7 @@
     }
 
     .mobile-nav-list button.active, .mobile-nav-list button:hover {
-      color: var(--accent-purple);
+      color: #7B438D;
       font-style: italic;
     }
 
@@ -394,9 +395,9 @@
       display: block;
     }
 
-    /* 02. OUR STORY PANEL (Distortion-Free Mobile Framing Fix) */
+    /* 02. OUR STORY PANEL */
     #tab-story { background-color: var(--bg-cream); color: var(--text-dark); }
-    #tab-story .section-label { color: var(--accent-purple); }
+    #tab-story .section-label { color: #7B438D; }
 
     .story-grid {
       display: grid;
@@ -407,10 +408,10 @@
 
     .story-content h2 { font-size: 3rem; line-height: 1.15; margin-bottom: 1.5rem; }
     .story-quote { font-family: var(--font-serif); font-size: 1.3rem; font-style: italic; margin-bottom: 1rem; }
-    .story-author { font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-purple); margin-bottom: 2rem; }
-    
+    .story-author { font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: #7B438D; margin-bottom: 2rem; }
+
     .story-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    
+
     .story-photos .img-wrapper {
       width: 100%;
       aspect-ratio: 4 / 5;
@@ -426,14 +427,13 @@
       display: block;
     }
 
-    /* Second photo face-focus alignment */
     .story-photos .img-wrapper.photo-focus-faces img {
       object-position: top center;
     }
 
     /* 03. OUR ADVENTURES PANEL */
     #tab-adventures { background-color: var(--bg-cream); color: var(--text-dark); }
-    #tab-adventures .section-label { color: var(--accent-purple); }
+    #tab-adventures .section-label { color: #7B438D; }
 
     .adventures-container {
       display: flex;
@@ -564,14 +564,14 @@
 
     /* 05. OUR PEOPLE PANEL */
     #tab-people { background-color: var(--bg-cream); color: var(--text-dark); }
-    #tab-people .section-label { color: var(--accent-purple); }
+    #tab-people .section-label { color: #7B438D; }
 
     .entourage-list { display: flex; flex-direction: column; gap: 2.5rem; }
     .entourage-group { border-bottom: 1px solid var(--border-dark); padding-bottom: 2rem; display: flex; justify-content: space-between; align-items: baseline; }
-    .role-title { font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-purple); }
+    .role-title { font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: #7B438D; }
     .person-names { font-family: var(--font-serif); font-size: 2.2rem; }
     .person-names span { position: relative; cursor: pointer; transition: color 0.3s; }
-    .person-names span:hover { color: var(--accent-purple); }
+    .person-names span:hover { color: #7B438D; }
 
     #entourage-preview {
       position: fixed; width: 220px; height: 290px; pointer-events: none; opacity: 0;
@@ -579,7 +579,7 @@
       z-index: 3000; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
 
-    /* 06. MOMENTS PANEL (Mobile Hardware-Accelerated 3D Swiper) */
+    /* 06. MOMENTS PANEL */
     #tab-moments {
       background-color: var(--bg-charcoal);
       color: var(--text-light);
@@ -694,7 +694,7 @@
       background-color: var(--bg-cream);
       color: var(--text-dark);
     }
-    #tab-faqs .section-label { color: var(--accent-purple); }
+    #tab-faqs .section-label { color: #7B438D; }
 
     .faqs-grid {
       display: grid;
@@ -814,13 +814,9 @@
     @media (max-width: 900px) {
       .app-header { padding: 0 1.5rem; height: 70px; }
       .tab-viewport { top: 70px; }
-      
+
       .nav-tabs { display: none; }
       .mobile-menu-toggle { display: flex; }
-
-      .cover-center {
-        padding: 2.5rem 1.5rem;
-      }
 
       .cover-center h1 {
         font-size: 2.5rem;
@@ -885,12 +881,12 @@
   <div class="film-grain"></div>
 
   <!-- ==========================================================================
-     01 — COVER PAGE OVERLAY
+     01 — COVER PAGE OVERLAY (Using cover-sunset.jpeg)
      ========================================================================== -->
   <div id="cover">
-    <img src="cover-sunset.png" alt="Elena & Adrian Sunset" class="cover-bg-image">
+    <img src="cover-sunset.jpeg" alt="Elena & Adrian Sunset" class="cover-bg-image">
     <div class="cover-header">Vol. 01 — The Wedding Brief</div>
-    
+
     <div class="cover-center">
       <h1>ELENA & ADRIAN</h1>
       <p>The Next Chapter</p>
@@ -921,7 +917,7 @@
      ========================================================================== -->
   <header class="app-header">
     <div class="brand-logo">E & A</div>
-    
+
     <!-- Desktop Navigation Tabs -->
     <ul class="nav-tabs">
       <li><button class="tab-link active" onclick="switchTab('story', 'cream', this)">Our Story</button></li>
@@ -935,7 +931,7 @@
 
     <div class="header-actions">
       <button class="audio-control" id="audioToggle"><span id="audioLabel">Sound On</span></button>
-      
+
       <!-- Mobile Hamburger Button -->
       <button class="mobile-menu-toggle" id="menuToggle" onclick="toggleMobileMenu()">
         <span></span>
@@ -982,9 +978,9 @@
     <div class="tab-panel" id="tab-adventures">
       <div class="container">
         <span class="section-label">02 / Our Adventures</span>
-        
+
         <div class="adventures-container">
-          
+
           <!-- Section 1: New York -->
           <div class="adventure-section-card">
             <div class="adv-text-block">
@@ -1026,7 +1022,7 @@
     <div class="tab-panel" id="tab-wedding">
       <div class="container">
         <span class="section-label">03 / The Wedding</span>
-        
+
         <div class="wedding-intro-story">
           <h2>FROM TRAVELS TO FOREVER</h2>
           <p class="narrative">“After traveling thousands of miles across different cities and shorelines, our favorite destination has always been each other. Now, we are coming home to where our story first began to begin our greatest chapter yet.”</p>
@@ -1102,11 +1098,11 @@
     <!-- MOMENTS PANEL -->
     <div class="tab-panel" id="tab-moments">
       <span class="section-label">05 / Photo Journal</span>
-      
+
       <div class="moments-slider-wrapper">
         <div class="swiper momentsSwiper">
           <div class="swiper-wrapper">
-            
+
             <div class="swiper-slide">
               <div class="moments-card">
                 <div class="moments-card-img-wrap"><img src="photo1.jpeg" alt="Moment 1"></div>
@@ -1198,12 +1194,12 @@
     <div class="tab-panel" id="tab-faqs">
       <div class="container">
         <span class="section-label">06 / Frequently Asked Questions</span>
-        
+
         <div class="faqs-grid">
           <div class="faq-item">
             <h3>Dress Code & Palette</h3>
             <p><strong>Formal Attire in Shades of Purple.</strong> We kindly invite guests to celebrate in rich or muted tones of purple—from deep plum and royal violet to soft lavender and mauve.</p>
-            
+
             <div class="palette-wrapper">
               <div class="swatch-item">
                 <div class="swatch plum"></div>
@@ -1252,7 +1248,7 @@
         <span class="section-label">07 / RSVP</span>
         <h2>Will you join us for the next chapter?</h2>
         <p class="rsvp-subtext">Please scan the QR code below using your mobile phone camera to confirm your attendance.</p>
-        
+
         <div class="qr-card-frame">
           <div class="qr-image-wrap">
             <img src="sampleQR.png" alt="RSVP QR Code">
@@ -1298,7 +1294,7 @@
     function openInvitation() {
       document.body.classList.add('invitation-opened');
       document.getElementById('cover').classList.add('unfolded');
-      
+
       // Audio Jump & Smooth Fade In logic
       audio.pause();
       audio.volume = 0;
@@ -1307,7 +1303,7 @@
       audio.play().then(() => {
         isPlaying = true;
         audioLabel.innerText = "Sound On";
-        
+
         let targetVolume = 0.3;
         let fadeInterval = setInterval(() => {
           if (audio.volume < targetVolume - 0.02) {
@@ -1391,7 +1387,7 @@
         targetPanel.classList.add('active');
         targetPanel.scrollTop = 0;
       }
-      
+
       if (btn) btn.classList.add('active');
 
       document.body.className = '';
