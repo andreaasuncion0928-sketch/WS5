@@ -394,7 +394,7 @@
       display: block;
     }
 
-    /* 02. OUR STORY PANEL */
+    /* 02. OUR STORY PANEL (Distortion-Free Mobile Framing Fix) */
     #tab-story { background-color: var(--bg-cream); color: var(--text-dark); }
     #tab-story .section-label { color: var(--accent-purple); }
 
@@ -413,17 +413,20 @@
     
     .story-photos .img-wrapper {
       width: 100%;
-      height: 340px;
+      aspect-ratio: 4 / 5;
       overflow: hidden;
       border: 1px solid var(--border-dark);
+      position: relative;
     }
 
     .story-photos img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
 
+    /* Second photo face-focus alignment */
     .story-photos .img-wrapper.photo-focus-faces img {
       object-position: top center;
     }
@@ -576,12 +579,13 @@
       z-index: 3000; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
 
-    /* 06. MOMENTS PANEL */
+    /* 06. MOMENTS PANEL (Mobile Hardware-Accelerated 3D Swiper) */
     #tab-moments {
       background-color: var(--bg-charcoal);
       color: var(--text-light);
       padding: 3rem 0;
       overflow: hidden;
+      transform-style: preserve-3d;
     }
     #tab-moments .section-label {
       color: var(--text-light-muted);
@@ -593,18 +597,25 @@
       width: 100%;
       padding: 1rem 0;
       perspective: 1200px;
+      transform-style: preserve-3d;
     }
 
     .swiper {
       width: 100%;
       padding: 3rem 0 !important;
       overflow: visible !important;
+      transform-style: preserve-3d;
+    }
+
+    .swiper-wrapper {
+      transform-style: preserve-3d;
     }
 
     .swiper-slide {
       width: 360px;
       height: 520px;
       will-change: transform;
+      transform-style: preserve-3d;
       transition: transform 0.4s ease-out, opacity 0.4s ease-out;
     }
 
@@ -616,6 +627,7 @@
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.15);
       box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+      transform-style: preserve-3d;
     }
 
     .moments-card-img-wrap {
@@ -846,7 +858,7 @@
 
       .story-content h2 { font-size: 2.2rem; }
       .story-photos { grid-template-columns: 1fr; }
-      .story-photos .img-wrapper { height: 280px; }
+      .story-photos .img-wrapper { height: auto; aspect-ratio: 4 / 5; }
 
       .wedding-intro-story h2 { font-size: 2.2rem; }
       .wedding-intro-story p.narrative { font-size: 1.15rem; }
@@ -873,10 +885,10 @@
   <div class="film-grain"></div>
 
   <!-- ==========================================================================
-     01 — COVER PAGE OVERLAY (Using cover-sunset.jpeg)
+     01 — COVER PAGE OVERLAY
      ========================================================================== -->
   <div id="cover">
-    <img src="cover-sunset.jpeg" alt="Elena & Adrian Sunset" class="cover-bg-image">
+    <img src="cover-sunset.png" alt="Elena & Adrian Sunset" class="cover-bg-image">
     <div class="cover-header">Vol. 01 — The Wedding Brief</div>
     
     <div class="cover-center">
@@ -995,7 +1007,7 @@
             </div>
           </div>
 
-          <!-- Section 3: Barcelona (Using palawan.jpeg) -->
+          <!-- Section 3: Barcelona (Using local palawan.jpeg) -->
           <div class="adventure-section-card">
             <div class="adv-text-block">
               <h3>BARCELONA</h3>
@@ -1287,7 +1299,7 @@
       document.body.classList.add('invitation-opened');
       document.getElementById('cover').classList.add('unfolded');
       
-      // Smooth Audio Jump & Fade In logic
+      // Audio Jump & Smooth Fade In logic
       audio.pause();
       audio.volume = 0;
       audio.currentTime = 11.2;
@@ -1315,6 +1327,7 @@
       }
     }
 
+    // High-Performance Mobile 3D Coverflow
     function initMomentsCarousel() {
       if (!momentsSwiper) {
         momentsSwiper = new Swiper('.momentsSwiper', {
@@ -1323,6 +1336,8 @@
           centeredSlides: true,
           slidesPerView: 'auto',
           loop: true,
+          loopAdditionalSlides: 3,
+          passiveListeners: true,
           speed: 450,
           observer: true,
           observeParents: true,
@@ -1386,9 +1401,17 @@
       if (theme === 'purple') document.body.classList.add('theme-purple');
       if (theme === 'charcoal') document.body.classList.add('theme-charcoal');
 
-      if (tabId === 'moments' && momentsSwiper) {
-        momentsSwiper.update();
-        momentsSwiper.slideTo(0, 0);
+      // Instant zero-delay mobile Swiper animation update
+      if (tabId === 'moments') {
+        if (!momentsSwiper) {
+          initMomentsCarousel();
+        }
+        requestAnimationFrame(() => {
+          if (momentsSwiper) {
+            momentsSwiper.update();
+            momentsSwiper.slideToLoop(0, 0);
+          }
+        });
       }
     }
 
