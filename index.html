@@ -70,7 +70,7 @@
     p { line-height: 1.6; font-weight: 300; }
 
     /* ==========================================================================
-       01. COVER OVERLAY (Ultra-Smooth Unfold Transition)
+       01. COVER OVERLAY
        ========================================================================== */
     #cover {
       position: fixed;
@@ -350,7 +350,7 @@
     .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
     /* ==========================================================================
-       03. TAB VIEWPORT & PANELS (Page Smooth Scale Reveal)
+       03. TAB VIEWPORT & PANELS
        ========================================================================== */
     .tab-viewport {
       position: absolute;
@@ -873,10 +873,10 @@
   <div class="film-grain"></div>
 
   <!-- ==========================================================================
-     01 — COVER PAGE OVERLAY
+     01 — COVER PAGE OVERLAY (Using cover-sunset.jpeg)
      ========================================================================== -->
   <div id="cover">
-    <img src="cover-sunset.png" alt="Elena & Adrian Sunset" class="cover-bg-image">
+    <img src="cover-sunset.jpeg" alt="Elena & Adrian Sunset" class="cover-bg-image">
     <div class="cover-header">Vol. 01 — The Wedding Brief</div>
     
     <div class="cover-center">
@@ -995,7 +995,7 @@
             </div>
           </div>
 
-          <!-- Section 3: Barcelona (Using local palawan.jpeg) -->
+          <!-- Section 3: Barcelona (Using palawan.jpeg) -->
           <div class="adventure-section-card">
             <div class="adv-text-block">
               <h3>BARCELONA</h3>
@@ -1250,7 +1250,7 @@
       </div>
     </div>
 
-    <!-- CLOSING PANEL (Accessible naturally as finale) -->
+    <!-- CLOSING PANEL -->
     <div class="tab-panel" id="tab-closing">
       <div class="closing-sec">
         <img src="background.png" alt="Elena & Adrian Finale" class="closing-bg-image">
@@ -1284,7 +1284,6 @@
     });
 
     function openInvitation() {
-      // Add opened state class for smooth page scale zoom-out reveal
       document.body.classList.add('invitation-opened');
       document.getElementById('cover').classList.add('unfolded');
       
@@ -1297,7 +1296,6 @@
         isPlaying = true;
         audioLabel.innerText = "Sound On";
         
-        // Smooth Volume Ramp over 1.2 seconds
         let targetVolume = 0.3;
         let fadeInterval = setInterval(() => {
           if (audio.volume < targetVolume - 0.02) {
